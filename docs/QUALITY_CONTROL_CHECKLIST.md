@@ -1,0 +1,22 @@
+# Final Quality-Control Checklist
+
+- [x] Fictional enterprise disclosed
+- [x] Synthetic data labeled
+- [x] Scenario outputs labeled simulated
+- [x] Financial assumptions labeled illustrative
+- [x] Fact grains documented
+- [x] No deliberate many-to-many joins
+- [x] OEE formula implemented and tested
+- [x] OLI separated from OEE
+- [x] MORI labeled project-defined
+- [x] Data Trust Score labeled project-defined
+- [x] Temporal ML validation
+- [x] Multiple ML metrics beyond accuracy
+- [x] Forecast baseline and error metrics
+- [x] No invented process specification limits
+- [x] No causal claims from feature importance/correlation
+- [x] SQL examples include CTE/window/ranking/validation patterns
+- [x] Power BI model/page/DAX build guidance
+- [x] Generated binary/data artifacts excluded from Git
+- [x] Automated tests included
+- [x] Reproducibility instructions included

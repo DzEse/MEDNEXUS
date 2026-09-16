@@ -1,0 +1,6 @@
+check,passed,status
+production_counts_nonnegative,True,PASS
+good_count_not_above_total,True,PASS
+runtime_positive,True,PASS
+shipment_delay_nonnegative,True,PASS
+finance_revenue_nonnegative,True,PASS

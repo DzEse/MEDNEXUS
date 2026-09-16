@@ -1,0 +1,82 @@
+{
+  "project": "MEDNEXUS",
+  "seed": 42,
+  "data_trust_score": 100.0,
+  "generated_files": [
+    {
+      "file": "powerbi\\exports\\DecisionQueue.csv",
+      "sha256": "5d6a4a1a8d291c412ffcadbbde2a923aec56e932710bf134b87837d0c2068357",
+      "bytes": 1496
+    },
+    {
+      "file": "powerbi\\exports\\DemandForecast.csv",
+      "sha256": "a510e59a6eba22cbe87b2bc6fac31838ef116f16a9ce14b47a3dae424f37e12c",
+      "bytes": 116
+    },
+    {
+      "file": "powerbi\\exports\\EnterpriseMonthly.csv",
+      "sha256": "93ce0c5d64e41cf75082df20b66d071ed227917c5f6304061f30a6345154aae7",
+      "bytes": 13340
+    },
+    {
+      "file": "powerbi\\exports\\Finance.csv",
+      "sha256": "3936c70d8baf49aa6bfb8d933bf089d61d569d34942795d635a5616b8540def6",
+      "bytes": 5872
+    },
+    {
+      "file": "powerbi\\exports\\MORI.csv",
+      "sha256": "ec1b8be6a196855291a010d3250ec607cf7c42f16072168738a6242eaab3e102",
+      "bytes": 4391
+    },
+    {
+      "file": "powerbi\\exports\\PredictiveMaintenanceScores.csv",
+      "sha256": "e525930d6c80b51f2cf0795f327c60683449413a75de1c85ca5089fa261045ff",
+      "bytes": 152198
+    },
+    {
+      "file": "powerbi\\exports\\ProductionKPI.csv",
+      "sha256": "0a1b04dd934c90c82a0d54ab4a4af545bf5c4af66a36768fb59f7af75f6f21ec",
+      "bytes": 3131255
+    },
+    {
+      "file": "powerbi\\exports\\QualityPareto.csv",
+      "sha256": "ce63322fd93beb818b557a7e6f7821d323043b8300f170befa1a5ef39f7d44dd",
+      "bytes": 320
+    },
+    {
+      "file": "powerbi\\exports\\Recruitment.csv",
+      "sha256": "795a138b82239754c73eae386832a4c082b622c250b900de03374d4d49bd62cf",
+      "bytes": 3502
+    },
+    {
+      "file": "powerbi\\exports\\Reliability.csv",
+      "sha256": "b1c3cfcd2f645a1d0ae4141f31088863db2daaa0f27624006d1f808f055ec1d8",
+      "bytes": 1724
+    },
+    {
+      "file": "powerbi\\exports\\ScenarioOutputs.csv",
+      "sha256": "0373c660d723fd8df90569fa4f7d3aae9d03570ef7fcf9d6e61ae64ffc8112b3",
+      "bytes": 686
+    },
+    {
+      "file": "powerbi\\exports\\Shipments.csv",
+      "sha256": "e6f48373a21415138f32d0f5a2ea3c42bf8fe97a251a9778a57c56c8f0c0fae5",
+      "bytes": 986441
+    },
+    {
+      "file": "powerbi\\exports\\Supply.csv",
+      "sha256": "e87d37d51168bd91f19a56f2efa145cc8b4aa4c8e4f8b00384d9a03d5bfabdad",
+      "bytes": 20919
+    },
+    {
+      "file": "powerbi\\exports\\TechnologyIncidents.csv",
+      "sha256": "63f1b55252b24f82672334947475a3a6f73f79ce959f1ce64673826a94c6265e",
+      "bytes": 18381
+    },
+    {
+      "file": "powerbi\\exports\\Workforce.csv",
+      "sha256": "0d6cf7b292c4ad2ba24ada618c2c35e923f550f401a043d0d97a3062f54b2165",
+      "bytes": 4950
+    }
+  ]
+}

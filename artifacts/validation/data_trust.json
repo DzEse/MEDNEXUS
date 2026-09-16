@@ -1,0 +1,9 @@
+{
+  "data_trust_score": 100.0,
+  "components": {
+    "uniqueness": 1.0,
+    "row_uniqueness": 1.0,
+    "completeness_proxy": 1.0,
+    "validity": 1.0
+  }
+}

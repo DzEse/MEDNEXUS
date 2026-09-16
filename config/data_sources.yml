@@ -1,0 +1,31 @@
+sources:
+  - id: uci_ai4i_2020
+    status: optional_public_extension
+    source_type: public_dataset
+    organization: UCI Machine Learning Repository
+    title: AI4I 2020 Predictive Maintenance Dataset
+    reference: https://archive.ics.uci.edu/dataset/601/ai4i+2020+predictive+maintenance+dataset
+    license: CC BY 4.0
+    grain: one row per synthetic machine observation in the source dataset
+    intended_use: independent predictive-maintenance benchmark
+    mednexus_proprietary: false
+  - id: uci_secom
+    status: optional_public_extension
+    source_type: public_dataset
+    organization: UCI Machine Learning Repository
+    title: SECOM
+    reference: https://archive.ics.uci.edu/dataset/179/secom
+    license: CC BY 4.0
+    grain: one row per manufacturing-process example in the source dataset
+    intended_use: independent process-quality/statistical exploration
+    mednexus_proprietary: false
+  - id: nasa_cmapss
+    status: optional_public_extension_usage_check_required
+    source_type: public_dataset
+    organization: NASA Prognostics Center of Excellence
+    title: C-MAPSS / Turbofan Engine Degradation Simulation
+    reference: https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/
+    license: verify source-specific terms before redistribution
+    grain: multivariate time-series by engine/cycle depending on selected package
+    intended_use: independent prognostics/RUL extension
+    mednexus_proprietary: false

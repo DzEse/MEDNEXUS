@@ -1,0 +1,14 @@
+name: mednexus
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - numpy
+  - pandas
+  - scikit-learn
+  - scipy
+  - statsmodels
+  - matplotlib
+  - pyyaml
+  - joblib
+  - pytest

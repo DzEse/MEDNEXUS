@@ -1,0 +1,29 @@
+project:
+  name: MEDNEXUS
+  description: Enterprise Operational Intelligence & Decision Analytics Platform
+  fictional_enterprise: true
+  simulated_engagement: true
+simulation:
+  seed: 42
+  months: 24
+  plants: 2
+  lines_per_plant: 2
+  machines_per_line: 4
+  products: 6
+  suppliers: 10
+  customers: 14
+  employees: 180
+risk:
+  mori_weights:
+    quality: 0.16
+    equipment: 0.16
+    downtime: 0.12
+    capacity: 0.12
+    supply: 0.12
+    logistics: 0.10
+    workforce: 0.10
+    technology: 0.12
+scenario:
+  default_downtime_reduction_pct: 10
+  default_defect_reduction_pct: 8
+  default_workforce_capacity_change_pct: 3

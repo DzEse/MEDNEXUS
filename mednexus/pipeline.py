@@ -1,0 +1,107 @@
+from __future__ import annotations
+from pathlib import Path
+import shutil
+import sqlite3
+import pandas as pd
+from .config import load_config, path
+from .synthetic import generate
+from .database import connect, load_frames, execute_sql_file
+from .quality import evaluate, data_trust_score
+from .analytics import production_kpis, monthly_enterprise_mart, quality_pareto, reliability_mart
+from .models import train_predictive_maintenance
+from .forecasting import forecast_demand
+from .risk import build_mori
+from .scenarios import run_scenarios
+from .decision_queue import build as build_decision_queue
+from .reporting import write_management_summary
+from .utils import save_frame, write_json, file_sha256
+
+
+def _clean():
+    for d in [path('data','synthetic'),path('data','curated'),path('powerbi','exports'),path('artifacts','reports'),path('artifacts','validation'),path('artifacts','models')]:
+        if d.exists():
+            for p in d.glob('*'):
+                if p.name=='.gitkeep': continue
+                if p.is_file(): p.unlink()
+                elif p.is_dir(): shutil.rmtree(p)
+    db=path('mednexus.db')
+    if db.exists(): db.unlink()
+
+
+def run(clean=False, seed=None):
+    cfg=load_config()
+    if clean: _clean()
+    for d in [path('data','synthetic'),path('data','curated'),path('powerbi','exports'),path('artifacts','reports'),path('artifacts','validation'),path('artifacts','models')]: d.mkdir(parents=True,exist_ok=True)
+    print('[1/9] Generating synthetic enterprise data...')
+    frames=generate(seed=seed)
+    for name,df in frames.items():
+        save_frame(df,path('data','synthetic',f'{name}.csv'))
+
+    print('[2/9] Running data-quality controls...')
+    table_q,business_q=evaluate(frames)
+    trust,trust_components=data_trust_score(table_q,business_q)
+    save_frame(table_q,path('artifacts','validation','data_quality_tables.csv'))
+    save_frame(business_q,path('artifacts','validation','data_quality_business_checks.csv'))
+    write_json({'data_trust_score':trust,'components':trust_components},path('artifacts','validation','data_trust.json'))
+    if (business_q['status']=='FAIL').any() or (table_q['status']=='FAIL').any():
+        raise RuntimeError('Data quality gate failed. See artifacts/validation.')
+
+    print('[3/9] Building analytical marts...')
+    production_enriched=production_kpis(frames['fact_production'])
+    mart=monthly_enterprise_mart(frames)
+    qp=quality_pareto(frames)
+    rel=reliability_mart(frames)
+    save_frame(production_enriched,path('data','curated','production_kpis.csv'))
+    save_frame(mart,path('data','curated','enterprise_monthly_mart.csv'))
+    save_frame(qp,path('data','curated','quality_pareto.csv'))
+    save_frame(rel,path('data','curated','reliability_mart.csv'))
+
+    print('[4/9] Training predictive-maintenance baseline...')
+    model_metrics,scored=train_predictive_maintenance(frames['fact_sensor'],path('artifacts','models','predictive_maintenance_logreg.joblib'))
+    save_frame(scored,path('data','curated','predictive_maintenance_scores.csv'))
+    write_json(model_metrics,path('artifacts','validation','predictive_maintenance_metrics.json'))
+
+    print('[5/9] Building demand forecast...')
+    forecast_metrics,forecast_history,forecast_future=forecast_demand(frames['fact_orders'])
+    save_frame(forecast_history,path('data','curated','demand_forecast_backtest.csv'))
+    save_frame(forecast_future,path('data','curated','demand_forecast_future.csv'))
+    write_json(forecast_metrics,path('artifacts','validation','forecast_metrics.json'))
+
+    print('[6/9] Building risk, scenarios and decision queue...')
+    risk=build_mori(mart,cfg['risk']['mori_weights'])
+    scenarios=run_scenarios(mart)
+    dq=build_decision_queue(mart,risk,rel,qp,forecast_metrics)
+    save_frame(risk,path('data','curated','mori.csv'))
+    save_frame(scenarios,path('data','curated','scenario_outputs.csv'))
+    save_frame(dq,path('data','curated','decision_queue.csv'))
+
+    print('[7/9] Loading SQLite analytical database and SQL views...')
+    con=connect(path('mednexus.db'))
+    load_frames(con,frames)
+    production_enriched.to_sql('mart_production_kpi',con,if_exists='replace',index=False)
+    mart.to_sql('mart_enterprise_monthly',con,if_exists='replace',index=False)
+    risk.to_sql('mart_mori',con,if_exists='replace',index=False)
+    scenarios.to_sql('mart_scenarios',con,if_exists='replace',index=False)
+    dq.to_sql('mart_decision_queue',con,if_exists='replace',index=False)
+    execute_sql_file(con,path('sql','analytical_views.sql'))
+    con.close()
+
+    print('[8/9] Exporting Power BI-ready datasets and reports...')
+    exports={
+        'EnterpriseMonthly':mart,'ProductionKPI':production_enriched,'MORI':risk,'ScenarioOutputs':scenarios,
+        'DecisionQueue':dq,'QualityPareto':qp,'Reliability':rel,'PredictiveMaintenanceScores':scored,
+        'DemandForecast':forecast_future,'Finance':frames['fact_finance'],'Workforce':frames['fact_workforce'],
+        'Recruitment':frames['fact_recruitment'],'Supply':frames['fact_supply'],'Shipments':frames['fact_shipment'],
+        'TechnologyIncidents':frames['fact_technology_incident']
+    }
+    for name,df in exports.items(): save_frame(df,path('powerbi','exports',f'{name}.csv'))
+    write_management_summary(path('artifacts','reports','management_summary.md'),mart,risk,qp,model_metrics,forecast_metrics,trust)
+
+    print('[9/9] Writing reproducibility manifest...')
+    manifest=[]
+    for p in sorted(path('powerbi','exports').glob('*.csv')):
+        manifest.append({'file':str(p.relative_to(path())), 'sha256':file_sha256(p), 'bytes':p.stat().st_size})
+    write_json({'project':'MEDNEXUS','seed':seed if seed is not None else cfg['simulation']['seed'],'data_trust_score':trust,'generated_files':manifest},path('artifacts','validation','manifest.json'))
+    print('MEDNEXUS pipeline completed successfully.')
+    print(f'Data Trust Score: {trust}/100')
+    print('Open artifacts/reports/management_summary.md for the executive summary.')
