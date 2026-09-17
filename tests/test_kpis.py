@@ -1,7 +1,7 @@
 import pandas as pd
-import pandas as pd
 
 from mednexus.analytics import production_kpis, monthly_enterprise_mart
+from mednexus.synthetic import generate
 
 
 def test_oee_formula():
