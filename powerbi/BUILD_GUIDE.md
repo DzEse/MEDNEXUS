@@ -1,5 +1,19 @@
 # Power BI Build Guide
 
+## Governance first
+
+The final Power BI report is built by the user in Power BI Desktop. The repository does not pretend that a PBIX file has been created.
+
+Before treating the report as final, review:
+
+- `docs/specification/MEDNEXUS_MASTER_BUILD_SPECIFICATION.md`
+- `docs/specification/REQUIREMENTS_TRACEABILITY_MATRIX.md`
+- `powerbi/SEMANTIC_MODEL.md`
+- `powerbi/DAX_MEASURES.md`
+- `powerbi/PAGE_SPECIFICATIONS.md`
+
+The existing report work is a **preserved shell** while unresolved predecessor analytical requirements are completed/gated. Final BI acceptance follows analytical reconciliation, not the other way around.
+
 ## 1. Generate the Power BI handoff
 
 From the repository root in VS Code PowerShell:
@@ -8,31 +22,31 @@ From the repository root in VS Code PowerShell:
 powershell -ExecutionPolicy Bypass -File ".\scripts\phase2_powerbi_prep.ps1"
 ```
 
-This regenerates the canonical datasets and verifies the required Power BI export files exist.
+This regenerates the current canonical datasets and verifies the Power BI export contract.
 
-## 2. Start with Page 1, not the whole report
+## 2. Start with Page 1 as the report shell
 
-Build and validate **Enterprise Command Center** first using:
+Build the **Enterprise Command Center** semantic/visual shell first using:
 
 - `PAGE_01_ENTERPRISE_COMMAND_CENTER.md`
 - `DAX_MEASURES.md`
 - `SEMANTIC_MODEL.md`
 - `MEDNEXUS_THEME.json`
 
-Once Page 1 reconciles to the canonical management summary, continue with the remaining pages in `PAGE_SPECIFICATIONS.md`.
+Do not treat the page as analytically final until predecessor analytical requirements in the traceability matrix are resolved or explicitly condition-gated.
 
 ## 3. Import data
 
 In Power BI Desktop choose **Get data → Text/CSV** and import the required files from `powerbi/exports/`.
 
-For Page 1, start with only:
+For Page 1, the current shell can begin with:
 
 - DimDate
 - EnterpriseMonthly
 - MORI
 - DecisionQueue
 
-The full report can then add these domain tables:
+The full report currently has these additional exported tables available:
 
 - DimPlant
 - DimLine
@@ -60,11 +74,13 @@ The full report can then add these domain tables:
 - DemandForecast
 - ScenarioOutputs
 
+The export contract may expand as unresolved canonical domains such as observability, inventory/material detail, statistical quality or final scenario outputs are implemented. Never fabricate missing tables in Power BI; regenerate them from the analytical pipeline when valid.
+
 ## 4. Apply the report theme
 
-Apply `powerbi/MEDNEXUS_THEME.json` as the custom report theme before detailed visual formatting. If the installed Power BI Desktop UI uses the newer Theme pane, use **View → Theme pane → Theme settings → Import theme**. On versions showing the classic Themes dropdown, use **View → Themes → Browse for themes**.
+Apply `powerbi/MEDNEXUS_THEME.json` as the custom report theme before detailed visual formatting.
 
-Power BI validates imported JSON themes, so stop and correct the file rather than ignoring an import error.
+Power BI validates imported JSON themes, so correct any import error rather than ignoring it.
 
 ## 5. Data types
 
@@ -73,61 +89,125 @@ Power BI validates imported JSON themes, so stop and correct the file rather tha
 - Keep identifiers such as `machine_id`, `plant_id`, `customer_id`, and `order_id` as Text.
 - Set rates and percentages to Decimal Number and format them as percentages only when the stored value is a 0–1 rate.
 - Set financial fields to Decimal Number / Currency.
+- Do not format MORI as a percentage.
 
 ## 6. Build the model
 
-Create the relationships in `SEMANTIC_MODEL.md`. Keep relationship filtering single-direction from dimensions to facts unless a documented requirement requires otherwise.
+Create the relationships in `SEMANTIC_MODEL.md`.
 
-Use `DimDate[date]` as the model's controlled calendar field. Marking it as a Date table is appropriate for classic time-intelligence workflows; current Power BI versions also support calendar-based time intelligence, so use one documented approach consistently rather than mixing date-table behaviors.
+Rules:
+
+- one-to-many where possible;
+- single-direction filtering from dimensions to facts;
+- no fact-to-fact relationships merely for convenience;
+- no many-to-many relationship without a documented bridge/grain rationale;
+- only one active date path per fact unless a deliberate inactive date role is activated by a measure;
+- use `DimDate[date]` as the controlled model date;
+- keep disconnected scenario/presentation tables disconnected where documented.
+
+Validate totals after every relationship change.
 
 ## 7. Add measures
 
-Create the measures in `DAX_MEASURES.md`.
+Create measures from `DAX_MEASURES.md`.
 
-For executive KPI cards, use the **Latest ...** measures so an unfiltered report defaults to the latest visible operating month. Use the non-latest measures for historical trend visuals.
+Key rules:
 
-Do not sum rate KPIs such as OEE, defect rate, on-time delivery, or capacity-gap percentage.
+- executive cards use `Latest ...` measures;
+- historical charts use trend/context measures;
+- do not sum OEE, OLI, defect rates, delivery rates, capacity rates or other percentage KPIs;
+- true FPY/RTY/DPMO measures are added only after their canonical data semantics are validated;
+- simulated/illustrative/model-derived measures retain their labels and tooltips.
 
-## 8. Build pages
+## 8. Build the canonical 13-question report story
 
-Build pages in the sequence defined in `PAGE_SPECIFICATIONS.md`:
+1. **Enterprise Command Center** — Where is MEDNEXUS losing operational value?
+2. **Finance & Business Health** — Where is financial performance being pressured?
+3. **People, HR & Workforce** — Do we have the people and capacity required to operate the business?
+4. **Recruitment & Capacity** — Where are talent gaps becoming operational constraints?
+5. **Manufacturing Performance** — Where is productive capacity being lost?
+6. **Quality & Process Intelligence** — Where are defects and process instability originating?
+7. **Equipment & Reliability** — Which assets represent the greatest operational risk?
+8. **Supply Chain & Inventory** — Are materials and suppliers constraining operations?
+9. **Logistics & Customer Service** — Where are delivery and service failures occurring?
+10. **Healthcare Customer Operations** — How does enterprise performance translate into downstream customer service?
+11. **Technology / Data Operations** — Can MEDNEXUS trust the systems and data supporting its decisions?
+12. **Prediction, Forecast & Risk** — What is likely to happen next?
+13. **Scenario & Decision Intelligence** — What should management do?
 
-1. Enterprise Command Center
-2. Finance & Business Health
-3. People & Recruitment
-4. Manufacturing & Quality
-5. Equipment & Reliability
-6. Supply Chain & Logistics
-7. Healthcare Customer Service
-8. Technology & Data Trust
-9. Prediction / Forecast / Risk
-10. Scenario & Decision Intelligence
+Detailed requirements are in `PAGE_SPECIFICATIONS.md`.
 
-Do not continue past Page 1 until its headline values reconcile to `artifacts/reports/management_summary.md`.
+A future consolidation is acceptable only if no business question, evidence layer, interaction or disclosure is lost.
 
-## 9. Required disclosure
+## 9. Page 1 requirements
 
-Use visible disclosure text where applicable:
+The executive page must visibly cover:
 
-**Synthetic enterprise data / Simulated scenario / Model-derived prediction**
+- revenue/cost/margin;
+- workforce/capacity;
+- production;
+- quality;
+- supply risk;
+- logistics/service;
+- technology health;
+- OEE/OLI;
+- MORI;
+- value-loss drivers;
+- management decision queue.
 
-Do not describe MEDNEXUS as a real employer, client, or proprietary dataset.
+Use a compact enterprise-health strip rather than creating an excessive number of large KPI cards.
 
-## 10. Validation
+## 10. Advanced Power BI features
 
-Before screenshots or publication:
+Use only when they improve analysis:
 
-- Compare executive values to `artifacts/reports/management_summary.md`.
-- Confirm no many-to-many relationships were introduced accidentally.
-- Verify Date filtering works across monthly and daily facts.
-- Check that slicers do not duplicate revenue, production, or shipment totals.
-- Validate scenario visuals are clearly labeled **Simulated**.
-- Validate prediction visuals are clearly labeled **Model-derived**.
-- Confirm MORI is identified as a project-defined composite index.
-- Confirm financial proxies are not represented as observed real-company financials.
+- drill-through for plant/line/machine/product/customer/supplier detail;
+- tooltip pages for definitions, provenance, assumptions and limitations;
+- bookmarks for executive/detail navigation;
+- field parameters for legitimate measure/dimension switching;
+- what-if parameters for scenario assumptions;
+- dynamic titles for selected period/entity/scenario;
+- conditional formatting based on documented thresholds;
+- decomposition tree for diagnostic association;
+- Key Influencers only when input data and interpretation are defensible;
+- executive commentary distinguishing evidence, hypothesis and simulated recommendation.
 
-## 11. Portfolio storage
+Avoid decorative use of advanced features.
 
-Save the working local report as `MEDNEXUS_Enterprise_Operational_Intelligence.pbix`.
+## 11. Required disclosures
 
-Do not commit a large `.pbix` file unless there is a specific reason. The repository is designed to retain the reproducible data pipeline, DAX/model specification, documentation, and selected screenshots while generated data and local Power BI binaries remain outside Git.
+Use visible wording where applicable:
+
+- **Synthetic enterprise data**
+- **Illustrative assumption**
+- **Model-derived**
+- **Simulated**
+- **Project-defined index/metric**
+
+Do not describe MEDNEXUS as a real employer, client or proprietary dataset.
+
+## 12. Validation
+
+Before screenshots/publication:
+
+- compare executive totals to the latest generated management summary;
+- reconcile Power BI to curated/SQLite outputs;
+- verify no accidental many-to-many or ambiguous relationship exists;
+- verify Date filtering works across the intended facts;
+- verify slicers do not multiply revenue, production or shipment totals;
+- verify Page 1 includes every required enterprise-health domain;
+- verify scenario visuals are clearly **Simulated**;
+- verify prediction/forecast visuals are **Model-derived**;
+- verify MORI/Data Trust/OLI are described as project-defined where applicable;
+- verify FPY/RTY/DPMO/capability/control visuals only exist after upstream validity gates pass;
+- verify all displayed assumptions/limitations are traceable.
+
+## 13. Portfolio storage
+
+Save the local working report as:
+
+`MEDNEXUS_Enterprise_Operational_Intelligence.pbix`
+
+Do not commit a large `.pbix` file unless a specific portfolio reason outweighs the storage cost. Retain the reproducible pipeline, model/DAX/page documentation and selected **validated** screenshots.
+
+Export final screenshots to `powerbi/screenshots/` only after reconciliation and analytical closure.
