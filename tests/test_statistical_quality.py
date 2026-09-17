@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 from mednexus.analytics import production_kpis
 from mednexus.statistical_quality import (
@@ -11,8 +12,12 @@ from mednexus.statistical_quality import (
 from mednexus.synthetic import generate
 
 
-def test_fpy_has_first_pass_semantics():
-    frames = generate(seed=42)
+@pytest.fixture(scope='module')
+def frames():
+    return generate(seed=42)
+
+
+def test_fpy_has_first_pass_semantics(frames):
     out = production_kpis(frames['fact_production'])
     expected = (out['total_count'] - out['defect_units']) / out['total_count']
     assert np.allclose(out['fpy'], expected)
@@ -29,8 +34,7 @@ def test_methodology_gates_fail_closed_for_unsupported_metrics():
     assert gates.loc['Full COPQ', 'status'] == 'NOT_CALCULABLE'
 
 
-def test_p_chart_limits_are_valid_and_observations_classified():
-    frames = generate(seed=42)
+def test_p_chart_limits_are_valid_and_observations_classified(frames):
     chart = p_chart_by_plant(frames['fact_production'])
 
     assert chart['defect_rate'].between(0, 1).all()
@@ -41,8 +45,7 @@ def test_p_chart_limits_are_valid_and_observations_classified():
     assert chart['out_of_control'].isin([0, 1]).all()
 
 
-def test_capacity_waterfall_reconciles_to_good_output():
-    frames = generate(seed=42)
+def test_capacity_waterfall_reconciles_to_good_output(frames):
     flow = capacity_waterfall(frames['fact_production'])
     pivot = flow.pivot(index='month', columns='stage', values='units_equivalent')
 
@@ -56,8 +59,7 @@ def test_capacity_waterfall_reconciles_to_good_output():
     assert np.allclose(reconstructed, pivot['Good Production'], atol=1e-6)
 
 
-def test_six_big_losses_keeps_startup_rejects_gated():
-    frames = generate(seed=42)
+def test_six_big_losses_keeps_startup_rejects_gated(frames):
     losses = six_big_losses(frames)
 
     startup = losses[losses['loss_category'] == 'Startup Rejects']
@@ -68,8 +70,7 @@ def test_six_big_losses_keeps_startup_rejects_gated():
     assert supported['status'].eq('CALCULATED').all()
 
 
-def test_value_leakage_does_not_fabricate_full_copq():
-    frames = generate(seed=42)
+def test_value_leakage_does_not_fabricate_full_copq(frames):
     leakage = value_leakage(frames)
 
     assert leakage['scrap_cost'].ge(0).all()
