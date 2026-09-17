@@ -60,6 +60,10 @@ The full report currently has these additional exported tables available:
 - QualityEvents
 - Maintenance
 - QualityPareto
+- QualityPChart
+- SixBigLosses
+- CapacityWaterfall
+- ValueLeakage
 - Reliability
 - PredictiveMaintenanceScores
 - Finance
