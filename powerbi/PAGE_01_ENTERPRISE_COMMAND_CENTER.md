@@ -96,7 +96,7 @@ For this page, required measures include:
 - `Operating Margin Proxy`
 - `MORI Score`
 
-`Latest FPY Proxy` may be displayed only with the word **Proxy** until the canonical FPY definition is fully validated from pass-without-rework semantics.
+`Latest FPY` may be displayed as the canonical single-stage first-pass yield. RTY and DPMO remain unavailable because their required evidence is not present.
 
 ## 5. Loss-driver calculated table
 
@@ -149,7 +149,7 @@ RETURN
 
 Keep `Loss Driver` disconnected. These costs include project-defined assumptions where documented; the visual must show an **Illustrative financial assumptions apply** note/tool-tip.
 
-The loss-driver visual will be expanded after COPQ/Six Big Losses work is validated; do not invent missing components in the meantime.
+The validated analytical package now includes Six Big Losses, a theoretical-capacity waterfall and a partial value-leakage/COPQ gate. Full COPQ remains unavailable because rework and external-failure costs are not observed; do not invent them.
 
 ## 6. Canvas layout
 
@@ -326,7 +326,7 @@ Before considering the executive page technically valid:
 
 This Page 1 design is preserved as the executive shell, but it is **provisional** until the canonical predecessor work is closed/gated, especially:
 
-- Six Big Losses and COPQ/value-leakage decomposition;
+- full COPQ remains gated, while Six Big Losses/capacity/value-leakage outputs are now available;
 - expanded statistical/root-cause analysis;
 - expanded Data Trust/observability;
 - strengthened predictive/forecast/risk evidence;
