@@ -6,7 +6,14 @@ import pandas as pd
 from .config import load_config, path
 from .synthetic import generate
 from .database import connect, load_frames, execute_sql_file
-from .quality import evaluate, data_trust_score
+from .quality import (
+    evaluate,
+    evaluate_referential_integrity,
+    build_observability,
+    model_input_profile,
+    data_trust_score,
+)
+from .data_dictionary import build_data_dictionary, build_table_register
 from .analytics import production_kpis, monthly_enterprise_mart, quality_pareto, reliability_mart
 from .models import train_predictive_maintenance
 from .forecasting import forecast_demand
@@ -71,14 +78,48 @@ def run(clean=False, seed=None):
     for name,df in frames.items():
         save_frame(df,path('data','synthetic',f'{name}.csv'))
 
-    print('[2/9] Running data-quality controls...')
+    print('[2/9] Running data-quality, integrity and observability controls...')
     table_q,business_q=evaluate(frames)
-    trust,trust_components=data_trust_score(table_q,business_q)
+    referential_q=evaluate_referential_integrity(frames)
+    observability=build_observability(frames)
+    model_profile=model_input_profile(frames)
+    data_dictionary=build_data_dictionary(frames)
+    table_register=build_table_register(frames)
+
+    trust,trust_components=data_trust_score(
+        table_q,
+        business_q,
+        referential_checks=referential_q,
+        observability=observability,
+    )
+
     save_frame(table_q,path('artifacts','validation','data_quality_tables.csv'))
     save_frame(business_q,path('artifacts','validation','data_quality_business_checks.csv'))
-    write_json({'data_trust_score':trust,'components':trust_components},path('artifacts','validation','data_trust.json'))
-    if (business_q['status']=='FAIL').any() or (table_q['status']=='FAIL').any():
-        raise RuntimeError('Data quality gate failed. See artifacts/validation.')
+    save_frame(referential_q,path('artifacts','validation','referential_integrity.csv'))
+    save_frame(observability,path('artifacts','validation','data_observability.csv'))
+    save_frame(model_profile,path('artifacts','validation','model_input_profile.csv'))
+    save_frame(data_dictionary,path('artifacts','validation','data_dictionary.csv'))
+    save_frame(table_register,path('artifacts','validation','table_register.csv'))
+    write_json({
+        'data_trust_score':trust,
+        'methodology':'MEDNEXUS project-defined Data Trust Score v2',
+        'industry_standard':False,
+        'component_weighting':'equal across eight dimensions',
+        'components':trust_components,
+        'dimensions':[
+            'completeness','validity','consistency','uniqueness',
+            'timeliness','referential_integrity','schema_consistency','freshness'
+        ],
+    },path('artifacts','validation','data_trust.json'))
+
+    quality_failed = (
+        (business_q['status']=='FAIL').any()
+        or (table_q['status']=='FAIL').any()
+        or (referential_q['status']=='FAIL').any()
+        or (observability['status']=='FAIL').any()
+    )
+    if quality_failed:
+        raise RuntimeError('Data quality/integrity/observability gate failed. See artifacts/validation/.')
 
     print('[3/9] Building analytical marts...')
     production_enriched=production_kpis(frames['fact_production'])
@@ -161,7 +202,12 @@ def run(clean=False, seed=None):
     manifest=[]
     for p in sorted(path('powerbi','exports').glob('*.csv')):
         manifest.append({'file':str(p.relative_to(path())), 'sha256':file_sha256(p), 'bytes':p.stat().st_size})
-    write_json({'project':'MEDNEXUS','seed':seed if seed is not None else cfg['simulation']['seed'],'data_trust_score':trust,'generated_files':manifest},path('artifacts','validation','manifest.json'))
+    write_json({
+        'project':'MEDNEXUS',
+        'seed':seed if seed is not None else cfg['simulation']['seed'],
+        'data_trust_score':trust,
+        'generated_files':manifest
+    },path('artifacts','validation','manifest.json'))
     print('MEDNEXUS pipeline completed successfully.')
     print(f'Data Trust Score: {trust}/100')
     print('Open artifacts/reports/management_summary.md for the executive summary.')
