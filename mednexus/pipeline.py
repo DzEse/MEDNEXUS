@@ -21,17 +21,51 @@ def _clean():
     for d in [path('data','synthetic'),path('data','curated'),path('powerbi','exports'),path('artifacts','reports'),path('artifacts','validation'),path('artifacts','models')]:
         if d.exists():
             for p in d.glob('*'):
-                if p.name=='.gitkeep': continue
-                if p.is_file(): p.unlink()
-                elif p.is_dir(): shutil.rmtree(p)
+                if p.name=='.gitkeep':
+                    continue
+                if p.is_file():
+                    p.unlink()
+                elif p.is_dir():
+                    shutil.rmtree(p)
     db=path('mednexus.db')
-    if db.exists(): db.unlink()
+    if db.exists():
+        db.unlink()
+
+
+def _build_date_dimension(frames, forecast_future):
+    start=pd.to_datetime(frames['fact_production']['date']).min()
+    end_candidates=[
+        pd.to_datetime(frames['fact_production']['date']).max(),
+        pd.to_datetime(frames['fact_shipment']['actual_delivery_date']).max(),
+        pd.to_datetime(forecast_future['month']).max(),
+    ]
+    end=max(x for x in end_candidates if pd.notna(x))
+    d=pd.DataFrame({'date':pd.date_range(start.normalize(),end.normalize(),freq='D')})
+    d['year']=d['date'].dt.year
+    d['quarter']='Q'+d['date'].dt.quarter.astype(str)
+    d['month_number']=d['date'].dt.month
+    d['month_name']=d['date'].dt.month_name()
+    d['year_month']=d['date'].dt.strftime('%Y-%m')
+    d['month_start']=d['date'].dt.to_period('M').dt.to_timestamp()
+    d['day_of_week']=d['date'].dt.day_name()
+    d['is_weekend']=d['date'].dt.dayofweek.ge(5).astype(int)
+    return d
+
+
+def _with_month_date(df):
+    out=df.copy()
+    if 'month' in out.columns:
+        out['month_date']=pd.to_datetime(out['month'].astype(str).str.slice(0,7)+'-01')
+    return out
 
 
 def run(clean=False, seed=None):
     cfg=load_config()
-    if clean: _clean()
-    for d in [path('data','synthetic'),path('data','curated'),path('powerbi','exports'),path('artifacts','reports'),path('artifacts','validation'),path('artifacts','models')]: d.mkdir(parents=True,exist_ok=True)
+    if clean:
+        _clean()
+    for d in [path('data','synthetic'),path('data','curated'),path('powerbi','exports'),path('artifacts','reports'),path('artifacts','validation'),path('artifacts','models')]:
+        d.mkdir(parents=True,exist_ok=True)
+
     print('[1/9] Generating synthetic enterprise data...')
     frames=generate(seed=seed)
     for name,df in frames.items():
@@ -87,14 +121,40 @@ def run(clean=False, seed=None):
     con.close()
 
     print('[8/9] Exporting Power BI-ready datasets and reports...')
+    dim_date=_build_date_dimension(frames,forecast_future)
     exports={
-        'EnterpriseMonthly':mart,'ProductionKPI':production_enriched,'MORI':risk,'ScenarioOutputs':scenarios,
-        'DecisionQueue':dq,'QualityPareto':qp,'Reliability':rel,'PredictiveMaintenanceScores':scored,
-        'DemandForecast':forecast_future,'Finance':frames['fact_finance'],'Workforce':frames['fact_workforce'],
-        'Recruitment':frames['fact_recruitment'],'Supply':frames['fact_supply'],'Shipments':frames['fact_shipment'],
-        'TechnologyIncidents':frames['fact_technology_incident']
+        'DimDate':dim_date,
+        'DimPlant':frames['dim_plant'],
+        'DimLine':frames['dim_line'],
+        'DimMachine':frames['dim_machine'],
+        'DimProduct':frames['dim_product'],
+        'DimSupplier':frames['dim_supplier'],
+        'DimCustomer':frames['dim_customer'],
+        'DimEmployee':frames['dim_employee'],
+        'EnterpriseMonthly':_with_month_date(mart),
+        'ProductionKPI':production_enriched,
+        'Downtime':frames['fact_downtime'],
+        'QualityEvents':frames['fact_quality'],
+        'Maintenance':frames['fact_maintenance'],
+        'MORI':_with_month_date(risk),
+        'ScenarioOutputs':scenarios,
+        'DecisionQueue':dq,
+        'QualityPareto':qp,
+        'Reliability':rel,
+        'PredictiveMaintenanceScores':scored,
+        'DemandForecast':forecast_future,
+        'Finance':frames['fact_finance'],
+        'Workforce':frames['fact_workforce'],
+        'Recruitment':frames['fact_recruitment'],
+        'Supply':frames['fact_supply'],
+        'Orders':frames['fact_orders'],
+        'Shipments':frames['fact_shipment'],
+        'CustomerService':frames['fact_customer_service'],
+        'TechnologyIncidents':frames['fact_technology_incident'],
+        'SaaSUsage':frames['fact_saas_usage'],
     }
-    for name,df in exports.items(): save_frame(df,path('powerbi','exports',f'{name}.csv'))
+    for name,df in exports.items():
+        save_frame(df,path('powerbi','exports',f'{name}.csv'))
     write_management_summary(path('artifacts','reports','management_summary.md'),mart,risk,qp,model_metrics,forecast_metrics,trust)
 
     print('[9/9] Writing reproducibility manifest...')
