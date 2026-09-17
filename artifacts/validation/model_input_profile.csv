@@ -1,0 +1,6 @@
+field,role,row_count,missing_count,missing_rate,unique_count,zero_variance,positive_rate
+temperature_c,feature,11680,0,0.0,11680,False,
+torque_nm,feature,11680,0,0.0,11680,False,
+vibration_mm_s,feature,11680,0,0.0,11680,False,
+tool_wear_index,feature,11680,0,0.0,11680,False,
+failure_next_7d,target,11680,0,0.0,2,False,0.04785958904109589

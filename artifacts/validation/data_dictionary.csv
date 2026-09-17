@@ -1,0 +1,153 @@
+table,column,dtype,semantic_role,description,foreign_key_target,observed_nullable,observed_null_count,observed_unique_count,example_value,data_classification
+dim_plant,plant_id,object,primary_key,Stable synthetic plant identifier.,,False,0,2,PL0001,synthetic
+dim_plant,plant_name,object,attribute,Plant name.,,False,0,2,MEDNEXUS Plant A,synthetic
+dim_plant,region,object,attribute,Region.,,False,0,2,Ontario,synthetic
+dim_line,line_id,object,primary_key,Stable synthetic production-line identifier.,,False,0,4,PL0001-L1,synthetic
+dim_line,plant_id,object,foreign_key,Stable synthetic plant identifier.,dim_plant.plant_id,False,0,2,PL0001,synthetic
+dim_line,line_name,object,attribute,Line name.,,False,0,2,Line 1,synthetic
+dim_machine,machine_id,object,primary_key,Stable synthetic machine identifier.,,False,0,16,PL0001-L1-M1,synthetic
+dim_machine,line_id,object,foreign_key,Stable synthetic production-line identifier.,dim_line.line_id,False,0,4,PL0001-L1,synthetic
+dim_machine,plant_id,object,foreign_key,Stable synthetic plant identifier.,dim_plant.plant_id,False,0,2,PL0001,synthetic
+dim_machine,machine_name,object,attribute,Machine name.,,False,0,4,Machine 1,synthetic
+dim_machine,machine_age_years,int64,measure,Machine age years.,,False,0,9,1,synthetic
+dim_product,product_id,object,primary_key,Stable synthetic product identifier.,,False,0,6,PR0001,synthetic
+dim_product,product_family,object,attribute,Product family.,,False,0,3,Diagnostic,synthetic
+dim_product,unit_price,float64,measure,Unit price.,,False,0,6,344.55,synthetic
+dim_product,ideal_cycle_min,float64,measure,Ideal cycle min.,,False,0,6,2.96,synthetic
+dim_product,material_cost_per_unit,float64,measure,Material cost per unit.,,False,0,6,239.2,synthetic
+dim_supplier,supplier_id,object,primary_key,Stable synthetic supplier identifier.,,False,0,10,SUP0001,synthetic
+dim_supplier,supplier_name,object,attribute,Supplier name.,,False,0,10,Supplier 01,synthetic
+dim_supplier,base_lead_time_days,int64,measure,Base lead time days.,,False,0,8,11,synthetic
+dim_supplier,quality_rating,float64,measure,Quality rating.,,False,0,10,0.9913,synthetic
+dim_customer,customer_id,object,primary_key,Stable synthetic healthcare-customer identifier.,,False,0,14,CUS0001,synthetic
+dim_customer,customer_type,object,attribute,Customer type.,,False,0,4,Hospital,synthetic
+dim_customer,region,object,attribute,Region.,,False,0,4,Canada,synthetic
+dim_employee,employee_id,object,primary_key,Stable synthetic employee identifier.,,False,0,180,EMP0001,synthetic
+dim_employee,department,object,attribute,Department.,,False,0,8,Logistics,synthetic
+dim_employee,plant_id,object,foreign_key,Stable synthetic plant identifier.,dim_plant.plant_id,False,0,2,PL0001,synthetic
+dim_employee,skill_level,object,attribute,Skill level.,,False,0,3,Qualified,synthetic
+dim_employee,hourly_cost,float64,measure,Hourly cost.,,False,0,176,36.26,synthetic
+dim_employee,active_flag,int64,measure,Active flag.,,False,0,1,1,synthetic
+fact_workforce,month,object,date,Month-start date for the observation period.,,False,0,24,2024-09-01,synthetic
+fact_workforce,plant_id,object,foreign_key,Stable synthetic plant identifier.,dim_plant.plant_id,False,0,2,PL0001,synthetic
+fact_workforce,required_headcount,int64,measure,Required headcount.,,False,0,13,77,synthetic
+fact_workforce,actual_headcount,int64,measure,Actual headcount.,,False,0,15,69,synthetic
+fact_workforce,vacancies,int64,measure,Vacancies.,,False,0,11,8,synthetic
+fact_workforce,absence_rate,float64,measure,Absence rate.,,False,0,47,0.031755111626615914,synthetic
+fact_workforce,overtime_hours_per_employee,float64,measure,Overtime hours per employee.,,False,0,48,20.279825031202538,synthetic
+fact_workforce,capacity_gap_pct,float64,measure,Derived required-versus-actual workforce capacity gap rate.,,False,0,35,0.1038961038961039,synthetic
+fact_workforce,labor_cost,float64,measure,Labor cost.,,False,0,48,447815.0853775071,synthetic
+fact_recruitment,month,object,date,Month-start date for the observation period.,,False,0,24,2024-09-01,synthetic
+fact_recruitment,plant_id,object,foreign_key,Stable synthetic plant identifier.,dim_plant.plant_id,False,0,2,PL0001,synthetic
+fact_recruitment,open_positions,int64,measure,Open positions.,,False,0,11,10,synthetic
+fact_recruitment,applicants,int64,measure,Applicants.,,False,0,32,140,synthetic
+fact_recruitment,screened,int64,measure,Screened.,,False,0,34,75,synthetic
+fact_recruitment,interviews,int64,measure,Interviews.,,False,0,22,31,synthetic
+fact_recruitment,offers,int64,measure,Offers.,,False,0,11,11,synthetic
+fact_recruitment,accepted,int64,measure,Accepted.,,False,0,10,9,synthetic
+fact_recruitment,avg_time_to_fill_days,float64,measure,Avg time to fill days.,,False,0,48,36.7290391944927,synthetic
+fact_recruitment,cost_per_hire,float64,measure,Cost per hire.,,False,0,48,3244.2594140825004,synthetic
+fact_production,production_order_id,object,primary_key,Stable synthetic production-order identifier.,,False,0,11680,PO0000001,synthetic
+fact_production,date,object,date,Calendar date for the observation or event.,,False,0,730,2024-09-01,synthetic
+fact_production,plant_id,object,foreign_key,Stable synthetic plant identifier.,dim_plant.plant_id,False,0,2,PL0001,synthetic
+fact_production,line_id,object,foreign_key,Stable synthetic production-line identifier.,dim_line.line_id,False,0,4,PL0001-L1,synthetic
+fact_production,machine_id,object,foreign_key,Stable synthetic machine identifier.,dim_machine.machine_id,False,0,16,PL0001-L1-M1,synthetic
+fact_production,product_id,object,foreign_key,Stable synthetic product identifier.,dim_product.product_id,False,0,6,PR0002,synthetic
+fact_production,planned_production_min,int64,measure,Planned production min.,,False,0,1,960,synthetic
+fact_production,planned_downtime_min,float64,measure,Planned downtime min.,,False,0,11640,26.197257586703625,synthetic
+fact_production,unplanned_downtime_min,float64,measure,Unplanned downtime min.,,False,0,11680,10.988422259524889,synthetic
+fact_production,run_time_min,float64,measure,Run time min.,,False,0,11680,922.8143201537715,synthetic
+fact_production,total_count,int64,measure,Total count.,,False,0,381,334,synthetic
+fact_production,good_count,int64,measure,Good count.,,False,0,382,331,synthetic
+fact_production,defect_units,int64,measure,Defect units.,,False,0,31,6,synthetic
+fact_production,rework_units,int64,measure,Rework units.,,False,0,19,3,synthetic
+fact_production,scrap_units,int64,measure,Scrap units.,,False,0,21,3,synthetic
+fact_production,ideal_cycle_min,float64,measure,Ideal cycle min.,,False,0,6,2.25,synthetic
+fact_downtime,downtime_event_id,object,primary_key,Stable synthetic downtime-event identifier.,,False,0,10332,DT0000001,synthetic
+fact_downtime,date,object,date,Calendar date for the observation or event.,,False,0,730,2024-09-01,synthetic
+fact_downtime,machine_id,object,foreign_key,Stable synthetic machine identifier.,dim_machine.machine_id,False,0,16,PL0001-L1-M1,synthetic
+fact_downtime,line_id,object,foreign_key,Stable synthetic production-line identifier.,dim_line.line_id,False,0,4,PL0001-L1,synthetic
+fact_downtime,plant_id,object,foreign_key,Stable synthetic plant identifier.,dim_plant.plant_id,False,0,2,PL0001,synthetic
+fact_downtime,downtime_reason,object,attribute,Downtime reason.,,False,0,3,Equipment Failure,synthetic
+fact_downtime,duration_min,float64,measure,Duration min.,,False,0,5158,10.99,synthetic
+fact_quality,quality_event_id,object,primary_key,Stable synthetic quality-event identifier.,,False,0,11611,Q0000001,synthetic
+fact_quality,date,object,date,Calendar date for the observation or event.,,False,0,730,2024-09-01,synthetic
+fact_quality,machine_id,object,foreign_key,Stable synthetic machine identifier.,dim_machine.machine_id,False,0,16,PL0001-L1-M1,synthetic
+fact_quality,line_id,object,foreign_key,Stable synthetic production-line identifier.,dim_line.line_id,False,0,4,PL0001-L1,synthetic
+fact_quality,plant_id,object,foreign_key,Stable synthetic plant identifier.,dim_plant.plant_id,False,0,2,PL0001,synthetic
+fact_quality,product_id,object,foreign_key,Stable synthetic product identifier.,dim_product.product_id,False,0,6,PR0002,synthetic
+fact_quality,defect_category,object,attribute,Defect category.,,False,0,5,Dimensional,synthetic
+fact_quality,severity,object,attribute,Severity.,,False,0,3,Minor,synthetic
+fact_quality,defect_units,int64,measure,Defect units.,,False,0,30,6,synthetic
+fact_quality,rework_units,int64,measure,Rework units.,,False,0,19,3,synthetic
+fact_quality,scrap_units,int64,measure,Scrap units.,,False,0,21,3,synthetic
+fact_maintenance,maintenance_event_id,object,primary_key,Stable synthetic maintenance-event identifier.,,False,0,433,MT0000001,synthetic
+fact_maintenance,date,object,date,Calendar date for the observation or event.,,False,0,341,2024-09-03,synthetic
+fact_maintenance,machine_id,object,foreign_key,Stable synthetic machine identifier.,dim_machine.machine_id,False,0,16,PL0002-L2-M4,synthetic
+fact_maintenance,maintenance_type,object,attribute,Maintenance type.,,False,0,2,Preventive,synthetic
+fact_maintenance,duration_min,float64,measure,Duration min.,,False,0,393,37.68591299000732,synthetic
+fact_maintenance,failure_mode,object,attribute,Failure mode.,,False,0,5,Calibration,synthetic
+fact_sensor,date,object,date,Calendar date for the observation or event.,,False,0,730,2024-09-01,synthetic
+fact_sensor,machine_id,object,foreign_key,Stable synthetic machine identifier.,dim_machine.machine_id,False,0,16,PL0001-L1-M1,synthetic
+fact_sensor,plant_id,object,foreign_key,Stable synthetic plant identifier.,dim_plant.plant_id,False,0,2,PL0001,synthetic
+fact_sensor,line_id,object,foreign_key,Stable synthetic production-line identifier.,dim_line.line_id,False,0,4,PL0001-L1,synthetic
+fact_sensor,temperature_c,float64,measure,Temperature c.,,False,0,11680,63.74301847777855,synthetic
+fact_sensor,torque_nm,float64,measure,Torque nm.,,False,0,11680,41.2253788316611,synthetic
+fact_sensor,vibration_mm_s,float64,measure,Vibration mm s.,,False,0,11680,2.1207530256388956,synthetic
+fact_sensor,tool_wear_index,float64,measure,Tool wear index.,,False,0,11680,37.72245223420737,synthetic
+fact_sensor,failure_next_7d,int64,measure,Synthetic binary modeling target indicating simulated near-term failure risk.,,False,0,2,0,synthetic
+fact_supply,month,object,date,Month-start date for the observation period.,,False,0,24,2024-09-01,synthetic
+fact_supply,supplier_id,object,foreign_key,Stable synthetic supplier identifier.,dim_supplier.supplier_id,False,0,10,SUP0001,synthetic
+fact_supply,ordered_qty,int64,measure,Ordered qty.,,False,0,229,1581,synthetic
+fact_supply,received_qty,int64,measure,Received qty.,,False,0,226,1411,synthetic
+fact_supply,material_defects,int64,measure,Material defects.,,False,0,146,13,synthetic
+fact_supply,avg_late_days,float64,measure,Avg late days.,,False,0,186,2.2649577738902944,synthetic
+fact_supply,supplier_reliability,float64,measure,Synthetic supplier reliability rate.,,False,0,240,0.907781433409555,synthetic
+fact_supply,shortage_hours,float64,measure,Shortage hours.,,False,0,240,11.204167566711494,synthetic
+fact_orders,order_id,object,primary_key,Stable synthetic customer-order identifier.,,False,0,11178,ORD0000001,synthetic
+fact_orders,order_date,object,date,Order date.,,False,0,730,2024-09-01,synthetic
+fact_orders,customer_id,object,foreign_key,Stable synthetic healthcare-customer identifier.,dim_customer.customer_id,False,0,14,CUS0011,synthetic
+fact_orders,product_id,object,foreign_key,Stable synthetic product identifier.,dim_product.product_id,False,0,6,PR0005,synthetic
+fact_orders,quantity,int64,measure,Quantity.,,False,0,370,333,synthetic
+fact_orders,unit_price,float64,measure,Unit price.,,False,0,6,684.95,synthetic
+fact_orders,revenue,float64,measure,Synthetic order-derived revenue for the period.,,False,0,2212,228088.35,synthetic
+fact_orders,promised_date,object,attribute,Promised date.,,False,0,735,2024-09-09,synthetic
+fact_shipment,shipment_id,object,primary_key,Stable synthetic shipment identifier.,,False,0,11178,SHP0000001,synthetic
+fact_shipment,order_id,object,foreign_key,Stable synthetic customer-order identifier.,fact_orders.order_id,False,0,11178,ORD0000001,synthetic
+fact_shipment,customer_id,object,foreign_key,Stable synthetic healthcare-customer identifier.,dim_customer.customer_id,False,0,14,CUS0011,synthetic
+fact_shipment,ship_date,object,date,Ship date.,,False,0,732,2024-09-02,synthetic
+fact_shipment,promised_date,object,attribute,Promised date.,,False,0,735,2024-09-09,synthetic
+fact_shipment,actual_delivery_date,object,attribute,Actual delivery date.,,False,0,736,2024-09-09,synthetic
+fact_shipment,delay_days,int64,measure,Nonnegative days between promised and actual delivery date.,,False,0,5,0,synthetic
+fact_shipment,on_time_flag,int64,measure,Binary indicator equal to 1 when delivery delay is zero.,,False,0,2,1,synthetic
+fact_shipment,logistics_cost,float64,measure,Logistics cost.,,False,0,11178,189.06797994290005,synthetic
+fact_customer_service,service_event_id,object,primary_key,Stable synthetic service-event identifier.,,False,0,2103,CS0000003,synthetic
+fact_customer_service,order_id,object,foreign_key,Stable synthetic customer-order identifier.,fact_orders.order_id,False,0,2103,ORD0000003,synthetic
+fact_customer_service,customer_id,object,foreign_key,Stable synthetic healthcare-customer identifier.,dim_customer.customer_id,False,0,14,CUS0004,synthetic
+fact_customer_service,date,object,date,Calendar date for the observation or event.,,False,0,698,2024-09-06,synthetic
+fact_customer_service,ticket_count,int64,measure,Ticket count.,,False,0,4,1,synthetic
+fact_customer_service,issue_type,object,attribute,Issue type.,,False,0,4,Support,synthetic
+fact_technology_incident,date,object,date,Calendar date for the observation or event.,,False,0,256,2024-09-01,synthetic
+fact_technology_incident,system_name,object,attribute,System name.,,False,0,5,MES,synthetic
+fact_technology_incident,severity,object,attribute,Severity.,,False,0,3,P3,synthetic
+fact_technology_incident,duration_min,float64,measure,Duration min.,,False,0,322,66.70538595669414,synthetic
+fact_technology_incident,major_incident_flag,int64,measure,Major incident flag.,,False,0,2,0,synthetic
+fact_technology_incident,incident_type,object,attribute,Incident type.,,False,0,4,Data Pipeline,synthetic
+fact_saas_usage,date,object,date,Calendar date for the observation or event.,,False,0,730,2024-09-01,synthetic
+fact_saas_usage,system_name,object,attribute,System name.,,False,0,5,ERP,synthetic
+fact_saas_usage,active_users,int64,measure,Active users.,,False,0,175,178,synthetic
+fact_saas_usage,adoption_rate,float64,measure,Synthetic 0-1 technology adoption rate.,,False,0,3514,0.9589766567362306,synthetic
+fact_finance,month,object,date,Month-start date for the observation period.,,False,0,24,2024-09-01,synthetic
+fact_finance,revenue,float64,measure,Synthetic order-derived revenue for the period.,,False,0,24,83190742.3,synthetic
+fact_finance,material_cost,float64,measure,Material cost.,,False,0,24,28250351.830000002,synthetic
+fact_finance,labor_cost,float64,measure,Labor cost.,,False,0,24,924023.4446067952,synthetic
+fact_finance,scrap_cost,float64,measure,Scrap cost.,,False,0,24,391495.77,synthetic
+fact_finance,logistics_cost,float64,measure,Logistics cost.,,False,0,24,84691.87506743235,synthetic
+fact_finance,downtime_cost,float64,measure,Illustrative financial assumption derived from unplanned downtime minutes.,,False,0,24,172513.95258051262,synthetic
+fact_finance,technology_cost,float64,measure,Illustrative technology-cost proxy.,,False,0,24,129407.49048834598,synthetic
+fact_finance,overhead_cost,float64,measure,Overhead cost.,,False,0,24,298690.3684399335,synthetic
+fact_finance,operating_cost,float64,measure,Synthetic operating cost reconciled from operational costs and documented assumptions.,,False,0,24,30251174.731183022,synthetic
+fact_finance,budget_operating_cost,float64,measure,Illustrative synthetic operating-cost budget comparator.,,False,0,24,30834235.407429155,synthetic
+fact_finance,gross_margin_proxy,float64,measure,Derived gross-margin proxy; not an audited accounting measure.,,False,0,24,54016367.0253932,synthetic
+fact_finance,operating_margin_proxy,float64,measure,Derived revenue minus operating-cost proxy.,,False,0,24,52939567.568816975,synthetic
+fact_finance,budget_variance,float64,measure,Derived operating cost minus synthetic budget operating cost.,,False,0,24,-583060.6762461327,synthetic

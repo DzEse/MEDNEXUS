@@ -1,9 +1,26 @@
 {
   "data_trust_score": 100.0,
+  "methodology": "MEDNEXUS project-defined Data Trust Score v2",
+  "industry_standard": false,
+  "component_weighting": "equal across eight dimensions",
   "components": {
+    "completeness": 1.0,
+    "validity": 1.0,
+    "consistency": 1.0,
     "uniqueness": 1.0,
-    "row_uniqueness": 1.0,
-    "completeness_proxy": 1.0,
-    "validity": 1.0
-  }
+    "timeliness": 1.0,
+    "referential_integrity": 1.0,
+    "schema_consistency": 1.0,
+    "freshness": 1.0
+  },
+  "dimensions": [
+    "completeness",
+    "validity",
+    "consistency",
+    "uniqueness",
+    "timeliness",
+    "referential_integrity",
+    "schema_consistency",
+    "freshness"
+  ]
 }

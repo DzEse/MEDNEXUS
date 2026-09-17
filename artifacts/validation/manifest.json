@@ -4,6 +4,11 @@
   "data_trust_score": 100.0,
   "generated_files": [
     {
+      "file": "powerbi\\exports\\CustomerService.csv",
+      "sha256": "ef1cbfdf7d65f26955fd380bde027b1ba9bcae881acb824e1816c97e6373ae0d",
+      "bytes": 111208
+    },
+    {
       "file": "powerbi\\exports\\DecisionQueue.csv",
       "sha256": "36e4615f133fc67d72848335c9f4610b2fd7f75202c16abafa9b6c17569e5c1c",
       "bytes": 1496
@@ -14,9 +19,54 @@
       "bytes": 115
     },
     {
+      "file": "powerbi\\exports\\DimCustomer.csv",
+      "sha256": "fb2d7e7bbb33fbc9368abeb2c923f87f82db89809d36e68307ced2852584dcca",
+      "bytes": 382
+    },
+    {
+      "file": "powerbi\\exports\\DimDate.csv",
+      "sha256": "467f210f8580d7c923ebb6319627164d55503e0dbbc7b45ad93d487859d8d336",
+      "bytes": 46584
+    },
+    {
+      "file": "powerbi\\exports\\DimEmployee.csv",
+      "sha256": "9a7ef4fee731ce2a4970f1622ccbf62d9b37e5c1c65adc00a8ab600560c049b4",
+      "bytes": 8272
+    },
+    {
+      "file": "powerbi\\exports\\DimLine.csv",
+      "sha256": "e8e35330cd1cbcdf9fffd61f4f9a45f39093eab4311d440d8bec13a078e5e627",
+      "bytes": 128
+    },
+    {
+      "file": "powerbi\\exports\\DimMachine.csv",
+      "sha256": "16f33ef52fe2e09f5823ad503ca88f859414a398ca9b900ed6e56887cdc96e1f",
+      "bytes": 750
+    },
+    {
+      "file": "powerbi\\exports\\DimPlant.csv",
+      "sha256": "48e0925aebc9f25e2c41937fd95b99d2f0124bd26d0860fb8996bd26f129286d",
+      "bytes": 105
+    },
+    {
+      "file": "powerbi\\exports\\DimProduct.csv",
+      "sha256": "a8d9aa53eecfda5361aeb5827ff061a9a57bb4c6357543d29c5c0f0e208bd5f4",
+      "bytes": 300
+    },
+    {
+      "file": "powerbi\\exports\\DimSupplier.csv",
+      "sha256": "adfbfa5f09910c4b1324751c472051006458e924cb64e4c368f935a2d56c2055",
+      "bytes": 368
+    },
+    {
+      "file": "powerbi\\exports\\Downtime.csv",
+      "sha256": "d4ddd19c144ae4f26f2c900f6476da6b0e1850260cf982fb3eab7f6ea908a0dc",
+      "bytes": 758644
+    },
+    {
       "file": "powerbi\\exports\\EnterpriseMonthly.csv",
-      "sha256": "64faa6070b5bfa1cc7ab9d35669288ef548d8ac6369eef724b3c6e72b4dd4cac",
-      "bytes": 13311
+      "sha256": "83e08d362355912b92847a409c1102ade25dde1617eaf5cf6b2a856e47102035",
+      "bytes": 13586
     },
     {
       "file": "powerbi\\exports\\Finance.csv",
@@ -24,9 +74,19 @@
       "bytes": 5837
     },
     {
+      "file": "powerbi\\exports\\Maintenance.csv",
+      "sha256": "93589f22fb15a3fe25de03584eaec505188c61964a4038b6559af093b691eff9",
+      "bytes": 31256
+    },
+    {
       "file": "powerbi\\exports\\MORI.csv",
-      "sha256": "c5008038a097735bde7c54aee9cf9bf4f7f95cd40286d16df4387d0cecdd0f99",
-      "bytes": 4391
+      "sha256": "7d40bc8eafafbb542447d3b5040d31a00c4ce15fe2d0bd28e7b252f7b05efa7f",
+      "bytes": 4666
+    },
+    {
+      "file": "powerbi\\exports\\Orders.csv",
+      "sha256": "4558aeb1826229efa14e0899e41e562a21be8aab3a2b985212fa5960e8ed4cdd",
+      "bytes": 797727
     },
     {
       "file": "powerbi\\exports\\PredictiveMaintenanceScores.csv",
@@ -37,6 +97,11 @@
       "file": "powerbi\\exports\\ProductionKPI.csv",
       "sha256": "76fcf0ebcd9fdf251c63cc1342224490cc7185a846c6cb9242497041b66cd1f2",
       "bytes": 3133157
+    },
+    {
+      "file": "powerbi\\exports\\QualityEvents.csv",
+      "sha256": "6c63457d8eabc2eda3c007cb045132b84743487796dbf13deb2e6c13ccac6550",
+      "bytes": 936918
     },
     {
       "file": "powerbi\\exports\\QualityPareto.csv",
@@ -52,6 +117,11 @@
       "file": "powerbi\\exports\\Reliability.csv",
       "sha256": "4bcfe1f44a52c2991b268da9aef7da7b4aa1275c644f8e1bd41b4698b1f7bc40",
       "bytes": 1732
+    },
+    {
+      "file": "powerbi\\exports\\SaaSUsage.csv",
+      "sha256": "e1263eb899d5d5f2ea6f0bb6c1446ae5310296eef5d977de63773ac2e2fb4777",
+      "bytes": 149921
     },
     {
       "file": "powerbi\\exports\\ScenarioOutputs.csv",
