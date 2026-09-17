@@ -35,6 +35,10 @@ Use one-to-many (`1:*`) relationships with **single-direction filtering from dim
 - `DimDate[date]` 1:* `Shipments[ship_date]`
 - `DimDate[date]` 1:* `CustomerService[date]`
 - `DimDate[date]` 1:* `TechnologyIncidents[date]`
+- `DimDate[date]` 1:* `QualityPChart[date]`
+- `DimDate[date]` 1:* `SixBigLosses[month_date]`
+- `DimDate[date]` 1:* `CapacityWaterfall[month_date]`
+- `DimDate[date]` 1:* `ValueLeakage[month_date]`
 
 For `Shipments[promised_date]` and `Shipments[actual_delivery_date]`, create inactive date relationships only if a measure explicitly needs them. Do not make multiple active date paths to the same fact.
 
@@ -43,6 +47,7 @@ For `Shipments[promised_date]` and `Shipments[actual_delivery_date]`, create ina
 - `DimPlant[plant_id]` 1:* `DimLine[plant_id]`
 - `DimLine[line_id]` 1:* `DimMachine[line_id]`
 - `DimPlant[plant_id]` 1:* `ProductionKPI[plant_id]`
+- `DimPlant[plant_id]` 1:* `QualityPChart[plant_id]`
 - `DimLine[line_id]` 1:* `ProductionKPI[line_id]`
 - `DimMachine[machine_id]` 1:* `ProductionKPI[machine_id]`
 - `DimMachine[machine_id]` 1:* `Downtime[machine_id]`
@@ -76,4 +81,6 @@ For `Shipments[promised_date]` and `Shipments[actual_delivery_date]`, create ina
 - Hide surrogate/technical key columns from report view where they are not useful to report consumers.
 - Keep scenario outputs disconnected unless using a deliberate scenario-selector pattern.
 - `QualityPareto` and `DecisionQueue` are presentation marts and can remain disconnected.
+- `SixBigLosses`, `CapacityWaterfall`, and `ValueLeakage` are monthly analytical marts; relate them to `DimDate[date]` through `month_date` only, not to detailed facts.
+- Do not fabricate relationships for gated metrics such as RTY, DPMO, capability indices, startup rejects, or full COPQ.
 - Validate totals after every relationship change to ensure filters do not duplicate fact rows.
