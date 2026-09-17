@@ -4,7 +4,7 @@ These measures are designed for the MEDNEXUS semantic model documented in `SEMAN
 
 ## Executive-period helpers
 
-The Enterprise Command Center should default to the latest visible operating month rather than summing all 24 monthly periods into a single KPI card.
+The Enterprise Command Center should default to the latest visible operating month rather than summing all monthly periods into a single KPI card.
 
 ```DAX
 Latest Visible Month =
@@ -28,6 +28,17 @@ RETURN
 
 Latest Operating Margin Proxy =
 [Latest Revenue] - [Latest Operating Cost]
+
+Latest Operating Margin % Proxy =
+DIVIDE([Latest Operating Margin Proxy], [Latest Revenue])
+
+Latest Gross Margin Proxy =
+VAR _period = [Latest Visible Month]
+RETURN
+    CALCULATE(
+        SUM(EnterpriseMonthly[gross_margin_proxy]),
+        KEEPFILTERS(EnterpriseMonthly[month_date] = _period)
+    )
 
 Latest OEE =
 VAR _period = [Latest Visible Month]
@@ -53,6 +64,33 @@ RETURN
         KEEPFILTERS(EnterpriseMonthly[month_date] = _period)
     )
 
+Latest Total Units =
+VAR _period = [Latest Visible Month]
+RETURN
+    CALCULATE(
+        SUM(EnterpriseMonthly[total_units]),
+        KEEPFILTERS(EnterpriseMonthly[month_date] = _period)
+    )
+
+Latest Good Units =
+VAR _period = [Latest Visible Month]
+RETURN
+    CALCULATE(
+        SUM(EnterpriseMonthly[good_units]),
+        KEEPFILTERS(EnterpriseMonthly[month_date] = _period)
+    )
+
+Latest Defect Units =
+VAR _period = [Latest Visible Month]
+RETURN
+    CALCULATE(
+        SUM(EnterpriseMonthly[defect_units]),
+        KEEPFILTERS(EnterpriseMonthly[month_date] = _period)
+    )
+
+Latest Defect Rate =
+DIVIDE([Latest Defect Units], [Latest Total Units])
+
 Latest On-Time Delivery =
 VAR _period = [Latest Visible Month]
 RETURN
@@ -66,6 +104,46 @@ VAR _period = [Latest Visible Month]
 RETURN
     CALCULATE(
         AVERAGE(EnterpriseMonthly[capacity_gap_pct]),
+        KEEPFILTERS(EnterpriseMonthly[month_date] = _period)
+    )
+
+Latest Vacancies =
+VAR _period = [Latest Visible Month]
+RETURN
+    CALCULATE(
+        SUM(EnterpriseMonthly[vacancies]),
+        KEEPFILTERS(EnterpriseMonthly[month_date] = _period)
+    )
+
+Latest Supplier Reliability =
+VAR _period = [Latest Visible Month]
+RETURN
+    CALCULATE(
+        AVERAGE(EnterpriseMonthly[supplier_reliability]),
+        KEEPFILTERS(EnterpriseMonthly[month_date] = _period)
+    )
+
+Latest Shortage Hours =
+VAR _period = [Latest Visible Month]
+RETURN
+    CALCULATE(
+        SUM(EnterpriseMonthly[shortage_hours]),
+        KEEPFILTERS(EnterpriseMonthly[month_date] = _period)
+    )
+
+Latest Technology Downtime Minutes =
+VAR _period = [Latest Visible Month]
+RETURN
+    CALCULATE(
+        SUM(EnterpriseMonthly[technology_downtime_min]),
+        KEEPFILTERS(EnterpriseMonthly[month_date] = _period)
+    )
+
+Latest Major Technology Incidents =
+VAR _period = [Latest Visible Month]
+RETURN
+    CALCULATE(
+        SUM(EnterpriseMonthly[major_incidents]),
         KEEPFILTERS(EnterpriseMonthly[month_date] = _period)
     )
 
@@ -94,10 +172,17 @@ Use these on time-series visuals where `DimDate[month_start]`, `DimDate[year_mon
 Revenue = SUM(EnterpriseMonthly[revenue])
 Operating Cost = SUM(EnterpriseMonthly[operating_cost])
 Operating Margin Proxy = [Revenue] - [Operating Cost]
+Operating Margin % Proxy = DIVIDE([Operating Margin Proxy], [Revenue])
 Gross Margin Proxy = SUM(EnterpriseMonthly[gross_margin_proxy])
+Total Enterprise Units = SUM(EnterpriseMonthly[total_units])
+Enterprise Defect Units = SUM(EnterpriseMonthly[defect_units])
+Enterprise Defect Rate = DIVIDE([Enterprise Defect Units], [Total Enterprise Units])
 Average OLI = AVERAGE(EnterpriseMonthly[oli])
 On-Time Delivery = AVERAGE(EnterpriseMonthly[on_time_delivery])
 Capacity Gap % = AVERAGE(EnterpriseMonthly[capacity_gap_pct])
+Supplier Reliability = AVERAGE(EnterpriseMonthly[supplier_reliability])
+Technology Downtime Minutes = SUM(EnterpriseMonthly[technology_downtime_min])
+Major Technology Incidents = SUM(EnterpriseMonthly[major_incidents])
 MORI Score = MAX(MORI[mori_score])
 ```
 
@@ -110,6 +195,7 @@ Total Units = SUM(ProductionKPI[total_count])
 Good Units = SUM(ProductionKPI[good_count])
 Defect Units = SUM(ProductionKPI[defect_units])
 Scrap Units = SUM(ProductionKPI[scrap_units])
+Rework Units = SUM(ProductionKPI[rework_units])
 
 Availability =
 DIVIDE(
@@ -130,7 +216,10 @@ Quality Rate = DIVIDE([Good Units], [Total Units])
 OEE = [Availability] * [Performance] * [Quality Rate]
 Defect Rate = DIVIDE([Defect Units], [Total Units])
 Scrap Rate = DIVIDE([Scrap Units], [Total Units])
+Rework Rate = DIVIDE([Rework Units], [Total Units])
 ```
+
+`FPY`, `RTY` and `DPMO` require their canonical data semantics. Do not substitute the current `fpy` proxy for a final true FPY measure without validating rework/pass definitions. RTY requires sequential process-stage yields. DPMO requires a defensible number of defect opportunities per unit.
 
 ## Logistics, people, and reliability measures
 
@@ -171,11 +260,14 @@ Scenario Downtime Minutes =
 SUM(ScenarioOutputs[simulated_downtime_min])
 ```
 
+The scenario layer will be expanded to the canonical Baseline → Assumption → Expected Change → Result → Difference design before final report acceptance.
+
 ## Formatting guidance
 
 - Currency: `$#,0;($#,0)` or the report's chosen local currency convention.
-- OEE / OLI / FPY / delivery / capacity / rates: percentage with 1 decimal place.
+- OEE / OLI / FPY / delivery / capacity / reliability / rates: percentage with 1 decimal place.
 - MORI: decimal number with 1 decimal place, not a percentage.
 - Counts and minutes: whole number unless decimal precision materially helps interpretation.
 - Do not sum percentage KPIs that are defined as rates; use weighted or context-appropriate aggregation.
 - Executive cards should use the `Latest ...` measures; trend visuals should use the non-latest measures.
+- Measures based on illustrative financial assumptions must remain visibly labeled as such in the report documentation/tooltips.
