@@ -9,7 +9,9 @@ def production_kpis(production: pd.DataFrame):
     p['performance']=(p['ideal_cycle_min']*p['total_count']/p['run_time_min'].clip(lower=1)).clip(0,1.2)
     p['quality_rate']=p['good_count']/p['total_count'].clip(lower=1)
     p['oee']=(p['availability']*p['performance']*p['quality_rate']).clip(0,1)
-    p['fpy']=(p['total_count']-p['defect_units'])/p['total_count'].clip(lower=1)\n    # Backward-compatible alias retained for earlier artifacts; canonical KPI name is now FPY.\n    p['fpy_proxy']=p['fpy']
+    p['fpy']=(p['total_count']-p['defect_units'])/p['total_count'].clip(lower=1)
+    # Backward-compatible alias retained for earlier artifacts; canonical KPI name is now FPY.
+    p['fpy_proxy']=p['fpy']
     p['defect_rate']=p['defect_units']/p['total_count'].clip(lower=1)
     theoretical=p['planned_production_min']/p['ideal_cycle_min'].clip(lower=.01)
     p['oli']=(1-p['good_count']/theoretical.clip(lower=1)).clip(0,1)
