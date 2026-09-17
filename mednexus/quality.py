@@ -280,7 +280,8 @@ def build_observability(frames):
                 freshness_lag_days = max(0, int((reference_date.normalize() - max_date.normalize()).days))
                 freshness_passed = freshness_lag_days <= tolerance
                 # Synthetic shipment/service dates may extend beyond the simulation cutoff; 45 days is a fail-closed anomaly guard.
-                timeliness_cutoff = pd.Timestamp(reference_date).normalize() + pd.DateOffset(days=45)\n                timeliness_passed = parse_failures == 0 and pd.Timestamp(max_date) <= timeliness_cutoff
+                timeliness_cutoff = pd.Timestamp(reference_date).normalize() + pd.DateOffset(days=45)
+                timeliness_passed = parse_failures == 0 and pd.Timestamp(max_date) <= timeliness_cutoff
             else:
                 freshness_passed = False
                 timeliness_passed = False
