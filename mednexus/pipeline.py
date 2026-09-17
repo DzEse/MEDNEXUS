@@ -15,6 +15,14 @@ from .quality import (
 )
 from .data_dictionary import build_data_dictionary, build_table_register
 from .analytics import production_kpis, monthly_enterprise_mart, quality_pareto, reliability_mart
+from .statistical_quality import (
+    methodology_gates,
+    p_chart_by_plant,
+    p_chart_summary,
+    six_big_losses,
+    capacity_waterfall,
+    value_leakage,
+)
 from .models import train_predictive_maintenance
 from .forecasting import forecast_demand
 from .risk import build_mori
@@ -126,10 +134,22 @@ def run(clean=False, seed=None):
     mart=monthly_enterprise_mart(frames)
     qp=quality_pareto(frames)
     rel=reliability_mart(frames)
+    quality_gates=methodology_gates()
+    p_chart=p_chart_by_plant(frames['fact_production'])
+    p_chart_overview=p_chart_summary(p_chart)
+    loss_decomposition=six_big_losses(frames)
+    capacity_flow=capacity_waterfall(frames['fact_production'])
+    leakage=value_leakage(frames)
     save_frame(production_enriched,path('data','curated','production_kpis.csv'))
     save_frame(mart,path('data','curated','enterprise_monthly_mart.csv'))
     save_frame(qp,path('data','curated','quality_pareto.csv'))
     save_frame(rel,path('data','curated','reliability_mart.csv'))
+    save_frame(p_chart,path('data','curated','quality_p_chart.csv'))
+    save_frame(p_chart_overview,path('data','curated','quality_p_chart_summary.csv'))
+    save_frame(loss_decomposition,path('data','curated','six_big_losses.csv'))
+    save_frame(capacity_flow,path('data','curated','capacity_waterfall.csv'))
+    save_frame(leakage,path('data','curated','value_leakage.csv'))
+    save_frame(quality_gates,path('artifacts','validation','quality_methodology_gates.csv'))
 
     print('[4/9] Training predictive-maintenance baseline...')
     model_metrics,scored=train_predictive_maintenance(frames['fact_sensor'],path('artifacts','models','predictive_maintenance_logreg.joblib'))
@@ -158,6 +178,10 @@ def run(clean=False, seed=None):
     risk.to_sql('mart_mori',con,if_exists='replace',index=False)
     scenarios.to_sql('mart_scenarios',con,if_exists='replace',index=False)
     dq.to_sql('mart_decision_queue',con,if_exists='replace',index=False)
+    p_chart.to_sql('mart_quality_p_chart',con,if_exists='replace',index=False)
+    loss_decomposition.to_sql('mart_six_big_losses',con,if_exists='replace',index=False)
+    capacity_flow.to_sql('mart_capacity_waterfall',con,if_exists='replace',index=False)
+    leakage.to_sql('mart_value_leakage',con,if_exists='replace',index=False)
     execute_sql_file(con,path('sql','analytical_views.sql'))
     con.close()
 
@@ -181,6 +205,10 @@ def run(clean=False, seed=None):
         'ScenarioOutputs':scenarios,
         'DecisionQueue':dq,
         'QualityPareto':qp,
+        'QualityPChart':p_chart,
+        'SixBigLosses':loss_decomposition,
+        'CapacityWaterfall':capacity_flow,
+        'ValueLeakage':leakage,
         'Reliability':rel,
         'PredictiveMaintenanceScores':scored,
         'DemandForecast':forecast_future,
