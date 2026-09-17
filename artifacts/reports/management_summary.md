@@ -4,21 +4,21 @@
 
 ## Latest synthetic operating period
 
-- Revenue: $85,826,930
-- Operating cost: $32,402,423
-- OEE: 78.9%
-- OLI: 23.1%
-- FPY proxy: 97.2%
-- On-time delivery: 58.9%
+- Revenue: $79,962,619
+- Operating cost: $31,046,396
+- OEE: 78.7%
+- OLI: 23.3%
+- FPY proxy: 97.1%
+- On-time delivery: 57.9%
 - Capacity gap: 7.5%
-- MORI: 60.1 (Elevated)
+- MORI: 70.1 (Elevated)
 - Data Trust Score: 100.0/100
 
 ## Evidence layers
 
-- Quality concentration: top defect category is **Assembly** (27.3% of defect units).
-- Predictive maintenance: Logistic Regression baseline ROC-AUC = 0.6262417028014841; recall = 0.906. These are model-derived values, not causal conclusions.
-- Demand forecasting: moving-average baseline RMSE = 10747.17.
+- Quality concentration: top defect category is **Assembly** (27.1% of defect units).
+- Predictive maintenance: Logistic Regression baseline ROC-AUC = 0.622066049370632; recall = 0.800. These are model-derived values, not causal conclusions.
+- Demand forecasting: moving-average baseline RMSE = 7955.50.
 
 ## Decision principle
 

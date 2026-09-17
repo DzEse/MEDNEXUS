@@ -1,7 +1,7 @@
 {
   "method": "3-month moving-average baseline",
-  "mae": 7732.285714285715,
-  "rmse": 10747.170025924852,
-  "bias": -1233.3650793650781,
+  "mae": 6726.333333333333,
+  "rmse": 7955.496299437916,
+  "bias": -332.23809523809524,
   "note": "Model-derived forecast baseline; compare future methods against this baseline."
 }

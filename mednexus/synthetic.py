@@ -1,4 +1,6 @@
 from __future__ import annotations
+from datetime import timedelta
+import zlib
 import numpy as np
 import pandas as pd
 from .config import load_config
@@ -6,6 +8,14 @@ from .config import load_config
 
 def _ids(prefix, n):
     return [f'{prefix}{i:04d}' for i in range(1, n + 1)]
+
+
+def _stable_index(*parts, n: int) -> int:
+    """Return a deterministic bucket index independent of PYTHONHASHSEED."""
+    if n <= 0:
+        raise ValueError('n must be positive')
+    payload = '|'.join(str(part) for part in parts).encode('utf-8')
+    return zlib.crc32(payload) % n
 
 
 def generate(seed: int | None = None):
@@ -104,7 +114,7 @@ def generate(seed: int | None = None):
     for d in dates:
         wf_period = d.to_period('M')
         for machine in machines.itertuples(index=False):
-            product = products.iloc[(hash(machine.machine_id + str(d.date())) % len(products))]
+            product = products.iloc[_stable_index(machine.machine_id, d.date(), n=len(products))]
             wf = workforce_lookup.loc[(wf_period, machine.plant_id)]
             staffing = 1 - float(wf['capacity_gap_pct'])
             planned_min = 2 * 8 * 60
@@ -182,12 +192,12 @@ def generate(seed: int | None = None):
             product = products.iloc[rng.integers(0,len(products))]
             customer = customers.iloc[rng.integers(0,len(customers))]
             qty = int(rng.integers(80,450))
-            promised = d + pd.Timedelta(days=int(rng.integers(3,9)))
+            promised = d + timedelta(days=int(rng.integers(3,9)))
             # Shipment delay linked to three-day rolling production downtime pressure.
             pressure = float(_rolling_pressure.get(d, 0.0))
             delay = int(max(0, round(rng.normal(pressure*1.2,0.9))))
-            shipped = d + pd.Timedelta(days=int(rng.integers(1,4)))
-            delivered = promised + pd.Timedelta(days=delay)
+            shipped = d + timedelta(days=int(rng.integers(1,4)))
+            delivered = promised + timedelta(days=delay)
             revenue = qty * float(product['unit_price'])
             oid=f'ORD{order_id:07d}'
             order_rows.append((oid,d.date(),customer['customer_id'],product['product_id'],qty,float(product['unit_price']),revenue,promised.date()))
