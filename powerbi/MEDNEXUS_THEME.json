@@ -1,0 +1,22 @@
+{
+  "name": "MEDNEXUS Executive",
+  "dataColors": [
+    "#2563EB",
+    "#0F766E",
+    "#7C3AED",
+    "#D97706",
+    "#DC2626",
+    "#475569",
+    "#0891B2",
+    "#65A30D"
+  ],
+  "background": "#F8FAFC",
+  "foreground": "#0F172A",
+  "tableAccent": "#2563EB",
+  "good": "#15803D",
+  "neutral": "#D97706",
+  "bad": "#B91C1C",
+  "maximum": "#1D4ED8",
+  "minimum": "#CBD5E1",
+  "center": "#F59E0B"
+}
