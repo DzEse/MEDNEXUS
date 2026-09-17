@@ -21,7 +21,26 @@ def production_kpis(production: pd.DataFrame):
 def monthly_enterprise_mart(frames):
     p=production_kpis(frames['fact_production'])
     p['month']=pd.to_datetime(p['date']).dt.to_period('M').astype(str)
-    pm=p.groupby('month',as_index=False).agg(total_units=('total_count','sum'),good_units=('good_count','sum'),defect_units=('defect_units','sum'),scrap_units=('scrap_units','sum'),unplanned_downtime_min=('unplanned_downtime_min','sum'),oee=('oee','mean'),oli=('oli','mean'),fpy=('fpy','mean'))
+    p['net_planned_min']=(p['planned_production_min']-p['planned_downtime_min']).clip(lower=0)
+    p['ideal_time_min']=p['ideal_cycle_min']*p['total_count']
+    p['theoretical_units']=p['planned_production_min']/p['ideal_cycle_min'].clip(lower=.01)
+    pm=p.groupby('month',as_index=False).agg(
+        total_units=('total_count','sum'),
+        good_units=('good_count','sum'),
+        defect_units=('defect_units','sum'),
+        scrap_units=('scrap_units','sum'),
+        unplanned_downtime_min=('unplanned_downtime_min','sum'),
+        run_time_min=('run_time_min','sum'),
+        net_planned_min=('net_planned_min','sum'),
+        ideal_time_min=('ideal_time_min','sum'),
+        theoretical_units=('theoretical_units','sum'),
+    )
+    pm['availability']=pm['run_time_min']/pm['net_planned_min'].replace(0,np.nan)
+    pm['performance']=pm['ideal_time_min']/pm['run_time_min'].replace(0,np.nan)
+    pm['quality_rate']=pm['good_units']/pm['total_units'].replace(0,np.nan)
+    pm['oee']=(pm['availability']*pm['performance']*pm['quality_rate']).clip(0,1)
+    pm['fpy']=(pm['total_units']-pm['defect_units'])/pm['total_units'].replace(0,np.nan)
+    pm['oli']=(1-pm['good_units']/pm['theoretical_units'].replace(0,np.nan)).clip(0,1)
     f=frames['fact_finance'].copy(); f['month']=pd.to_datetime(f['month']).dt.to_period('M').astype(str)
     wf=frames['fact_workforce'].copy(); wf['month']=pd.to_datetime(wf['month']).dt.to_period('M').astype(str)
     wm=wf.groupby('month',as_index=False).agg(required_headcount=('required_headcount','sum'),actual_headcount=('actual_headcount','sum'),vacancies=('vacancies','sum'),absence_rate=('absence_rate','mean'),overtime_hours=('overtime_hours_per_employee','mean'),capacity_gap_pct=('capacity_gap_pct','mean'))
