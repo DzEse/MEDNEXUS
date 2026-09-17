@@ -1,17 +1,117 @@
 # Definition of Done
 
-MEDNEXUS is implementation-complete when:
-- clean setup runs from a documented environment
-- synthetic data generation is deterministic
-- data-quality gate passes
-- relational database is built
-- core KPI formulas are tested
-- predictive baseline is temporally validated
-- forecast baseline is backtested
-- MORI methodology is transparent
-- scenarios are explicitly labeled simulated
-- decision queue includes evidence, confidence and limitations
-- Power BI exports and DAX/page build specifications exist
-- tests pass
-- README discloses the fictional/simulated nature of the project
-- no fabricated employment, customer result, business saving or causal claim is present
+MEDNEXUS is **not** implementation-complete merely because the pipeline runs or a Power BI report exists.
+
+The project is complete only when the canonical master specification is fully resolved through evidence or an explicit methodological gate.
+
+Canonical governance:
+
+- `docs/specification/MEDNEXUS_MASTER_BUILD_SPECIFICATION.md`
+- `docs/specification/REQUIREMENTS_TRACEABILITY_MATRIX.md`
+- `docs/specification/SCOPE_PRESERVATION_POLICY.md`
+- `docs/MASTER_IMPLEMENTATION_BLUEPRINT.md`
+
+## 1. Specification closure
+
+- every one of the 55 canonical specification sections is represented in the traceability matrix;
+- every one of the 60 master-blueprint areas is present;
+- no canonical requirement is silently dropped, weakened or renamed away;
+- every requirement is either implemented/evidenced or explicitly condition-gated with a defensible methodological reason;
+- automated specification-preservation tests pass.
+
+## 2. Data and architecture
+
+- clean setup runs from a documented environment;
+- synthetic data generation is deterministic across Python processes;
+- public-source provenance/license/usage is verified for every public dataset actually used;
+- raw/staging/curated/analytical/BI responsibilities are clear;
+- dimensional grains, keys, cardinalities and refresh logic are documented;
+- fact-to-fact/many-to-many ambiguity and duplicate multiplication are prevented;
+- data-quality and referential-integrity gates pass;
+- observability records freshness, row counts, schema, quality failures and pipeline status.
+
+## 3. Business/KPI correctness
+
+- core KPI formulas are tested and reconciled;
+- OEE is mathematically correct and supported by an explicit loss decomposition;
+- OLI is clearly distinguished from OEE;
+- FPY/RTY/DPMO are used only when their required process/grain inputs exist;
+- financial observed/derived values are separated from illustrative assumptions;
+- COPQ/value-leakage metrics have transparent definitions and reconciliation;
+- MORI methodology, weighting, normalization, sensitivity, missing-data handling and limitations are documented;
+- Data Trust Score components are transparent and not presented as an industry standard.
+
+## 4. Statistical and diagnostic validity
+
+- statistical methods state assumptions, sample adequacy and limitations;
+- process-control/capability methods are applied only when valid data/specification conditions exist;
+- specification limits are never fabricated;
+- root-cause outputs distinguish association from causation;
+- diagnostic analyses identify evidence for investigation rather than unsupported causal conclusions.
+
+## 5. Predictive analytics
+
+- predictive baseline is temporally validated;
+- a nonlinear comparator is evaluated where justified;
+- advanced boosting is used only if evidence justifies the additional complexity;
+- precision, recall, F1, ROC-AUC, PR-AUC and confusion matrix are reported where applicable;
+- calibration is assessed when probability quality matters;
+- threshold and false-negative/false-positive operational consequences are documented;
+- leakage and train/test separation checks pass;
+- explainability is used to understand model behavior, not infer causality.
+
+## 6. Forecasting
+
+- forecast baseline is backtested;
+- at least one meaningful comparison is evaluated where the time series supports it;
+- MAE/RMSE/bias and sMAPE or another safe percentage metric are used appropriately;
+- zeros/near-zero denominators are handled correctly;
+- forecast limitations and horizon are explicit.
+
+## 7. Scenario, optimization and process analytics
+
+- scenarios are explicitly labeled **Simulated**;
+- scenario outputs show Baseline → Assumption → Expected Change → Result → Difference;
+- optimization is implemented only if a defensible objective, variables and constraints exist, otherwise a documented gate decision exists;
+- process mining is implemented only if a valid linked event log exists, otherwise a documented gate decision exists;
+- experimentation is not fabricated; simulated/pre-post frameworks are labeled appropriately.
+
+## 8. Decision intelligence
+
+- decision queue includes evidence, risk, estimated impact, recommended action, owner, urgency, confidence, analytical basis and limitations;
+- recommendations trace back to validated evidence;
+- confidence does not hide uncertainty;
+- monitoring/learning design explains how management would validate intervention results.
+
+## 9. SQL/Python engineering
+
+- SQL demonstrates controlled staging/quality/dimension/fact/KPI/analytical-view logic with documented grain;
+- SQL validation protects against join/aggregation errors;
+- Python production logic is modular;
+- notebooks are used only for exploration/experimentation;
+- reproducibility, validation and quality tests pass in CI/local build;
+- no secrets or unnecessary regenerable artifacts are committed.
+
+## 10. Power BI
+
+- Power BI exports reconcile to analytical outputs;
+- semantic relationships are valid and unambiguous;
+- rate measures aggregate correctly;
+- all canonical business questions are covered even if pages are consolidated;
+- drill-through/tooltips/bookmarks/field parameters/what-if parameters/dynamic titles/conditional formatting are used only where analytically useful;
+- decomposition tree/Key Influencers are used only where their data/model semantics are defensible;
+- synthetic/simulated/model-derived disclosures are visible;
+- no PBIX file or screenshot is fabricated by the repository.
+
+## 11. Documentation, lineage and portfolio credibility
+
+- Project Charter, Statement of Work, Business/Analytical Requirements, Data Architecture, Data Dictionary, KPI Dictionary, Provenance, Data Quality/Observability, Methodologies, Assumptions/Limitations, Validation, Lineage, Technical Documentation, Power BI guides and Repository/Reproducibility guides are complete;
+- lineage can answer **“Where did this number come from?”** for important outputs;
+- README accurately distinguishes implemented work from planned/conditional work;
+- no fabricated employment, client, customer outcome, savings, source, license, model performance or causal claim exists;
+- user positioning demonstrates capability without exaggerating professional analytics experience;
+- repository remains lightweight and feasible on a personal development machine.
+
+## Final completion gate
+
+All automated tests and reconciliation checks must pass, and every canonical requirement must have an evidence-backed final disposition in `REQUIREMENTS_TRACEABILITY_MATRIX.md`.
