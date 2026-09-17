@@ -56,7 +56,7 @@ RETURN
         KEEPFILTERS(EnterpriseMonthly[month_date] = _period)
     )
 
-Latest FPY Proxy =
+Latest FPY =
 VAR _period = [Latest Visible Month]
 RETURN
     CALCULATE(
@@ -219,7 +219,7 @@ Scrap Rate = DIVIDE([Scrap Units], [Total Units])
 Rework Rate = DIVIDE([Rework Units], [Total Units])
 ```
 
-`FPY`, `RTY` and `DPMO` require their canonical data semantics. Do not substitute the current `fpy` proxy for a final true FPY measure without validating rework/pass definitions. RTY requires sequential process-stage yields. DPMO requires a defensible number of defect opportunities per unit.
+`FPY` is valid in the canonical synthetic process because defect_units represent first-pass failures before rework allocation. RTY remains unavailable because sequential process-stage yields are not modeled. DPMO remains unavailable because defect opportunities per unit are undefined.
 
 ## Logistics, people, and reliability measures
 
@@ -271,3 +271,21 @@ The scenario layer will be expanded to the canonical Baseline → Assumption →
 - Do not sum percentage KPIs that are defined as rates; use weighted or context-appropriate aggregation.
 - Executive cards should use the `Latest ...` measures; trend visuals should use the non-latest measures.
 - Measures based on illustrative financial assumptions must remain visibly labeled as such in the report documentation/tooltips.
+
+
+## Statistical quality and value-loss measures
+
+```DAX
+FPY = DIVIDE(SUM(ProductionKPI[total_count]) - SUM(ProductionKPI[defect_units]), SUM(ProductionKPI[total_count]))
+
+P Chart Defect Rate = DIVIDE(SUM(QualityPChart[defect_units]), SUM(QualityPChart[total_count]))
+P Chart Center Line = AVERAGE(QualityPChart[center_line])
+P Chart LCL = AVERAGE(QualityPChart[lcl])
+P Chart UCL = AVERAGE(QualityPChart[ucl])
+P Chart Signals = SUM(QualityPChart[out_of_control])
+
+Cost per Good Unit = AVERAGE(ValueLeakage[cost_per_good_unit])
+Known Internal Quality Cost Proxy = SUM(ValueLeakage[known_internal_quality_cost_proxy])
+```
+
+Do not create RTY, DPMO, Cp, Cpk, Pp, Ppk, startup-reject loss, rework cost, or full COPQ measures unless the required evidence is added and the corresponding methodology gate changes from NOT_CALCULABLE.
