@@ -9,7 +9,7 @@ def production_kpis(production: pd.DataFrame):
     p['performance']=(p['ideal_cycle_min']*p['total_count']/p['run_time_min'].clip(lower=1)).clip(0,1.2)
     p['quality_rate']=p['good_count']/p['total_count'].clip(lower=1)
     p['oee']=(p['availability']*p['performance']*p['quality_rate']).clip(0,1)
-    p['fpy_proxy']=(p['total_count']-p['defect_units'])/p['total_count'].clip(lower=1)
+    p['fpy']=(p['total_count']-p['defect_units'])/p['total_count'].clip(lower=1)\n    # Backward-compatible alias retained for earlier artifacts; canonical KPI name is now FPY.\n    p['fpy_proxy']=p['fpy']
     p['defect_rate']=p['defect_units']/p['total_count'].clip(lower=1)
     theoretical=p['planned_production_min']/p['ideal_cycle_min'].clip(lower=.01)
     p['oli']=(1-p['good_count']/theoretical.clip(lower=1)).clip(0,1)
@@ -19,7 +19,7 @@ def production_kpis(production: pd.DataFrame):
 def monthly_enterprise_mart(frames):
     p=production_kpis(frames['fact_production'])
     p['month']=pd.to_datetime(p['date']).dt.to_period('M').astype(str)
-    pm=p.groupby('month',as_index=False).agg(total_units=('total_count','sum'),good_units=('good_count','sum'),defect_units=('defect_units','sum'),scrap_units=('scrap_units','sum'),unplanned_downtime_min=('unplanned_downtime_min','sum'),oee=('oee','mean'),oli=('oli','mean'),fpy=('fpy_proxy','mean'))
+    pm=p.groupby('month',as_index=False).agg(total_units=('total_count','sum'),good_units=('good_count','sum'),defect_units=('defect_units','sum'),scrap_units=('scrap_units','sum'),unplanned_downtime_min=('unplanned_downtime_min','sum'),oee=('oee','mean'),oli=('oli','mean'),fpy=('fpy','mean'))
     f=frames['fact_finance'].copy(); f['month']=pd.to_datetime(f['month']).dt.to_period('M').astype(str)
     wf=frames['fact_workforce'].copy(); wf['month']=pd.to_datetime(wf['month']).dt.to_period('M').astype(str)
     wm=wf.groupby('month',as_index=False).agg(required_headcount=('required_headcount','sum'),actual_headcount=('actual_headcount','sum'),vacancies=('vacancies','sum'),absence_rate=('absence_rate','mean'),overtime_hours=('overtime_hours_per_employee','mean'),capacity_gap_pct=('capacity_gap_pct','mean'))
