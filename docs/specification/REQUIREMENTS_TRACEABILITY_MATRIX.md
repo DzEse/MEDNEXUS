@@ -1,0 +1,108 @@
+# MEDNEXUS Requirements Traceability Matrix
+
+## Purpose
+
+This document makes the canonical MEDNEXUS master specification enforceable in implementation. No requirement may be silently dropped, narrowed, renamed away, or treated as complete merely because a simpler baseline exists.
+
+Canonical source: `docs/specification/MEDNEXUS_MASTER_BUILD_SPECIFICATION.md`.
+
+## Status definitions
+
+- **IMPLEMENTED** — working code/documentation exists and is exercised by the current pipeline or build package.
+- **PARTIAL** — a defensible baseline exists, but the canonical requirement contains additional required depth.
+- **PLANNED** — required by the canonical specification and not yet implemented.
+- **CONDITIONAL-GATED** — the specification requires the technique to be considered, but it must only be implemented if the data/methodological assumptions support it. A documented gate decision is required; silence is not acceptable.
+- **DOCUMENTED** — the architecture/method is documented, but implementation evidence is still required where applicable.
+
+## Preservation rule
+
+Existing validated work remains authoritative unless superseded by a stronger, tested implementation. New work is additive. A later phase may refine an earlier artifact, but it must preserve the original requirement, rationale, disclosures, validation controls, and evidence trail.
+
+## Master traceability
+
+| Spec section | Requirement area | Current state | Evidence / current artifact | Remaining canonical work |
+|---|---|---|---|---|
+| 1 | Project identity | IMPLEMENTED | README, Project Charter | Preserve naming and central executive question |
+| 2 | Fictional enterprise disclosure | IMPLEMENTED | README, management summary, assumptions docs | Keep disclosure visible in every portfolio/report surface |
+| 3 | Enterprise story / finance entry point | PARTIAL | EnterpriseMonthly, Finance, management summary | Add fuller cost-center/value-leakage analysis and executive narrative chain |
+| 4 | HR / people / workforce | PARTIAL | Workforce synthetic fact, capacity-gap/overtime/absence metrics | Add turnover, roles, onboarding/training, utilization and workforce-risk structure where supportable |
+| 5 | Recruitment & talent | PARTIAL | Recruitment funnel, time-to-fill, cost-per-hire | Add critical roles, skills shortages, bottleneck diagnostics and capacity linkage |
+| 6 | Manufacturing | PARTIAL | Production, lines, machines, products, OEE inputs | Add shift/changeover/schedule-adherence/production-attainment treatment where justified |
+| 7 | Quality intelligence | PARTIAL | Defect rate, FPY proxy, defect Pareto, scrap/rework facts | Formalize true FPY definition, gate RTY/DPMO, add stage/location/supplier/shift relationships where data supports |
+| 8 | Process capability & statistical quality | CONDITIONAL-GATED | Statistical methodology doc | Build control-chart/statistical-quality layer; Cp/Cpk/Pp/Ppk only with valid specification limits; no fabricated limits |
+| 9 | OEE & loss intelligence | PARTIAL | OEE, OLI, downtime data | Add explicit Six Big Losses decomposition and theoretical-capacity waterfall |
+| 10 | Maintenance & reliability | PARTIAL | Preventive/corrective maintenance, downtime, MTTR, MTBF proxy, machine age | Add utilization, backlog concept if supported, failure trends and stronger risk diagnostics |
+| 11 | Predictive maintenance | PARTIAL | Logistic Regression baseline, temporal split, precision/recall/F1/ROC-AUC/PR-AUC/confusion matrix | Add Random Forest comparison, threshold/false-negative cost analysis, calibration assessment; advanced boosting only if justified |
+| 12 | Model explainability | PLANNED | Causality warnings documented | Add permutation importance; SHAP/PDP only if technically justified and stable |
+| 13 | Supply chain | PARTIAL | Supplier reliability, lead-time proxy, shortages, material defects | Add material/inventory/purchase-order/stockout/excess-inventory structure if needed to support decisions |
+| 14 | Logistics | PARTIAL | Orders, shipments, promised/actual dates, delays, on-time delivery | Add warehouse/carrier/route/exception/OTIF analysis where justified |
+| 15 | Healthcare customer environment | PARTIAL | Customer types, orders, shipment reliability, service events | Add service-level/fulfillment/customer-pattern analytics while retaining no-PII rule |
+| 16 | Technology / SaaS operations | PARTIAL | Incidents, severity, downtime, usage/adoption | Add availability/uptime/response/deployment/support/data-availability linkage and technology-risk diagnostics |
+| 17 | Central enterprise value-loss chains | PARTIAL | Synthetic cross-domain relationships and decision queue | Quantify supported chains; label unsupported links conceptual/simulated/hypothesis |
+| 18 | Five-level decision intelligence | PARTIAL | Descriptive KPIs, diagnostics, prediction, scenarios, decision queue | Strengthen diagnostic/statistical and prescriptive/optimization layers; monitor/learn loop |
+| 19 | MORI | IMPLEMENTED/PARTIAL | `mednexus/risk.py`, config weights, MORI export | Add missing-data policy, sensitivity analysis and fuller limitations evidence |
+| 20 | OLI | IMPLEMENTED/PARTIAL | `mednexus/analytics.py` | Add explicit decomposition/interpretation and reconcile OLI vs Six Big Losses |
+| 21 | Data Trust Score | PARTIAL | Data Trust Score 0–100 | Expand to timeliness, referential integrity, schema consistency, freshness, consistency where supported |
+| 22 | Data quality & governance / observability | PARTIAL | Null/duplicate/basic range/business checks, manifest | Add orphan/RI/date/schema/row-count drift/missingness/category drift/freshness/class imbalance/feature sparsity; observability outputs |
+| 23 | Forecasting | PARTIAL | 3-month moving-average demand baseline with MAE/RMSE/bias | Add meaningful comparator(s), sMAPE where appropriate, explicit forecast adequacy checks; other forecasts only if supported |
+| 24 | Optimization | CONDITIONAL-GATED | Scenario prioritization only | Formally assess maintenance/intervention optimization; implement objective/constraints/variables if decision problem supports it |
+| 25 | Process analytics / process mining | CONDITIONAL-GATED | No valid full event log yet | Build/gate event-log design for Order→Production→Inspection→Rework→Release→Shipment; do not fabricate events |
+| 26 | Root-cause intelligence | PARTIAL | Pareto, trend/risk layers | Add segmentation/correlation/statistical tests/regression/tree/explainability hierarchy; no causal overclaim |
+| 27 | COPQ & value leakage | PARTIAL | Scrap, downtime, logistics, technology cost proxies; simulated opportunity | Add rework cost, cost-per-good-unit, COPQ/avoidable-cost definitions and reconciliation |
+| 28 | Scenario engine | PARTIAL | Downtime/defect/workforce scenarios | Expand parameters/output structure to explicit Baseline→Assumption→Expected Change→Result→Difference and broader domains where valid |
+| 29 | Decision queue | IMPLEMENTED | `mednexus/decision_queue.py`, DecisionQueue export | Enhance prioritization evidence only after new analytics; preserve confidence/basis/limitations |
+| 30 | Enterprise Operations Twin | PLANNED/DOCUMENTED | Concept represented by dimensional hierarchy | Create formal conceptual twin artifact and cross-domain hierarchy; no 3D factory |
+| 31 | Layered data architecture | PARTIAL | raw/staging/curated/BI folders, SQLite analytical layer | Make staging/analytical transformations more explicit and minimize duplicate CSV layers |
+| 32 | Public data sources | PARTIAL | UCI AI4I, UCI SECOM, NASA C-MAPSS provenance entries | Verify current source/license details and add reproducible acquisition adapters only where used; do not misrepresent as MEDNEXUS proprietary |
+| 33 | Synthetic data | IMPLEMENTED/PARTIAL | Deterministic generator with cross-domain logic | Expand only where required by unresolved domains; document every relationship and assumption |
+| 34 | Storage/computational efficiency | IMPLEMENTED/PARTIAL | Compact generated data, ignored regenerable artifacts/PBIX | Evaluate Parquet where it materially improves storage; retain personal-machine feasibility |
+| 35 | Data model | PARTIAL | Core dimensions/facts plus 29 Power BI exports | Publish table-by-table grain/PK/FK/cardinality/refresh/business meaning; add only dimensions/facts needed for unresolved story |
+| 36 | SQL requirements | PARTIAL | SQLite views and example CTE/window/root-cause/validation SQL | Expand staging/quality/dimension/fact/KPI SQL modules and grain documentation; add reconciliation tests |
+| 37 | Python architecture | PARTIAL | Modular `mednexus/` package | Add explicit statistics, feature-engineering, explainability, observability modules as requirements mature; notebooks for investigation only |
+| 38 | Power BI requirements | PARTIAL | Semantic model, DAX, build guide, theme, Page 1 spec | Add drill-through, bookmarks, tooltips, field parameters, what-if parameters, dynamic titles, decomposition tree, Key Influencers, commentary design where justified |
+| 39 | Power BI story structure | PARTIAL | Current 10-page architecture + Page 1 detailed spec | Reconcile all 13 canonical business questions. Pages may be consolidated only if every question/requirement remains explicitly covered |
+| 40 | Executive narrative | PARTIAL | Business health→loss→risk→scenario→action story | Extend to expected result and monitoring/learning evidence |
+| 41 | Experimentation | CONDITIONAL-GATED | No fabricated experiment | Define pre/post or treatment/control framework for future interventions; only calculate when valid evidence exists |
+| 42 | Testing & validation | PARTIAL | 6 tests, reproducibility guard, data-quality gate | Add SQL grain/join/KPI tests, statistical assumptions, finance/OEE/quality reconciliation, threshold/false-negative/model-health tests |
+| 43 | Data lineage | PARTIAL | LINEAGE.md and manifests | Expand output-level Source→Transformation→Table→Method→KPI/Model→BI→Decision lineage |
+| 44 | Documentation | PARTIAL | Most named documents exist | Add complete Data Dictionary and any missing canonical docs; keep interview defense outside repo |
+| 45 | Repository structure | IMPLEMENTED/PARTIAL | Professional compact structure | Add substructure only when real artifacts exist; do not create empty appearance folders |
+| 46 | User professional story | DOCUMENTED | Portfolio strategy / positioning docs | Preserve truthful transferable-skill framing; no invented analytics employment |
+| 47 | Professional positioning | DOCUMENTED | Portfolio strategy | Preserve simulated-engagement vs analyst-demonstration distinction |
+| 48 | Analytical discipline | PLANNED AS GATE | Methodology docs | Add reusable analysis-design checklist requiring business question/grain/data/assumptions/bias/proof/decision/validation |
+| 49 | Anti-fabrication | IMPLEMENTED AS POLICY | Disclosures, assumptions/limitations | Add automated/text QC where practical; preserve labels: To be calculated / Simulated / Illustrative / Model-derived / Conceptual |
+| 50 | Quality-control standard | PARTIAL | Tests, docs, reproducibility | Formalize final cross-functional QC checklist with pass/fail evidence |
+| 51 | 60-part master blueprint output | PARTIAL | Multiple docs cover many areas | Create one indexed master implementation blueprint linking all 60 required areas |
+| 52 | Phases 0–17 | IMPLEMENTED AS PLAN / PARTIAL IN EXECUTION | `docs/IMPLEMENTATION_PHASES.md` | Rebaseline actual status; do not call Phase 13/14 complete until predecessor gaps are resolved/gated |
+| 53 | Judgment over superficial complexity | IMPLEMENTED AS POLICY | Methodology and repository approach | Continue conditional gating instead of forced techniques |
+| 54 | Final success chain | PARTIAL | Core chain exists | Add stronger statistical diagnostics, optimization/prescription where valid, and post-intervention monitoring framework |
+| 55 | Non-negotiable professional standard | ACTIVE GOVERNANCE | Canonical specification + this matrix | Use as final acceptance gate across analytics, engineering, BI, finance and operations |
+
+## Immediate sequencing correction
+
+The project had begun Power BI Page 1 preparation before all predecessor analytical requirements were closed. The Power BI handoff already created remains valid and is preserved, but **final report development is paused as the next major workstream** until the following predecessor gaps are closed or explicitly condition-gated:
+
+1. statistical/quality-analysis layer and capability/control gate;
+2. predictive-maintenance model comparison, calibration/threshold evidence and explainability;
+3. expanded data quality, referential-integrity and observability controls;
+4. diagnostic/root-cause statistical layer;
+5. forecast comparator/validation expansion;
+6. OEE Six Big Losses / COPQ / value-leakage decomposition;
+7. scenario engine expansion and optimization decision gate;
+8. process-mining event-log feasibility gate;
+9. deeper SQL staging/quality/dimensional/KPI/reconciliation layer;
+10. table-level grain/PK/FK/cardinality/refresh dictionary and output-level lineage.
+
+Power BI Page 1 artifacts are **not discarded**. They become the validated report shell to be refreshed after these analytical layers produce final canonical measures.
+
+## Acceptance rule
+
+A requirement can move to **IMPLEMENTED** only when there is:
+
+1. an artifact or executable implementation;
+2. a documented business purpose and grain;
+3. validation evidence appropriate to the method;
+4. limitations/assumptions documented;
+5. traceability to the decision or report output it supports.
+
+No status may be upgraded based only on intent or documentation describing work that has not been executed.
