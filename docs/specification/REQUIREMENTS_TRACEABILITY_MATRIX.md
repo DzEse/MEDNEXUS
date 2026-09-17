@@ -42,8 +42,8 @@ Existing validated work remains authoritative unless superseded by a stronger, t
 | 18 | Five-level decision intelligence | PARTIAL | Descriptive KPIs, diagnostics, prediction, scenarios, decision queue | Strengthen diagnostic/statistical and prescriptive/optimization layers; monitor/learn loop |
 | 19 | MORI | IMPLEMENTED/PARTIAL | `mednexus/risk.py`, config weights, MORI export | Add missing-data policy, sensitivity analysis and fuller limitations evidence |
 | 20 | OLI | IMPLEMENTED/PARTIAL | `mednexus/analytics.py` | Add explicit decomposition/interpretation and reconcile OLI vs Six Big Losses |
-| 21 | Data Trust Score | PARTIAL | Data Trust Score 0–100 | Expand to timeliness, referential integrity, schema consistency, freshness, consistency where supported |
-| 22 | Data quality & governance / observability | PARTIAL | Null/duplicate/basic range/business checks, manifest | Add orphan/RI/date/schema/row-count drift/missingness/category drift/freshness/class imbalance/feature sparsity; observability outputs |
+| 21 | Data Trust Score | IMPLEMENTED | Data Trust Score v2 with completeness, validity, consistency, uniqueness, timeliness, referential integrity, schema consistency and freshness | Preserve project-defined labeling; production alert thresholds remain environment-specific |
+| 22 | Data quality & governance / observability | IMPLEMENTED/PARTIAL | Structural/business checks, orphan/RI hierarchy checks, schema signatures, freshness/timeliness, model-input sparsity/class balance, observability artifacts | Persistent cross-run row-count/missingness/category/model/KPI drift alerting remains a production-style extension |
 | 23 | Forecasting | PARTIAL | 3-month moving-average demand baseline with MAE/RMSE/bias | Add meaningful comparator(s), sMAPE where appropriate, explicit forecast adequacy checks; other forecasts only if supported |
 | 24 | Optimization | CONDITIONAL-GATED | Scenario prioritization only | Formally assess maintenance/intervention optimization; implement objective/constraints/variables if decision problem supports it |
 | 25 | Process analytics / process mining | CONDITIONAL-GATED | No valid full event log yet | Build/gate event-log design for Order→Production→Inspection→Rework→Release→Shipment; do not fabricate events |
@@ -56,7 +56,7 @@ Existing validated work remains authoritative unless superseded by a stronger, t
 | 32 | Public data sources | PARTIAL | UCI AI4I, UCI SECOM, NASA C-MAPSS provenance entries | Verify current source/license details and add reproducible acquisition adapters only where used; do not misrepresent as MEDNEXUS proprietary |
 | 33 | Synthetic data | IMPLEMENTED/PARTIAL | Deterministic generator with cross-domain logic | Expand only where required by unresolved domains; document every relationship and assumption |
 | 34 | Storage/computational efficiency | IMPLEMENTED/PARTIAL | Compact generated data, ignored regenerable artifacts/PBIX | Evaluate Parquet where it materially improves storage; retain personal-machine feasibility |
-| 35 | Data model | PARTIAL | Core dimensions/facts plus 29 Power BI exports | Publish table-by-table grain/PK/FK/cardinality/refresh/business meaning; add only dimensions/facts needed for unresolved story |
+| 35 | Data model | IMPLEMENTED/PARTIAL | Generated 21-table grain/PK/FK/cardinality/refresh/business register plus expanded Power BI exports | Add only dimensions/facts required by unresolved domains; keep semantic model synchronized |
 | 36 | SQL requirements | PARTIAL | SQLite views and example CTE/window/root-cause/validation SQL | Expand staging/quality/dimension/fact/KPI SQL modules and grain documentation; add reconciliation tests |
 | 37 | Python architecture | PARTIAL | Modular `mednexus/` package | Add explicit statistics, feature-engineering, explainability, observability modules as requirements mature; notebooks for investigation only |
 | 38 | Power BI requirements | PARTIAL | Semantic model, DAX, build guide, theme, Page 1 spec | Add drill-through, bookmarks, tooltips, field parameters, what-if parameters, dynamic titles, decomposition tree, Key Influencers, commentary design where justified |
@@ -65,7 +65,7 @@ Existing validated work remains authoritative unless superseded by a stronger, t
 | 41 | Experimentation | CONDITIONAL-GATED | No fabricated experiment | Define pre/post or treatment/control framework for future interventions; only calculate when valid evidence exists |
 | 42 | Testing & validation | PARTIAL | 6 tests, reproducibility guard, data-quality gate | Add SQL grain/join/KPI tests, statistical assumptions, finance/OEE/quality reconciliation, threshold/false-negative/model-health tests |
 | 43 | Data lineage | PARTIAL | LINEAGE.md and manifests | Expand output-level Source→Transformation→Table→Method→KPI/Model→BI→Decision lineage |
-| 44 | Documentation | PARTIAL | Most named documents exist | Add complete Data Dictionary and any missing canonical docs; keep interview defense outside repo |
+| 44 | Documentation | IMPLEMENTED/PARTIAL | Named core docs plus generated field-level Data Dictionary and table register | Continue updating canonical docs as later analytics close; keep interview defense outside repo |
 | 45 | Repository structure | IMPLEMENTED/PARTIAL | Professional compact structure | Add substructure only when real artifacts exist; do not create empty appearance folders |
 | 46 | User professional story | DOCUMENTED | Portfolio strategy / positioning docs | Preserve truthful transferable-skill framing; no invented analytics employment |
 | 47 | Professional positioning | DOCUMENTED | Portfolio strategy | Preserve simulated-engagement vs analyst-demonstration distinction |
