@@ -59,6 +59,9 @@ The full report currently has these additional exported tables available:
 - Downtime
 - QualityEvents
 - Maintenance
+- MORIComponentContributions
+- MORIWeightSensitivity
+- MORIThresholdSensitivity
 - QualityPareto
 - QualityPChart
 - SixBigLosses
