@@ -144,6 +144,21 @@
       "bytes": 326040
     },
     {
+      "file": "powerbi\\exports\\ProcessCases.csv",
+      "sha256": "f9d994db5ee5704765b1030d0a45fd35b0d9933953924f55bf37e024ec89ec92",
+      "bytes": 2024980
+    },
+    {
+      "file": "powerbi\\exports\\ProcessEventLog.csv",
+      "sha256": "4440553b3746c3c32b9bcfee4c3b819ea4cba60b5ae55f8eb5b2bc7272b6fd6d",
+      "bytes": 3859524
+    },
+    {
+      "file": "powerbi\\exports\\ProcessTransitions.csv",
+      "sha256": "d811cbbc8f74a4c32d0892d17409a5b079c32374dd5eb6e329cd9e8e6465e04a",
+      "bytes": 596
+    },
+    {
       "file": "powerbi\\exports\\ProductionKPI.csv",
       "sha256": "a513ea469c162df9ecfc862f868f4719b280649792422927f13f2d4832ba6f9b",
       "bytes": 3348727

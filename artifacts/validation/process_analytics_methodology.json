@@ -1,0 +1,10 @@
+{
+  "process_scope": "ORDER_FULFILLMENT_ONLY",
+  "case_id": "order_id",
+  "event_count": 35637,
+  "case_count": 11178,
+  "supported_activity_count": 4,
+  "full_process_mining_admitted": false,
+  "experimentation_admitted": false,
+  "anti_fabrication_rule": "No Production, Inspection, Rework or Release event is created because those source facts lack defensible order-level case linkage."
+}

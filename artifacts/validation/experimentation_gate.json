@@ -1,0 +1,25 @@
+{
+  "experimentation_status": "NOT_ADMITTED_NO_EXECUTED_INTERVENTION_OR_TREATMENT_ASSIGNMENT",
+  "causal_effect_estimated": false,
+  "experiment_executed": false,
+  "current_evidence": "Scenario assumptions and prospective monitoring plans exist, but no treatment assignment or observed post-intervention outcome data exist.",
+  "future_design_hierarchy": [
+    "Randomized controlled intervention where operationally feasible",
+    "Matched treatment/control or difference-in-differences when assignment is non-random but defensible",
+    "Interrupted time series / pre-post only with sufficient history and explicit causal limitations"
+  ],
+  "minimum_future_fields": [
+    "intervention_id",
+    "entity_id",
+    "intervention_type",
+    "intervention_start_date",
+    "treatment_flag",
+    "pre_period_start",
+    "post_period_end",
+    "primary_outcome",
+    "observed_outcome_value",
+    "comparison_group_id_or_rule"
+  ],
+  "admission_rule": "Estimate intervention effects only after a documented design, treatment/comparison definition, pre-intervention evidence, post-intervention observations and assumption checks exist.",
+  "decision": "Keep experimentation as a prospective validation framework; calculate no treatment effect now."
+}

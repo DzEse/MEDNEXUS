@@ -1,0 +1,32 @@
+{
+  "full_process_mining_status": "NOT_ADMITTED_MISSING_END_TO_END_CASE_LINKAGE",
+  "partial_process_analytics_status": "SUPPORTED_ORDER_FULFILLMENT_ONLY",
+  "desired_process": [
+    "Order",
+    "Production",
+    "Inspection",
+    "Rework",
+    "Release",
+    "Shipment"
+  ],
+  "supported_linked_process": [
+    "Order Created",
+    "Shipped",
+    "Delivered",
+    "Service Issue (optional)"
+  ],
+  "prohibited_fabricated_events": [
+    "Production",
+    "Inspection",
+    "Rework",
+    "Release"
+  ],
+  "missing_required_linkage": [
+    "customer order_id to production_order_id",
+    "production_order_id to quality/inspection events",
+    "case-linked rework event timestamps",
+    "case-linked release event timestamps",
+    "end-to-end order/manufacturing/shipment case identifier"
+  ],
+  "decision": "Use supported order-fulfillment cycle-time/transition analytics only. Do not run full manufacturing process mining until defensible case linkage exists."
+}
