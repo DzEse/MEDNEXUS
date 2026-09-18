@@ -94,9 +94,24 @@
       "bytes": 797727
     },
     {
+      "file": "powerbi\\exports\\PredictiveMaintenanceCalibration.csv",
+      "sha256": "3f7c9b0129802736d609dc0234b166bdd1cb334318329b5893d39e5940d44439",
+      "bytes": 859
+    },
+    {
+      "file": "powerbi\\exports\\PredictiveMaintenanceFeatureImportance.csv",
+      "sha256": "0c6783acfe6a409d5de8ec3267bb4943ea2488b4bf1b00e37e48881358822315",
+      "bytes": 677
+    },
+    {
+      "file": "powerbi\\exports\\PredictiveMaintenanceModelComparison.csv",
+      "sha256": "6b6a0c63abbb0b4715383e5ff12f7b9d168d49301b16059568abdc4ffeb5523a",
+      "bytes": 757
+    },
+    {
       "file": "powerbi\\exports\\PredictiveMaintenanceScores.csv",
-      "sha256": "acb948a8e88b6564ded2bc8d0b2ce6f3c3ef8d7d4d3241deae0a979df3b1791d",
-      "bytes": 152407
+      "sha256": "472fda198a4add0d8915e538359edd2978370687609184a50512afc4e52664ef",
+      "bytes": 208618
     },
     {
       "file": "powerbi\\exports\\ProductionKPI.csv",

@@ -1,23 +1,43 @@
 {
-  "model": "LogisticRegression baseline",
-  "split": "temporal 80/20",
-  "threshold": 0.4,
-  "precision": 0.05753595997498437,
-  "recall": 0.8,
-  "f1": 0.1073512252042007,
-  "roc_auc": 0.622066049370632,
-  "pr_auc": 0.0835915985312909,
+  "model": "LogisticRegression",
+  "split": "strict temporal holdout test",
+  "threshold": 0.75,
+  "precision": 0.1111111111111111,
+  "recall": 0.008695652173913044,
+  "f1": 0.016129032258064516,
+  "roc_auc": 0.6172268660806922,
+  "pr_auc": 0.07987731415889955,
+  "brier_score": 0.1913317121846757,
   "confusion_matrix": [
     [
-      714,
-      1507
+      2213,
+      8
     ],
     [
-      23,
-      92
+      114,
+      1
     ]
   ],
-  "test_rows": 2336,
-  "positive_rate_test": 0.04922945205479452,
-  "note": "Model-derived. Feature importance must not be interpreted as causation."
+  "rows": 2336,
+  "positive_rate": 0.04922945205479452,
+  "model_role": "selected predictive-maintenance model",
+  "selection_basis": "Highest validation PR-AUC; if models differ by <0.01, prefer LogisticRegression for simplicity.",
+  "logistic_validation_pr_auc": 0.10273181991627559,
+  "random_forest_validation_pr_auc": 0.08562017129003771,
+  "expected_calibration_error": 0.3632143397352352,
+  "false_negative_cost_weight": 5.0,
+  "false_positive_cost_weight": 1.0,
+  "train_start": "2024-09-01",
+  "train_end": "2025-11-12",
+  "validation_start": "2025-11-13",
+  "validation_end": "2026-04-07",
+  "test_start": "2026-04-08",
+  "test_end": "2026-08-31",
+  "features": [
+    "temperature_c",
+    "torque_nm",
+    "vibration_mm_s",
+    "tool_wear_index"
+  ],
+  "note": "Model-derived predictive evidence on synthetic data. Cost weights are illustrative decision weights, not observed financial costs. Feature importance and model associations are not causal conclusions."
 }

@@ -1,0 +1,5 @@
+model,feature,permutation_importance_mean,permutation_importance_std,interpretation
+LogisticRegression,temperature_c,0.027492337831250605,0.004617077556111594,Predictive contribution on the holdout set; not evidence of causation.
+LogisticRegression,vibration_mm_s,0.004808484189382111,0.003471936133230359,Predictive contribution on the holdout set; not evidence of causation.
+LogisticRegression,torque_nm,-0.00016447024873310345,0.001242701230912667,Predictive contribution on the holdout set; not evidence of causation.
+LogisticRegression,tool_wear_index,-0.0024071380035707492,0.003012292992639197,Predictive contribution on the holdout set; not evidence of causation.

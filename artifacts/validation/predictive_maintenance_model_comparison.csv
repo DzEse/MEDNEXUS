@@ -1,0 +1,3 @@
+model,split,threshold,precision,recall,f1,roc_auc,pr_auc,brier_score,confusion_matrix,rows,positive_rate,selection_metric,selection_rule
+LogisticRegression,validation,0.75,0.2857142857142857,0.03305785123966942,0.05925925925925926,0.6523291606813051,0.10273181991627559,0.20257029212668895,"[[2205, 10], [117, 4]]",2336,0.05179794520547945,validation PR-AUC,"Highest validation PR-AUC; if models differ by <0.01, prefer LogisticRegression for simplicity."
+RandomForest,validation,0.55,0.25,0.03305785123966942,0.058394160583941604,0.5954666716415127,0.08562017129003771,0.100733404673866,"[[2203, 12], [117, 4]]",2336,0.05179794520547945,validation PR-AUC,"Highest validation PR-AUC; if models differ by <0.01, prefer LogisticRegression for simplicity."

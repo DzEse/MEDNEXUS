@@ -17,7 +17,7 @@
 ## Evidence layers
 
 - Quality concentration: top defect category is **Assembly** (27.1% of defect units).
-- Predictive maintenance: Logistic Regression baseline ROC-AUC = 0.622066049370632; recall = 0.800. These are model-derived values, not causal conclusions.
+- Predictive maintenance: selected model = **LogisticRegression**; holdout PR-AUC = 0.07987731415889955; ROC-AUC = 0.6172268660806922; recall = 0.009; Brier score = 0.1913. Selection used validation data only. These are model-derived values on synthetic data, not causal conclusions.
 - Demand forecasting: moving-average baseline RMSE = 7955.50.
 
 ## Decision principle
