@@ -203,7 +203,9 @@ Required analysis:
 - shipment exceptions;
 - carrier/warehouse/route performance only if modeled;
 - logistics cost;
-- customer-service issues associated with delivery performance.
+- customer-service issues associated with delivery performance;
+- supported order-fulfillment process cycle times and Order Created → Shipped → Delivered transition bottlenecks;
+- visible disclosure that these process analytics do not represent full manufacturing process mining.
 
 ---
 
@@ -278,7 +280,8 @@ Required analysis:
 - monitoring-plan panel showing metric, owner, frequency and required future validation design;
 - priority DecisionQueue;
 - owner/urgency/confidence/basis/limitations;
-- monitoring plan for validating intervention results.
+- monitoring plan for validating intervention results;
+- experimentation-gate status showing that no treatment effect is estimated until executed intervention/comparison evidence exists.
 
 Every scenario/optimization output must show a visible **Simulated** or decision-support label.
 
