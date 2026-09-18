@@ -238,7 +238,7 @@ Average Overtime Hours = AVERAGE(Workforce[overtime_hours_per_employee])
 Unplanned Downtime Minutes = SUM(Downtime[duration_min])
 Maintenance Events = COUNTROWS(Maintenance)
 Average Maintenance Duration Minutes = AVERAGE(Maintenance[duration_min])
-Average Failure Risk = AVERAGE(PredictiveMaintenanceScores[failure_risk])
+Average Failure Risk Score = AVERAGE(PredictiveMaintenanceScores[failure_risk_score])
 Predicted Failure Flags = SUM(PredictiveMaintenanceScores[predicted_failure_flag])
 ```
 
@@ -298,10 +298,13 @@ The validation tables are disconnected evidence marts. They should be used on th
 ```DAX
 PM Validation PR-AUC = MAX(PredictiveMaintenanceModelComparison[pr_auc])
 PM Validation ROC-AUC = MAX(PredictiveMaintenanceModelComparison[roc_auc])
-PM Holdout Average Risk = AVERAGE(PredictiveMaintenanceScores[failure_risk])
+PM Holdout Average Risk Score = AVERAGE(PredictiveMaintenanceScores[failure_risk_score])
 PM Holdout Predicted Flags = SUM(PredictiveMaintenanceScores[predicted_failure_flag])
 PM Holdout Actual Failures = SUM(PredictiveMaintenanceScores[actual_failure_next_7d])
 PM Calibration Gap = AVERAGE(PredictiveMaintenanceCalibration[absolute_calibration_gap])
 ```
 
 Model-comparison visuals must state that candidate selection occurred on validation data and that the exported machine scores represent the strict temporal holdout test period. Permutation-importance visuals must include the non-causal interpretation label.
+
+
+Predictive-maintenance score labeling is controlled by the generated `score_semantics` field. When calibration is inadequate, visuals must say **risk score** rather than **failure probability**. Do not convert an uncalibrated score into a percentage-probability label.
