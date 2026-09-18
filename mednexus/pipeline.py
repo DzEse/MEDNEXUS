@@ -26,7 +26,7 @@ from .statistical_quality import (
 from .models import train_predictive_maintenance
 from .root_cause import run_root_cause_analysis
 from .forecasting import forecast_demand
-from .risk import build_mori
+from .risk import run_mori_validation
 from .scenarios import run_scenarios
 from .decision_queue import build as build_decision_queue
 from .reporting import write_management_summary
@@ -200,7 +200,13 @@ def run(clean=False, seed=None):
     write_json(forecast_metrics,path('artifacts','validation','forecast_metrics.json'))
 
     print('[6/9] Building risk, scenarios and decision queue...')
-    risk=build_mori(mart,cfg['risk']['mori_weights'])
+    mori_validation=run_mori_validation(mart,cfg['risk']['mori_weights'])
+    risk=mori_validation['mori']
+    save_frame(mori_validation['contributions'],path('artifacts','validation','mori_component_contributions.csv'))
+    save_frame(mori_validation['weight_sensitivity'],path('artifacts','validation','mori_weight_sensitivity.csv'))
+    save_frame(mori_validation['threshold_sensitivity'],path('artifacts','validation','mori_threshold_sensitivity.csv'))
+    write_json(mori_validation['sensitivity_summary'],path('artifacts','validation','mori_sensitivity_summary.json'))
+    write_json(mori_validation['methodology'],path('artifacts','validation','mori_methodology.json'))
     scenarios=run_scenarios(mart)
     dq=build_decision_queue(mart,risk,rel,qp,forecast_metrics)
     save_frame(risk,path('data','curated','mori.csv'))
@@ -245,6 +251,9 @@ def run(clean=False, seed=None):
         'QualityEvents':frames['fact_quality'],
         'Maintenance':frames['fact_maintenance'],
         'MORI':_with_month_date(risk),
+        'MORIComponentContributions':_with_month_date(mori_validation['contributions']),
+        'MORIWeightSensitivity':_with_month_date(mori_validation['weight_sensitivity']),
+        'MORIThresholdSensitivity':_with_month_date(mori_validation['threshold_sensitivity']),
         'ScenarioOutputs':scenarios,
         'DecisionQueue':dq,
         'QualityPareto':qp,
