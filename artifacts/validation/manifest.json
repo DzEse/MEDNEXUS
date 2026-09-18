@@ -4,6 +4,11 @@
   "data_trust_score": 100.0,
   "generated_files": [
     {
+      "file": "powerbi\\exports\\CapacityWaterfall.csv",
+      "sha256": "fbfff6ef17ed3d0294e55c646edf0142eea7a976ab74c50c47286a28ba3e8b9a",
+      "bytes": 8879
+    },
+    {
       "file": "powerbi\\exports\\CustomerService.csv",
       "sha256": "ef1cbfdf7d65f26955fd380bde027b1ba9bcae881acb824e1816c97e6373ae0d",
       "bytes": 111208
@@ -65,8 +70,8 @@
     },
     {
       "file": "powerbi\\exports\\EnterpriseMonthly.csv",
-      "sha256": "83e08d362355912b92847a409c1102ade25dde1617eaf5cf6b2a856e47102035",
-      "bytes": 13586
+      "sha256": "477d7e05a718ba4b303c4a0cab5da81d53cca46b3c26378b102744752e5d88a0",
+      "bytes": 16654
     },
     {
       "file": "powerbi\\exports\\Finance.csv",
@@ -95,8 +100,8 @@
     },
     {
       "file": "powerbi\\exports\\ProductionKPI.csv",
-      "sha256": "76fcf0ebcd9fdf251c63cc1342224490cc7185a846c6cb9242497041b66cd1f2",
-      "bytes": 3133157
+      "sha256": "a513ea469c162df9ecfc862f868f4719b280649792422927f13f2d4832ba6f9b",
+      "bytes": 3348727
     },
     {
       "file": "powerbi\\exports\\QualityEvents.csv",
@@ -107,6 +112,11 @@
       "file": "powerbi\\exports\\QualityPareto.csv",
       "sha256": "703d8d67bd42d667fc6c7cddd191e606f528fc7071b2d54f577c7824b7faca59",
       "bytes": 321
+    },
+    {
+      "file": "powerbi\\exports\\QualityPChart.csv",
+      "sha256": "e92ba3a3ee4adf86d4997959cf53b08c4e55d05b719f27e7f963fbe4feec6404",
+      "bytes": 213098
     },
     {
       "file": "powerbi\\exports\\Recruitment.csv",
@@ -134,6 +144,11 @@
       "bytes": 967457
     },
     {
+      "file": "powerbi\\exports\\SixBigLosses.csv",
+      "sha256": "30c949f9f7cde4ace9fe9ef80cc8f8a635e6d571053adee287197c1fc190c703",
+      "bytes": 16348
+    },
+    {
       "file": "powerbi\\exports\\Supply.csv",
       "sha256": "0e55a5b7bb05bbce6c373e04c1033befd590e3e747165d522d0249d5aa21091b",
       "bytes": 20792
@@ -142,6 +157,11 @@
       "file": "powerbi\\exports\\TechnologyIncidents.csv",
       "sha256": "020021f5b61e477cacbe4fa791c17c8811b2a8038ffecd6ac34cd0080b2c3f90",
       "bytes": 18036
+    },
+    {
+      "file": "powerbi\\exports\\ValueLeakage.csv",
+      "sha256": "0c8aaeb64ef5395d76026d8c0008c0684150ee917df4a0a499639094004cae06",
+      "bytes": 9895
     },
     {
       "file": "powerbi\\exports\\Workforce.csv",

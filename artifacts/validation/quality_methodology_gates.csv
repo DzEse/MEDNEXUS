@@ -1,0 +1,8 @@
+method,status,reason,required_evidence
+First Pass Yield (FPY),IMPLEMENTED,Synthetic defect_units represent units failing the first pass; total_count - defect_units therefore represents units passing without rework.,total_count and defect_units at production-order grain
+Rolled Throughput Yield (RTY),NOT_CALCULABLE,Sequential process-stage yields are not modeled.,ordered stage-level first-pass yields for the same units
+DPMO,NOT_CALCULABLE,Defect opportunities per unit are undefined.,"defect count, units, and defensible opportunities per unit"
+p chart,IMPLEMENTED,Daily plant-level defective-unit proportions have varying subgroup sizes and support a binomial proportion chart.,defect_units and total_count by rational daily plant subgroup
+Cp/Cpk/Pp/Ppk,NOT_CALCULABLE,No valid engineering specification limits exist in the canonical synthetic data.,validated USL/LSL and a continuous quality characteristic with suitable distribution/stability assessment
+Startup Reject loss,NOT_CALCULABLE,The production data does not identify startup-period rejects separately from other defects.,startup/changeover phase marker plus rejected-unit counts
+Full COPQ,NOT_CALCULABLE,Rework labor/time cost and external failure cost are not separately observed.,"rework resource cost, appraisal/prevention policy if included, and external failure cost definitions"

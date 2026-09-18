@@ -8,7 +8,7 @@
 - Operating cost: $31,046,396
 - OEE: 78.7%
 - OLI: 23.3%
-- FPY proxy: 97.1%
+- FPY: 97.2%
 - On-time delivery: 57.9%
 - Capacity gap: 7.5%
 - MORI: 70.1 (Elevated)
