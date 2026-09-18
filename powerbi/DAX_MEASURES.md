@@ -344,3 +344,30 @@ MAX(DemandForecastDiagnostics[bias_forecast_minus_actual])
 ```
 
 Forecast visuals must retain the **Model-derived** disclosure and show the generated adequacy status. If the status is limited, do not imply the selected model has proven forecasting superiority.
+
+
+## MORI sensitivity measures
+
+MORI sensitivity tables are disconnected evidence marts. MORI must remain visibly labeled **Project-defined index**.
+
+```DAX
+MORI Component Contribution Points =
+SUM(MORIComponentContributions[weighted_contribution_points])
+
+MORI Weight Sensitivity Max Abs Delta =
+MAX(MORIWeightSensitivity[absolute_score_delta])
+
+MORI Weight Sensitivity Band Changes =
+CALCULATE(
+    COUNTROWS(MORIWeightSensitivity),
+    MORIWeightSensitivity[band_changed_vs_baseline] = TRUE()
+)
+
+MORI Threshold Sensitivity Band Changes =
+CALCULATE(
+    COUNTROWS(MORIThresholdSensitivity),
+    MORIThresholdSensitivity[band_changed_vs_baseline] = TRUE()
+)
+```
+
+Do not interpret MORI as an externally calibrated probability, regulatory risk score or causal estimate. If a MORI row is unavailable because a required component is missing, Power BI must preserve that unavailable state rather than substituting zero or recalculating a partial score.
