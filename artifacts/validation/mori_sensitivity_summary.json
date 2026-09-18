@@ -1,0 +1,20 @@
+{
+  "latest_month": "2026-08",
+  "baseline_latest_score": 70.05450716728754,
+  "baseline_latest_band": "Elevated",
+  "weight_perturbation_relative": 0.25,
+  "weight_sensitivity_latest_min_score": 69.41870775480695,
+  "weight_sensitivity_latest_max_score": 70.7078550279319,
+  "weight_sensitivity_latest_max_absolute_delta": 0.6533478606443595,
+  "weight_sensitivity_latest_band_changes": 0,
+  "weight_sensitivity_all_period_band_change_rate": 0.044270833333333336,
+  "threshold_shift_points": 5.0,
+  "threshold_sensitivity_latest_bands": [
+    "Critical",
+    "Elevated"
+  ],
+  "threshold_sensitivity_latest_band_changes": 1,
+  "missing_data_policy": "fail_closed_no_partial_score",
+  "normalization_method": "full_available_history_min_max",
+  "interpretation": "Sensitivity evidence tests dependence on configured weights and band thresholds. It does not establish MORI as an externally validated risk scale."
+}

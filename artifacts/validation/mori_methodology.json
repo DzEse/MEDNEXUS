@@ -1,0 +1,42 @@
+{
+  "index_name": "MEDNEXUS Operational Risk Index (MORI)",
+  "index_status": "project_defined_not_industry_standard",
+  "components": [
+    "quality",
+    "equipment",
+    "downtime",
+    "capacity",
+    "supply",
+    "logistics",
+    "workforce",
+    "technology"
+  ],
+  "weights": {
+    "quality": 0.16,
+    "equipment": 0.16,
+    "downtime": 0.12,
+    "capacity": 0.12,
+    "supply": 0.12,
+    "logistics": 0.1,
+    "workforce": 0.1,
+    "technology": 0.12
+  },
+  "normalization": "Per-component min-max normalization across the full available canonical history; logistics is inverted so lower on-time delivery produces higher risk.",
+  "score_construction": "Sum(normalized_component_risk * configured_weight) * 100",
+  "bands": {
+    "Stable": "0 <= score < 25",
+    "Watch": "25 <= score < 50",
+    "Elevated": "50 <= score < 75",
+    "Critical": "75 <= score <= 100"
+  },
+  "missing_data_policy": "Fail closed by month: if any required MORI component is missing, do not renormalize remaining weights and do not produce a partial composite score.",
+  "sensitivity": "Each configured component weight is perturbed +/-25% one at a time and the full weight vector is renormalized to sum to 1. Band thresholds are also shifted +/-5 points.",
+  "limitations": [
+    "MORI is project-defined and has no external calibration or industry-standard status.",
+    "Full-history min-max normalization makes historical scores relative to the current dataset and can change when history expands.",
+    "Component weights are analytical design choices rather than empirically estimated causal weights.",
+    "Correlated components can double-count related operational pressure.",
+    "Band thresholds are governance choices, not externally validated risk cutoffs.",
+    "Sensitivity analysis assesses robustness to design choices but does not validate real-world risk outcomes."
+  ]
+}

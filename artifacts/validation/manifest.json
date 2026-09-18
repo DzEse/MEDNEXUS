@@ -100,8 +100,23 @@
     },
     {
       "file": "powerbi\\exports\\MORI.csv",
-      "sha256": "7d40bc8eafafbb542447d3b5040d31a00c4ce15fe2d0bd28e7b252f7b05efa7f",
-      "bytes": 4666
+      "sha256": "bf48b4fcfcd919a34bbd34407449f22246d62c342ecc10da82ba9f9691ca60ec",
+      "bytes": 10815
+    },
+    {
+      "file": "powerbi\\exports\\MORIComponentContributions.csv",
+      "sha256": "f3d2650458263f9d78edcb628dc4c6af7066f2e890caab44cea33fcc327bde7e",
+      "bytes": 36557
+    },
+    {
+      "file": "powerbi\\exports\\MORIThresholdSensitivity.csv",
+      "sha256": "2419409d916a03154f5aac5ccb4ff9d16f07b4b3ab33fe1014f66cdb40fd1a38",
+      "bytes": 7068
+    },
+    {
+      "file": "powerbi\\exports\\MORIWeightSensitivity.csv",
+      "sha256": "e2fceca6c7812dc7a60742221f9cabb8031b928b39c5466c64337e03f9dce285",
+      "bytes": 163146
     },
     {
       "file": "powerbi\\exports\\Orders.csv",
