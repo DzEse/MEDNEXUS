@@ -181,6 +181,7 @@ def test_layered_sql_contains_staging_dimension_fact_kpi_and_validation_views(ca
             'kpi_monthly_operations',
             'val_order_fulfillment_grain',
             'val_machine_hierarchy_grain',
+            'kpi_supplier_risk_ranked',
         }.issubset(views)
     finally:
         con.close()
