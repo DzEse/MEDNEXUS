@@ -29,6 +29,12 @@ from .forecasting import forecast_demand
 from .risk import run_mori_validation
 from .scenarios import run_scenarios
 from .process_analytics import run_process_and_experiment_gates
+from .architecture_governance import (
+    build_operations_twin_catalog,
+    build_output_lineage_registry,
+    build_analysis_design_checklist,
+    run_persistent_drift_monitor,
+)
 from .decision_queue import build as build_decision_queue
 from .reporting import write_management_summary
 from .utils import save_frame, write_json, file_sha256
@@ -153,6 +159,22 @@ def run(clean=False, seed=None):
     save_frame(leakage,path('data','curated','value_leakage.csv'))
     save_frame(quality_gates,path('artifacts','validation','quality_methodology_gates.csv'))
 
+    twin_catalog=build_operations_twin_catalog()
+    output_lineage=build_output_lineage_registry()
+    analysis_checklist=build_analysis_design_checklist()
+    drift_profile,drift_comparison,drift_summary=run_persistent_drift_monitor(
+        table_q,
+        model_profile,
+        mart,
+        path('artifacts','runtime','observability_baseline.csv'),
+    )
+    save_frame(twin_catalog,path('artifacts','validation','enterprise_operations_twin.csv'))
+    save_frame(output_lineage,path('artifacts','validation','output_lineage_registry.csv'))
+    save_frame(analysis_checklist,path('artifacts','validation','analysis_design_checklist.csv'))
+    save_frame(drift_profile,path('artifacts','validation','observability_current_profile.csv'))
+    save_frame(drift_comparison,path('artifacts','validation','cross_run_drift.csv'))
+    write_json(drift_summary,path('artifacts','validation','cross_run_drift_summary.json'))
+
     root_cause=run_root_cause_analysis(frames)
     save_frame(root_cause['segments'],path('data','curated','root_cause_segments.csv'))
     save_frame(root_cause['associations'],path('data','curated','root_cause_associations.csv'))
@@ -257,6 +279,31 @@ def run(clean=False, seed=None):
     forecast_comparison.to_sql('mart_forecast_model_comparison',con,if_exists='replace',index=False)
     forecast_diagnostics.to_sql('mart_forecast_diagnostics',con,if_exists='replace',index=False)
     execute_sql_file(con,path('sql','analytical_views.sql'))
+    execute_sql_file(con,path('sql','layered_architecture.sql'))
+    sql_views = pd.read_sql_query(
+        "SELECT name FROM sqlite_master WHERE type='view' ORDER BY name",
+        con,
+    )['name'].tolist()
+    expected_layered_views = [
+        'stg_production_validated',
+        'dim_machine_hierarchy',
+        'fact_order_fulfillment_enriched',
+        'kpi_monthly_operations',
+        'val_order_fulfillment_grain',
+        'val_machine_hierarchy_grain',
+    ]
+    missing_layered_views = [name for name in expected_layered_views if name not in sql_views]
+    if missing_layered_views:
+        raise RuntimeError(f'Layered SQL contract failed: {missing_layered_views}')
+    order_grain = pd.read_sql_query('SELECT * FROM val_order_fulfillment_grain', con).iloc[0].to_dict()
+    machine_grain = pd.read_sql_query('SELECT * FROM val_machine_hierarchy_grain', con).iloc[0].to_dict()
+    write_json({
+        'expected_views': expected_layered_views,
+        'missing_views': missing_layered_views,
+        'order_fulfillment_grain': order_grain,
+        'machine_hierarchy_grain': machine_grain,
+        'status': 'PASS',
+    },path('artifacts','validation','sql_layer_contract.json'))
     con.close()
 
     print('[8/9] Exporting Power BI-ready datasets and reports...')
