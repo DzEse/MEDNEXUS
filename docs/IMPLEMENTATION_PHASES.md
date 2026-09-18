@@ -17,8 +17,8 @@ Phase status is based on evidence closure, not file existence.
 | 10 | Forecasting | Validated rolling-origin comparator framework |
 | 11 | Risk intelligence | MORI validated with missing-data and sensitivity controls |
 | 12 | Scenario / decision / optimization gate | Scenario engine implemented; optimization/process-mining/experimentation formally gated where evidence is insufficient |
-| 13 | Power BI semantic model | Strong documented baseline; final relationship audit and refresh are next |
-| 14 | Power BI report development | Preserved Page 1 shell; full 13-question build remains |
+| 13 | Power BI semantic model | Contract validated in Phase 12; physical Power BI Desktop model build/reconciliation remains |
+| 14 | Power BI report development | Next active boundary — build/refresh the 13-question report against the validated semantic contract |
 | 15 | Validation / reconciliation | Strong automated baseline; final BI-to-analytics reconciliation remains |
 | 16 | Documentation closeout | Strong baseline; final update/QC execution remains |
 | 17 | Portfolio / GitHub presentation | Not final; screenshots and final README evidence wait for Power BI completion |
@@ -27,7 +27,7 @@ Phase status is based on evidence closure, not file existence.
 
 Predecessor analytical work through process/experimentation gating and Phase 11 architecture governance is now closed or explicitly condition-gated.
 
-The next major workstream is the **final Power BI semantic-model and report build**, followed by BI reconciliation, documentation closeout and portfolio presentation.
+The next major workstream is the **actual Power BI Desktop model/report build**, followed by PBIX reconciliation, documentation closeout and portfolio presentation.
 
 ## Dependency rule
 
