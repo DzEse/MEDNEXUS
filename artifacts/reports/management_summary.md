@@ -18,7 +18,7 @@
 
 - Quality concentration: top defect category is **Assembly** (27.1% of defect units).
 - Predictive maintenance: selected model = **LogisticRegression**; holdout PR-AUC = 0.07987731415889955; ROC-AUC = 0.6172268660806922; recall = 0.643; Brier score = 0.1913. Selection used validation data only. These are model-derived values on synthetic data, not causal conclusions.
-- Demand forecasting: moving-average baseline RMSE = 7955.50.
+- Demand forecasting: selected model = **Seasonal naive (12-month)**; rolling-origin MAE = 6262.75; RMSE = 7326.44; sMAPE = 5.13%; adequacy = PASS_OUTPERFORMS_NAIVE_ON_MAE_AND_RMSE. Forecast values are model-derived from synthetic demand.
 
 ## Decision principle
 

@@ -20,8 +20,23 @@
     },
     {
       "file": "powerbi\\exports\\DemandForecast.csv",
-      "sha256": "3c4d0bd6ddc53d8b1f43c41969e0705e72052957d18c3a9d25c43ac76a1719e8",
-      "bytes": 115
+      "sha256": "7778162e35eb62d5359f73407260ec64df569a7e4c8a94a8a998fe8f44673ea9",
+      "bytes": 555
+    },
+    {
+      "file": "powerbi\\exports\\DemandForecastBacktest.csv",
+      "sha256": "8415aa7ef4178e41abf6acdaedb0925c25e4666755334df5a9677090bc220e46",
+      "bytes": 9002
+    },
+    {
+      "file": "powerbi\\exports\\DemandForecastDiagnostics.csv",
+      "sha256": "f7af8922df42a0d49dcb5614f2dc7f4e9bf8487d45f2bdce91a1fe63caece7c7",
+      "bytes": 1070
+    },
+    {
+      "file": "powerbi\\exports\\DemandForecastModelComparison.csv",
+      "sha256": "8fb9aeb40957798c56ae9e471eea27cb0e206dc8f770b1907c72f71ac60f6491",
+      "bytes": 1931
     },
     {
       "file": "powerbi\\exports\\DimCustomer.csv",
