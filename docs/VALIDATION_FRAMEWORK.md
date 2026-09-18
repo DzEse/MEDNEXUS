@@ -44,7 +44,20 @@ RTY and DPMO are likewise fail-closed.
 
 ## ML
 
-Temporal train/test separation, class weighting, recall-sensitive threshold and multiple classification metrics remain part of the predictive-maintenance validation layer.
+Predictive maintenance now uses a strict train/validation/test temporal design. Validation data is used for Logistic Regression vs Random Forest comparison and threshold/error-cost selection; the final test period remains untouched until holdout evaluation.
+
+Validation evidence includes:
+
+- validation PR-AUC/ROC-AUC and candidate comparison;
+- explicit false-negative vs false-positive decision weights;
+- threshold sweep and confusion-matrix evidence;
+- holdout precision, recall, F1, ROC-AUC and PR-AUC;
+- Brier score and binned calibration evidence;
+- permutation feature importance on the holdout period;
+- strict date ordering and non-overlap tests;
+- anti-causal interpretation labels.
+
+Gradient boosting, SHAP/PDP and probability recalibration remain conditional extensions rather than forced complexity.
 
 ## Forecasting
 
