@@ -308,3 +308,39 @@ Model-comparison visuals must state that candidate selection occurred on validat
 
 
 Predictive-maintenance score labeling is controlled by the generated `score_semantics` field. When calibration is inadequate, visuals must say **risk score** rather than **failure probability**. Do not convert an uncalibrated score into a percentage-probability label.
+
+
+## Forecast validation measures
+
+The forecast comparison and diagnostic tables are validation evidence marts. Keep them disconnected from the operational star schema.
+
+```DAX
+Selected Forecast MAE =
+CALCULATE(
+    MIN(DemandForecastModelComparison[mae]),
+    DemandForecastModelComparison[selection_rank] = 1
+)
+
+Selected Forecast RMSE =
+CALCULATE(
+    MIN(DemandForecastModelComparison[rmse]),
+    DemandForecastModelComparison[selection_rank] = 1
+)
+
+Selected Forecast sMAPE % =
+CALCULATE(
+    MIN(DemandForecastModelComparison[smape_pct]),
+    DemandForecastModelComparison[selection_rank] = 1
+)
+
+Forecast MAE Improvement vs Naive % =
+CALCULATE(
+    MIN(DemandForecastModelComparison[mae_improvement_vs_naive_pct]),
+    DemandForecastModelComparison[selection_rank] = 1
+)
+
+Forecast Bias =
+MAX(DemandForecastDiagnostics[bias_forecast_minus_actual])
+```
+
+Forecast visuals must retain the **Model-derived** disclosure and show the generated adequacy status. If the status is limited, do not imply the selected model has proven forecasting superiority.
