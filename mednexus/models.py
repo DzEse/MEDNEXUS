@@ -25,6 +25,8 @@ FEATURES = ['temperature_c', 'torque_nm', 'vibration_mm_s', 'tool_wear_index']
 TARGET = 'failure_next_7d'
 FALSE_NEGATIVE_COST = 5.0
 FALSE_POSITIVE_COST = 1.0
+MIN_VALIDATION_RECALL = 0.70
+MAX_ECE_FOR_PROBABILITY_LABEL = 0.10
 THRESHOLDS = np.round(np.arange(0.05, 0.96, 0.05), 2)
 
 
@@ -107,15 +109,21 @@ def _threshold_table(model_name, y_true, prob):
                 'false_positive_cost_weight': FALSE_POSITIVE_COST,
                 'weighted_error_cost': float(total_cost),
                 'weighted_error_cost_per_1000': float(total_cost / max(len(y_true), 1) * 1000),
+                'meets_recall_floor': bool(recall_score(y_true, pred, zero_division=0) >= MIN_VALIDATION_RECALL),
             }
         )
     return pd.DataFrame(rows)
 
 
 def _choose_threshold(table: pd.DataFrame):
-    ranked = table.sort_values(
-        ['weighted_error_cost', 'recall', 'threshold'],
-        ascending=[True, False, True],
+    feasible = table[table['recall'] >= MIN_VALIDATION_RECALL].copy()
+    if feasible.empty:
+        raise RuntimeError(
+            f'No validation threshold satisfies the minimum recall floor of {MIN_VALIDATION_RECALL:.2f}.'
+        )
+    ranked = feasible.sort_values(
+        ['weighted_error_cost', 'recall', 'precision', 'threshold'],
+        ascending=[True, False, False, True],
     )
     return float(ranked.iloc[0]['threshold'])
 
@@ -233,6 +241,16 @@ def train_predictive_maintenance(sensor: pd.DataFrame, model_path=None):
 
     calibration = _calibration_table(selected_model_name, y_test, test_prob)
     ece = _expected_calibration_error(calibration)
+    calibration_status = (
+        'ACCEPTABLE_FOR_PROJECT_PROBABILITY_INTERPRETATION'
+        if ece is not None and ece <= MAX_ECE_FOR_PROBABILITY_LABEL
+        else 'INADEQUATE_FOR_PROBABILITY_INTERPRETATION'
+    )
+    score_semantics = (
+        'estimated_failure_probability'
+        if calibration_status == 'ACCEPTABLE_FOR_PROJECT_PROBABILITY_INTERPRETATION'
+        else 'uncalibrated_failure_risk_score'
+    )
 
     importance_result = permutation_importance(
         selected_model,
@@ -258,10 +276,12 @@ def train_predictive_maintenance(sensor: pd.DataFrame, model_path=None):
     pred = (test_prob >= selected_threshold).astype(int)
     scored = test[['date', 'machine_id', 'plant_id', 'line_id']].copy()
     scored['failure_risk'] = test_prob
+    scored['failure_risk_score'] = test_prob
     scored['predicted_failure_flag'] = pred
     scored['actual_failure_next_7d'] = y_test.to_numpy()
     scored['selected_model'] = selected_model_name
     scored['decision_threshold'] = selected_threshold
+    scored['score_semantics'] = score_semantics
 
     metrics = {
         **test_metrics,
@@ -273,6 +293,12 @@ def train_predictive_maintenance(sensor: pd.DataFrame, model_path=None):
         'logistic_validation_pr_auc': log_pr,
         'random_forest_validation_pr_auc': rf_pr,
         'expected_calibration_error': ece,
+        'calibration_status': calibration_status,
+        'score_semantics': score_semantics,
+        'minimum_validation_recall': MIN_VALIDATION_RECALL,
+        'threshold_policy': (
+            'Minimize validation weighted error cost only among thresholds meeting the minimum validation recall floor.'
+        ),
         'false_negative_cost_weight': FALSE_NEGATIVE_COST,
         'false_positive_cost_weight': FALSE_POSITIVE_COST,
         'train_start': str(train['date'].min().date()),
@@ -284,7 +310,8 @@ def train_predictive_maintenance(sensor: pd.DataFrame, model_path=None):
         'features': FEATURES,
         'note': (
             'Model-derived predictive evidence on synthetic data. Cost weights are illustrative decision weights, '
-            'not observed financial costs. Feature importance and model associations are not causal conclusions.'
+            'not observed financial costs. Raw scores are labeled as uncalibrated unless holdout calibration is adequate. '
+            'Feature importance and model associations are not causal conclusions.'
         ),
     }
 
