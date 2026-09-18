@@ -23,3 +23,13 @@
 - Rework resource cost and external failure cost are not separately observed, so full COPQ is intentionally omitted.
 - p-chart signals indicate statistical behavior requiring investigation, not causal explanations.
 - Power BI is specified but the PBIX file must be built by the user.
+
+
+## Predictive-maintenance-specific limitations
+
+- Candidate selection is based on synthetic validation data and cannot establish real-world model superiority.
+- False-negative and false-positive weights are illustrative decision weights, not measured financial or safety costs.
+- The holdout test set measures performance only under the simulated data-generating process.
+- Calibration diagnostics do not establish that probabilities are suitable for safety-critical decision-making.
+- Permutation importance measures predictive contribution, not causal effect.
+- No clinical, patient-safety or regulated medical-device inference should be drawn from the model.
