@@ -81,6 +81,7 @@ For `Shipments[promised_date]` and `Shipments[actual_delivery_date]`, create ina
 - Hide surrogate/technical key columns from report view where they are not useful to report consumers.
 - Keep scenario outputs disconnected unless using a deliberate scenario-selector pattern.
 - `QualityPareto` and `DecisionQueue` are presentation marts and can remain disconnected.
+- `PredictiveMaintenanceModelComparison`, `PredictiveMaintenanceCalibration`, and `PredictiveMaintenanceFeatureImportance` are validation/explainability marts and should remain disconnected from the operational star schema. Use them only on model-validation/reporting surfaces.
 - `SixBigLosses`, `CapacityWaterfall`, and `ValueLeakage` are monthly analytical marts; relate them to `DimDate[date]` through `month_date` only, not to detailed facts.
 - Do not fabricate relationships for gated metrics such as RTY, DPMO, capability indices, startup rejects, or full COPQ.
 - Validate totals after every relationship change to ensure filters do not duplicate fact rows.
