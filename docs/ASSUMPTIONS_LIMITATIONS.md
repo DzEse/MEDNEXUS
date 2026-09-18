@@ -43,3 +43,14 @@
 - Kruskal-Wallis results identify distribution differences but do not identify which operational mechanism created the difference.
 - Diagnostic-tree split importance is exploratory and in-sample; it is not causal attribution.
 - Synthetic generator relationships are known by construction and do not establish real-world generalization.
+
+
+## Forecasting-specific limitations
+
+- The canonical demand history contains only 24 synthetic monthly periods, so forecasting complexity is intentionally constrained.
+- Rolling-origin backtesting measures synthetic historical generalization only.
+- A model can be statistically best among the tested candidates without being operationally adequate in a real enterprise.
+- Residual autocorrelation diagnostics have limited power with the available backtest length.
+- Seasonal-naive comparison is supported because at least 12 months of history exist, but two years of data is still weak evidence for stable annual seasonality.
+- Linear-trend extrapolation is descriptive and may become unreliable if structural demand conditions change.
+- Future demand values remain model-derived and must not be presented as guaranteed outcomes.
