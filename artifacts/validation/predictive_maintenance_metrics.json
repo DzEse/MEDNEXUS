@@ -1,21 +1,21 @@
 {
   "model": "LogisticRegression",
   "split": "strict temporal holdout test",
-  "threshold": 0.75,
-  "precision": 0.1111111111111111,
-  "recall": 0.008695652173913044,
-  "f1": 0.016129032258064516,
+  "threshold": 0.4,
+  "precision": 0.06026058631921824,
+  "recall": 0.6434782608695652,
+  "f1": 0.11020104244229337,
   "roc_auc": 0.6172268660806922,
   "pr_auc": 0.07987731415889955,
   "brier_score": 0.1913317121846757,
   "confusion_matrix": [
     [
-      2213,
-      8
+      1067,
+      1154
     ],
     [
-      114,
-      1
+      41,
+      74
     ]
   ],
   "rows": 2336,
@@ -25,6 +25,10 @@
   "logistic_validation_pr_auc": 0.10273181991627559,
   "random_forest_validation_pr_auc": 0.08562017129003771,
   "expected_calibration_error": 0.3632143397352352,
+  "calibration_status": "INADEQUATE_FOR_PROBABILITY_INTERPRETATION",
+  "score_semantics": "uncalibrated_failure_risk_score",
+  "minimum_validation_recall": 0.7,
+  "threshold_policy": "Minimize validation weighted error cost only among thresholds meeting the minimum validation recall floor.",
   "false_negative_cost_weight": 5.0,
   "false_positive_cost_weight": 1.0,
   "train_start": "2024-09-01",
@@ -39,5 +43,5 @@
     "vibration_mm_s",
     "tool_wear_index"
   ],
-  "note": "Model-derived predictive evidence on synthetic data. Cost weights are illustrative decision weights, not observed financial costs. Feature importance and model associations are not causal conclusions."
+  "note": "Model-derived predictive evidence on synthetic data. Cost weights are illustrative decision weights, not observed financial costs. Raw scores are labeled as uncalibrated unless holdout calibration is adequate. Feature importance and model associations are not causal conclusions."
 }
