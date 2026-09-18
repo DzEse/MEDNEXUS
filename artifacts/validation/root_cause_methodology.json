@@ -1,0 +1,45 @@
+{
+  "analysis_target": "first-pass defect rate",
+  "evidence_hierarchy": [
+    "Pareto",
+    "trend",
+    "segmentation with Wilson intervals",
+    "Spearman association with FDR correction and quartile contrast",
+    "Kruskal-Wallis group comparison with epsilon-squared",
+    "grouped-binomial GLM with robust covariance and VIF",
+    "shallow diagnostic tree",
+    "business validation"
+  ],
+  "causal_claim": false,
+  "required_interpretation": "Outputs identify association and investigation priority only. They do not establish root cause causally.",
+  "regression_diagnostics": {
+    "model": "Grouped-binomial GLM",
+    "covariance": "HC0 robust",
+    "analysis_grain": "production_order_machine_day",
+    "rows": 11680,
+    "total_units": 3275889,
+    "total_defects": 87673,
+    "predictor_count": 5,
+    "deviance": 17028.895861686768,
+    "df_resid": 11674.0,
+    "deviance_per_df_resid": 1.45870274641826,
+    "max_vif": 4.0828832540932884,
+    "converged": true,
+    "adequacy_notes": [
+      "Grouped-binomial form respects defect counts and production exposure.",
+      "Predictors are standardized before fitting.",
+      "HC0 robust covariance is used for inferential uncertainty.",
+      "VIF is reported to expose multicollinearity.",
+      "Association estimates are not causal effects.",
+      "Synthetic-data relationships may not generalize to real operations."
+    ]
+  },
+  "tree_diagnostics": {
+    "model": "DecisionTreeRegressor diagnostic segmentation",
+    "max_depth": 3,
+    "min_samples_leaf": 350,
+    "weighted_r2_in_sample": 0.12711368814863921,
+    "purpose": "Exploratory segmentation / investigation prioritization only",
+    "causal_status": "NOT_CAUSAL"
+  }
+}

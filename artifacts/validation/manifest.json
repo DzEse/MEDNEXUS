@@ -144,6 +144,36 @@
       "bytes": 1732
     },
     {
+      "file": "powerbi\\exports\\RootCauseAssociations.csv",
+      "sha256": "83d72956a55da2678df0bdc080fa1892f340de7366a191b26db5bc7c4ddb1406",
+      "bytes": 1810
+    },
+    {
+      "file": "powerbi\\exports\\RootCauseGroupTests.csv",
+      "sha256": "f52f15fd6d58cfd02d57a0cb48a8f0caf1e2ed95f324805d27aac5a923233921",
+      "bytes": 1566
+    },
+    {
+      "file": "powerbi\\exports\\RootCausePriorities.csv",
+      "sha256": "9e14f732ebc6a99098e132693c7ab0844f9df3dac58264cd9ad6a3fe643c6b8f",
+      "bytes": 3769
+    },
+    {
+      "file": "powerbi\\exports\\RootCauseRegression.csv",
+      "sha256": "e2eb49873dc3fd3b19843d34267bbef935646be50aba55e89217aa81fa5babe5",
+      "bytes": 2110
+    },
+    {
+      "file": "powerbi\\exports\\RootCauseSegments.csv",
+      "sha256": "05848360300281ab6446864492f198b6066c583c52f923caa47524a021817231",
+      "bytes": 9368
+    },
+    {
+      "file": "powerbi\\exports\\RootCauseTreeImportance.csv",
+      "sha256": "5019ea63e88700d855e08524f903292d949147879609d57cffe9e881b64a0f9c",
+      "bytes": 675
+    },
+    {
       "file": "powerbi\\exports\\SaaSUsage.csv",
       "sha256": "e1263eb899d5d5f2ea6f0bb6c1446ae5310296eef5d977de63773ac2e2fb4777",
       "bytes": 149921

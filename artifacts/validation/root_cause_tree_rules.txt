@@ -1,0 +1,19 @@
+|--- unplanned_downtime_min <= 38.7411
+|   |--- capacity_gap_pct <= 0.0523
+|   |   |--- unplanned_downtime_min <= 14.5604
+|   |   |   |--- value: [0.0211]
+|   |   |--- unplanned_downtime_min >  14.5604
+|   |   |   |--- value: [0.0244]
+|   |--- capacity_gap_pct >  0.0523
+|   |   |--- unplanned_downtime_min <= 22.7246
+|   |   |   |--- value: [0.0251]
+|   |   |--- unplanned_downtime_min >  22.7246
+|   |   |   |--- value: [0.0288]
+|--- unplanned_downtime_min >  38.7411
+|   |--- unplanned_downtime_min <= 74.2496
+|   |   |--- unplanned_downtime_min <= 52.2432
+|   |   |   |--- value: [0.0296]
+|   |   |--- unplanned_downtime_min >  52.2432
+|   |   |   |--- value: [0.0330]
+|   |--- unplanned_downtime_min >  74.2496
+|   |   |--- value: [0.0383]
