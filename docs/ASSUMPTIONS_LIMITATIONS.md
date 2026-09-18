@@ -65,3 +65,12 @@
 - Stable/Watch/Elevated/Critical thresholds are project-defined governance bands, not validated real-world risk cutoffs.
 - The index fails closed when any required component is missing; MEDNEXUS does not renormalize remaining components into a partial score.
 - Weight and threshold sensitivity assess robustness to design choices but do not prove predictive validity or causation.
+
+
+## Scenario/optimization-specific limitations
+
+- Scenario response relationships are illustrative assumptions, not estimated causal intervention effects.
+- Simulated opportunity value is not realized savings.
+- The scenario ranking is a prioritization heuristic rather than mathematical optimization.
+- Formal optimization is not admitted because defensible intervention costs, resource/budget constraints, response functions and objective trade-off weights are not all available.
+- Monitoring plans are prospective only; no intervention has been executed or experimentally evaluated.
