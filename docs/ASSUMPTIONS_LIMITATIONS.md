@@ -54,3 +54,14 @@
 - Seasonal-naive comparison is supported because at least 12 months of history exist, but two years of data is still weak evidence for stable annual seasonality.
 - Linear-trend extrapolation is descriptive and may become unreliable if structural demand conditions change.
 - Future demand values remain model-derived and must not be presented as guaranteed outcomes.
+
+
+## MORI-specific limitations
+
+- MORI is a project-defined composite index and is not an industry-standard or externally validated risk scale.
+- Component weights are analytical governance choices rather than estimated causal coefficients.
+- Full-history min-max normalization makes the index relative to the current canonical history and can change when new history is added.
+- Correlated components can represent overlapping operational pressure and may partially double-count risk.
+- Stable/Watch/Elevated/Critical thresholds are project-defined governance bands, not validated real-world risk cutoffs.
+- The index fails closed when any required component is missing; MEDNEXUS does not renormalize remaining components into a partial score.
+- Weight and threshold sensitivity assess robustness to design choices but do not prove predictive validity or causation.
