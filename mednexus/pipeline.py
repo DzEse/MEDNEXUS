@@ -28,6 +28,7 @@ from .root_cause import run_root_cause_analysis
 from .forecasting import forecast_demand
 from .risk import run_mori_validation
 from .scenarios import run_scenarios
+from .process_analytics import run_process_and_experiment_gates
 from .decision_queue import build as build_decision_queue
 from .reporting import write_management_summary
 from .utils import save_frame, write_json, file_sha256
@@ -221,6 +222,17 @@ def run(clean=False, seed=None):
     write_json(optimization,path('artifacts','validation','optimization_gate.json'))
     save_frame(dq,path('data','curated','decision_queue.csv'))
 
+    process_validation=run_process_and_experiment_gates(frames)
+    process_event_log=process_validation['event_log']
+    process_cases=process_validation['cases']
+    process_transitions=process_validation['transition_summary']
+    write_json(process_validation['process_gate'],path('artifacts','validation','process_mining_gate.json'))
+    write_json(process_validation['experiment_gate'],path('artifacts','validation','experimentation_gate.json'))
+    write_json(process_validation['methodology'],path('artifacts','validation','process_analytics_methodology.json'))
+    save_frame(process_event_log,path('data','curated','process_order_fulfillment_event_log.csv'))
+    save_frame(process_cases,path('data','curated','process_order_fulfillment_cases.csv'))
+    save_frame(process_transitions,path('data','curated','process_transition_summary.csv'))
+
     print('[7/9] Loading SQLite analytical database and SQL views...')
     con=connect(path('mednexus.db'))
     load_frames(con,frames)
@@ -230,6 +242,9 @@ def run(clean=False, seed=None):
     scenarios.to_sql('mart_scenarios',con,if_exists='replace',index=False)
     scenario_assumptions.to_sql('mart_scenario_assumptions',con,if_exists='replace',index=False)
     scenario_monitoring.to_sql('mart_scenario_monitoring',con,if_exists='replace',index=False)
+    process_event_log.to_sql('mart_process_event_log',con,if_exists='replace',index=False)
+    process_cases.to_sql('mart_order_fulfillment_cases',con,if_exists='replace',index=False)
+    process_transitions.to_sql('mart_process_transition_summary',con,if_exists='replace',index=False)
     dq.to_sql('mart_decision_queue',con,if_exists='replace',index=False)
     p_chart.to_sql('mart_quality_p_chart',con,if_exists='replace',index=False)
     loss_decomposition.to_sql('mart_six_big_losses',con,if_exists='replace',index=False)
@@ -267,6 +282,9 @@ def run(clean=False, seed=None):
         'ScenarioOutputs':scenarios,
         'ScenarioAssumptions':scenario_assumptions,
         'ScenarioMonitoringPlan':scenario_monitoring,
+        'ProcessEventLog':process_event_log,
+        'ProcessCases':process_cases,
+        'ProcessTransitions':process_transitions,
         'DecisionQueue':dq,
         'QualityPareto':qp,
         'QualityPChart':p_chart,
