@@ -273,6 +273,9 @@ Required analysis:
 - simulated opportunity value;
 - OEE/good units/downtime/capacity/cost/risk effects where supported;
 - optimization recommendation only if a valid objective/constraint model exists;
+- explicit optimization-gate status when a solver is not admitted;
+- scenario ranking clearly labeled as heuristic rather than optimal;
+- monitoring-plan panel showing metric, owner, frequency and required future validation design;
 - priority DecisionQueue;
 - owner/urgency/confidence/basis/limitations;
 - monitoring plan for validating intervention results.
