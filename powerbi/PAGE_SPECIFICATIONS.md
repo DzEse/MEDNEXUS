@@ -149,7 +149,9 @@ Advanced visuals:
 
 - Pareto;
 - control chart produced from validated analytical output;
-- decomposition tree/Key Influencers only for association diagnostics and only after assumptions are documented.
+- decomposition tree/Key Influencers only for association diagnostics and only after assumptions are documented;
+- root-cause evidence panel sourced from disconnected `RootCause...` marts: Wilson-interval segment ranking, FDR-adjusted associations, adjusted GLM evidence, shallow-tree importance and investigation priorities;
+- every diagnostic visual must visibly state **Association / investigation priority — not causal attribution**.
 
 ---
 
