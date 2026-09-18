@@ -186,9 +186,17 @@ def run(clean=False, seed=None):
     write_json(model_metrics,path('artifacts','validation','predictive_maintenance_metrics.json'))
 
     print('[5/9] Building demand forecast...')
-    forecast_metrics,forecast_history,forecast_future=forecast_demand(frames['fact_orders'])
+    (
+        forecast_metrics,
+        forecast_history,
+        forecast_future,
+        forecast_comparison,
+        forecast_diagnostics,
+    )=forecast_demand(frames['fact_orders'])
     save_frame(forecast_history,path('data','curated','demand_forecast_backtest.csv'))
     save_frame(forecast_future,path('data','curated','demand_forecast_future.csv'))
+    save_frame(forecast_comparison,path('artifacts','validation','forecast_model_comparison.csv'))
+    save_frame(forecast_diagnostics,path('artifacts','validation','forecast_diagnostics.csv'))
     write_json(forecast_metrics,path('artifacts','validation','forecast_metrics.json'))
 
     print('[6/9] Building risk, scenarios and decision queue...')
@@ -215,6 +223,8 @@ def run(clean=False, seed=None):
     root_cause['associations'].to_sql('mart_root_cause_associations',con,if_exists='replace',index=False)
     root_cause['regression'].to_sql('mart_root_cause_regression',con,if_exists='replace',index=False)
     root_cause['priorities'].to_sql('mart_root_cause_priorities',con,if_exists='replace',index=False)
+    forecast_comparison.to_sql('mart_forecast_model_comparison',con,if_exists='replace',index=False)
+    forecast_diagnostics.to_sql('mart_forecast_diagnostics',con,if_exists='replace',index=False)
     execute_sql_file(con,path('sql','analytical_views.sql'))
     con.close()
 
@@ -254,6 +264,9 @@ def run(clean=False, seed=None):
         'RootCauseTreeImportance':root_cause['tree_importance'],
         'RootCausePriorities':root_cause['priorities'],
         'DemandForecast':forecast_future,
+        'DemandForecastBacktest':forecast_history,
+        'DemandForecastModelComparison':forecast_comparison,
+        'DemandForecastDiagnostics':forecast_diagnostics,
         'Finance':frames['fact_finance'],
         'Workforce':frames['fact_workforce'],
         'Recruitment':frames['fact_recruitment'],
