@@ -167,6 +167,7 @@ def run(clean=False, seed=None):
         model_profile,
         mart,
         path('artifacts','runtime','observability_baseline.csv'),
+        frames=frames,
     )
     save_frame(twin_catalog,path('artifacts','validation','enterprise_operations_twin.csv'))
     save_frame(output_lineage,path('artifacts','validation','output_lineage_registry.csv'))
