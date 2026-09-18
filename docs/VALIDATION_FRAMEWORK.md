@@ -74,7 +74,20 @@ Automated validation covers:
 
 ## Forecasting
 
-Backtest against observed monthly demand using MAE, RMSE and bias. Comparator expansion remains an open canonical requirement.
+Automated validation covers:
+
+- contiguous monthly-demand history;
+- expanding-window rolling-origin one-step-ahead validation;
+- common evaluation months across all candidate models;
+- naive, three-month moving-average, seasonal-naive and linear-trend comparators;
+- MAE, RMSE, sMAPE and bias;
+- residual lag-1 autocorrelation and Ljung-Box diagnostics;
+- deterministic selection by MAE with RMSE/sMAPE tie-breaks;
+- explicit adequacy status versus the naive benchmark;
+- nonnegative, model-derived three-month future forecasts;
+- reproducibility of selected model and future values.
+
+Forecast validation is fail-closed on insufficient history and does not require a more complex model to win. If no candidate outperforms naive forecasting, the limitation is retained rather than hidden.
 
 ## Business
 
