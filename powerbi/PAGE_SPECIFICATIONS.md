@@ -254,7 +254,9 @@ Required analysis:
 - calibration/threshold/false-negative context where appropriate;
 - explainability outputs;
 - demand forecast and baseline/comparator backtest;
-- forecast error/bias;
+- forecast candidate comparison using MAE, RMSE and sMAPE on common rolling-origin periods;
+- forecast error/bias and residual-autocorrelation diagnostics;
+- explicit adequacy status versus naive forecasting; do not imply improvement when the selected model fails the benchmark gate;
 - MORI trend/components/sensitivity;
 - clear **Model-derived** disclosure.
 
