@@ -70,3 +70,23 @@ Full COPQ is intentionally not calculated because rework resource cost and exter
 ## Causality
 
 Correlation, regression coefficients, control-chart signals, feature importance and SHAP values must not be described as causal effects. Causal language requires an appropriate identification strategy, experiment or defensible quasi-experimental design.
+
+
+## Root-cause diagnostic hierarchy
+
+MEDNEXUS now implements a non-causal diagnostic hierarchy for first-pass defect rate:
+
+1. segment defect-rate summaries with Wilson 95% confidence intervals;
+2. Spearman rank associations at production-order/machine-day grain;
+3. high-vs-low quartile practical contrasts;
+4. Benjamini-Hochberg false-discovery-rate correction;
+5. Kruskal-Wallis group tests with epsilon-squared effect size;
+6. grouped-binomial GLM with standardized predictors, HC0 robust covariance and VIF diagnostics;
+7. shallow diagnostic decision tree for exploratory segmentation;
+8. investigation-priority output with explicit next-validation steps.
+
+The implemented numeric drivers are supported by the canonical source grain: unplanned downtime, machine age, workforce capacity gap, absence rate and overtime.
+
+Statistical detection is not treated as business materiality. Correlation magnitude, quartile defect-rate difference, effect size, confidence interval and adjusted regression association are all retained so practical significance can be considered separately from p-values.
+
+No output from this layer is labeled a proven root cause. The required interpretation is **association / investigation priority** until controlled, prospective or otherwise defensible causal evidence exists.
