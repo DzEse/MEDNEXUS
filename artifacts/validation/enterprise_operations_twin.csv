@@ -1,0 +1,22 @@
+source_entity,target_entity,relationship_type,link_key,target_grain,evidence_status,twin_type,three_dimensional_model
+Enterprise,Plant,contains,enterprise→plant,one row per plant,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Plant,Line,contains,plant_id,one row per line,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Line,Machine,contains,line_id,one row per machine,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Machine,Production,operates,machine_id,one row per machine-day production order,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Machine,Downtime,experiences,machine_id,one row per downtime event,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Machine,Quality Event,associated_with,machine_id,one row per quality event,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Machine,Maintenance,receives,machine_id,one row per maintenance event,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Machine,Sensor Snapshot,measured_by,machine_id,one row per machine-day sensor snapshot,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Plant,Workforce,staffed_by,plant_id,one row per plant-month,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Plant,Recruitment,capacity_pipeline,plant_id,one row per plant-month funnel,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Supplier,Supply,provides,supplier_id,one row per supplier-month,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Customer,Order,places,customer_id,one row per order,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Product,Order,requested_as,product_id,one row per order,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Order,Shipment,fulfilled_by,order_id,one row per shipment/order,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Order,Customer Service,may_generate,order_id,one row per service event,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Enterprise,Finance,summarized_by,month,one row per month,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Enterprise,Technology Incident,depends_on,system/date,one row per incident,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Enterprise,SaaS Usage,uses,system/date,one row per system-day,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Enterprise,Enterprise Monthly Mart,integrated_view,month,one row per month,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Enterprise Monthly Mart,MORI,risk_summary,month,one row per month,SUPPORTED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False
+Enterprise Monthly Mart,Scenario Outputs,simulated_decision_support,latest baseline,one row per scenario,SIMULATED,CONCEPTUAL_ENTERPRISE_OPERATIONS_TWIN,False

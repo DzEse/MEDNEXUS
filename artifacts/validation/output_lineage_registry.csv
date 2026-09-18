@@ -1,0 +1,13 @@
+output,source,transformation,analytical_table_or_artifact,method_or_metric,bi_surface,decision_supported
+ProductionKPI,fact_production,production_kpis(),mart_production_kpi,OEE / FPY / throughput,Manufacturing pages,capacity-loss investigation
+QualityPChart,fact_production,p_chart_by_plant(),mart_quality_p_chart,p-chart signal,Quality page,process-stability investigation
+SixBigLosses,production + downtime,six_big_losses(),mart_six_big_losses,loss decomposition,Manufacturing page,loss prioritization
+ValueLeakage,finance + production,value_leakage(),mart_value_leakage,cost-per-good-unit / leakage,Finance page,value-loss investigation
+RootCausePriorities,production + workforce + machine,run_root_cause_analysis(),mart_root_cause_priorities,association priorities,Quality page,investigation prioritization
+PredictiveMaintenanceScores,fact_sensor,train_predictive_maintenance(),scored holdout rows,failure risk score,Reliability page,maintenance investigation
+DemandForecast,fact_orders,forecast_demand(),future forecast rows,model-derived demand,Prediction page,capacity planning
+MORI,enterprise_monthly_mart,run_mori_validation(),mart_mori,project-defined MORI,Executive / Prediction pages,cross-domain risk review
+ScenarioOutputs,enterprise_monthly_mart,run_scenarios(),mart_scenarios,simulated differences,Scenario page,intervention comparison
+DecisionQueue,mart + MORI + reliability + Pareto,build_decision_queue(),mart_decision_queue,priority / owner / urgency,Executive / Scenario pages,management action review
+ProcessTransitions,orders + shipments,run_process_and_experiment_gates(),mart_process_transition_summary,cycle-time bottleneck,Logistics page,fulfillment investigation
+DataTrust,quality + RI + observability,data_trust_score(),data_trust.json,project-defined score,Technology / Executive pages,data reliability review

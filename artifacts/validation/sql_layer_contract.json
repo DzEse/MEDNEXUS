@@ -1,0 +1,23 @@
+{
+  "expected_views": [
+    "stg_production_validated",
+    "dim_machine_hierarchy",
+    "fact_order_fulfillment_enriched",
+    "kpi_monthly_operations",
+    "val_order_fulfillment_grain",
+    "val_machine_hierarchy_grain",
+    "kpi_supplier_risk_ranked"
+  ],
+  "missing_views": [],
+  "order_fulfillment_grain": {
+    "row_count": 11178,
+    "distinct_order_count": 11178,
+    "duplicate_order_rows": 0
+  },
+  "machine_hierarchy_grain": {
+    "row_count": 16,
+    "distinct_machine_count": 16,
+    "duplicate_machine_rows": 0
+  },
+  "status": "PASS"
+}

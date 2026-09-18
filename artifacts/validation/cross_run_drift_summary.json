@@ -1,0 +1,16 @@
+{
+  "baseline_path": "C:\\Users\\admin\\Downloads\\MEDNEXUS\\MEDNEXUS\\artifacts\\runtime\\observability_baseline.csv",
+  "baseline_previously_available": false,
+  "profile_rows": 82,
+  "alert_count": 0,
+  "statuses": {
+    "BASELINE_INITIALIZED": 82
+  },
+  "thresholds": {
+    "row_count_relative_change": 0.1,
+    "null_rate_absolute_change": 0.02,
+    "model_positive_rate_absolute_change": 0.05,
+    "kpi_relative_change": 0.2
+  },
+  "behavior": "Persistent runtime baseline survives --clean because artifacts/runtime is not deleted. A fresh environment initializes a baseline; later runs compare against the previous profile."
+}

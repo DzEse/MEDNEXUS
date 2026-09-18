@@ -1,0 +1,11 @@
+check_id,required_question,mandatory,gate_status
+business_question,What decision-relevant question is being answered?,True,REQUIRED_FOR_NEW_MAJOR_ANALYSIS
+unit_and_grain,What is the unit of analysis and grain?,True,REQUIRED_FOR_NEW_MAJOR_ANALYSIS
+required_data,Which source fields/tables are required and linked validly?,True,REQUIRED_FOR_NEW_MAJOR_ANALYSIS
+assumptions,"Which assumptions are observed, derived, illustrative or simulated?",True,REQUIRED_FOR_NEW_MAJOR_ANALYSIS
+bias_and_leakage,"What bias, leakage, confounding or selection risks apply?",True,REQUIRED_FOR_NEW_MAJOR_ANALYSIS
+method_suitability,Why is the analytical method appropriate for this data structure?,True,REQUIRED_FOR_NEW_MAJOR_ANALYSIS
+proof_boundary,What does the result prove and explicitly not prove?,True,REQUIRED_FOR_NEW_MAJOR_ANALYSIS
+validation,"Which reconciliation, benchmark, test or gate validates the result?",True,REQUIRED_FOR_NEW_MAJOR_ANALYSIS
+decision_supported,Which management action or decision can use the evidence?,True,REQUIRED_FOR_NEW_MAJOR_ANALYSIS
+monitoring,How will the result or intervention be monitored over time?,True,REQUIRED_FOR_NEW_MAJOR_ANALYSIS
