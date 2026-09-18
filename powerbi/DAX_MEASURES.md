@@ -289,3 +289,19 @@ Known Internal Quality Cost Proxy = SUM(ValueLeakage[known_internal_quality_cost
 ```
 
 Do not create RTY, DPMO, Cp, Cpk, Pp, Ppk, startup-reject loss, rework cost, or full COPQ measures unless the required evidence is added and the corresponding methodology gate changes from NOT_CALCULABLE.
+
+
+## Predictive-maintenance validation measures
+
+The validation tables are disconnected evidence marts. They should be used on the Prediction / Forecast / Risk page and model-validation tooltip surfaces, not joined into the operational fact model.
+
+```DAX
+PM Validation PR-AUC = MAX(PredictiveMaintenanceModelComparison[pr_auc])
+PM Validation ROC-AUC = MAX(PredictiveMaintenanceModelComparison[roc_auc])
+PM Holdout Average Risk = AVERAGE(PredictiveMaintenanceScores[failure_risk])
+PM Holdout Predicted Flags = SUM(PredictiveMaintenanceScores[predicted_failure_flag])
+PM Holdout Actual Failures = SUM(PredictiveMaintenanceScores[actual_failure_next_7d])
+PM Calibration Gap = AVERAGE(PredictiveMaintenanceCalibration[absolute_calibration_gap])
+```
+
+Model-comparison visuals must state that candidate selection occurred on validation data and that the exported machine scores represent the strict temporal holdout test period. Permutation-importance visuals must include the non-causal interpretation label.
