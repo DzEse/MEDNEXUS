@@ -48,7 +48,7 @@ Weighted error cost:
 
 `5 × false negatives + 1 × false positives`
 
-The threshold minimizing validation weighted error cost is selected for the chosen model, with recall used as the first tie-breaker. These values are decision weights, **not observed financial costs**.
+The threshold-selection rule is recall-constrained: a candidate threshold must first achieve at least **70% validation recall**. Among those feasible thresholds, MEDNEXUS selects the threshold with the lowest validation weighted error cost. This prevents the strong class imbalance from making a near-never-alert threshold look artificially cheap. These values are decision weights, **not observed financial costs**.
 
 ## Holdout metrics
 
@@ -74,7 +74,7 @@ Calibration evidence uses probability bins on the holdout test set. Each bin rep
 
 An expected calibration error is reported as the observation-weighted mean absolute calibration gap.
 
-This is a calibration assessment, not a claim that the probabilities are perfectly calibrated. Formal recalibration should only be added if the diagnostics and decision use justify it.
+This is a calibration assessment, not a claim that the probabilities are perfectly calibrated. If holdout expected calibration error exceeds the project adequacy gate, the exported model output is labeled **uncalibrated failure-risk score** rather than estimated failure probability. Formal recalibration should only be added if the diagnostics and decision use justify it.
 
 ## Explainability
 
