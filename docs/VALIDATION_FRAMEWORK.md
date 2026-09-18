@@ -119,6 +119,20 @@ Automated validation covers:
 - fail-closed optimization admission with no solver execution when objective/constraint/response evidence is insufficient;
 - explicit Simulated / not-realized-savings / non-causal labeling.
 
+## Process analytics and experimentation gates
+
+Automated validation covers:
+
+- source-backed order-fulfillment event-log activities only;
+- unique event IDs and monotonic case chronology;
+- mandatory Order Created → Shipped → Delivered events for every case;
+- nonnegative and reconciled order-fulfillment cycle times;
+- supported transition-duration and bottleneck summaries;
+- explicit prohibition of fabricated Production/Inspection/Rework/Release events;
+- fail-closed full process-mining admission when end-to-end case linkage is absent;
+- fail-closed experimentation when no executed treatment assignment/post-intervention evidence exists;
+- prospective experiment-design fields and design hierarchy only.
+
 ## Business
 
 Finance is built from synthetic operational components plus explicitly documented illustrative overhead/cost assumptions. OEE, OLI, FPY, MORI, value leakage and scenarios are separately defined and reconciled where valid.
