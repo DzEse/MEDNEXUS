@@ -371,3 +371,27 @@ CALCULATE(
 ```
 
 Do not interpret MORI as an externally calibrated probability, regulatory risk score or causal estimate. If a MORI row is unavailable because a required component is missing, Power BI must preserve that unavailable state rather than substituting zero or recalculating a partial score.
+
+
+## Scenario validation measures
+
+`ScenarioOutputs`, `ScenarioAssumptions`, and `ScenarioMonitoringPlan` are disconnected simulated evidence tables.
+
+```DAX
+Scenario Opportunity Value =
+SUM(ScenarioOutputs[simulated_opportunity_value])
+
+Scenario Good-Unit Difference =
+SUM(ScenarioOutputs[difference_good_units])
+
+Scenario Downtime Difference =
+SUM(ScenarioOutputs[difference_downtime_min])
+
+Scenario Defect Difference =
+SUM(ScenarioOutputs[difference_defect_units])
+
+Scenario Capacity-Gap Difference =
+SUM(ScenarioOutputs[difference_capacity_gap_pct])
+```
+
+Every scenario visual must retain a visible **Simulated** label. `simulated_opportunity_value` must never be relabeled as realized savings. Scenario ranking is a prioritization heuristic, not mathematical optimization.
