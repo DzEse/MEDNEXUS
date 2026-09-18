@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from mednexus.models import FEATURES, train_predictive_maintenance
+from mednexus.models import FEATURES, MIN_VALIDATION_RECALL, train_predictive_maintenance
 from mednexus.synthetic import generate
 
 
@@ -28,11 +28,15 @@ def test_temporal_partitions_are_strictly_ordered(result):
 def test_threshold_is_selected_from_validation_cost_table(result):
     metrics, scored, comparison, thresholds, calibration, importance = result
     selected = thresholds[thresholds['model'] == metrics['model']].copy()
-    best_cost = selected['weighted_error_cost'].min()
+    feasible = selected[selected['recall'] >= MIN_VALIDATION_RECALL]
+    assert not feasible.empty
+    best_cost = feasible['weighted_error_cost'].min()
     chosen = selected[np.isclose(selected['threshold'], metrics['threshold'])].iloc[0]
 
     assert np.isclose(chosen['weighted_error_cost'], best_cost)
     assert metrics['false_negative_cost_weight'] > metrics['false_positive_cost_weight']
+    assert metrics['minimum_validation_recall'] == MIN_VALIDATION_RECALL
+    assert chosen['recall'] >= MIN_VALIDATION_RECALL
 
 
 def test_holdout_scores_and_metrics_are_valid(result):
@@ -55,6 +59,12 @@ def test_calibration_evidence_is_explicit(result):
     assert calibration['observed_failure_rate'].between(0, 1).all()
     assert calibration['absolute_calibration_gap'].ge(0).all()
     assert 0 <= metrics['expected_calibration_error'] <= 1
+    assert metrics['calibration_status'] in {
+        'ACCEPTABLE_FOR_PROJECT_PROBABILITY_INTERPRETATION',
+        'INADEQUATE_FOR_PROBABILITY_INTERPRETATION',
+    }
+    if metrics['calibration_status'] == 'INADEQUATE_FOR_PROBABILITY_INTERPRETATION':
+        assert metrics['score_semantics'] == 'uncalibrated_failure_risk_score'
 
 
 def test_permutation_importance_covers_all_features_and_warns_against_causality(result):
