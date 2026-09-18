@@ -43,6 +43,8 @@ $expected = @(
     "MORIWeightSensitivity.csv",
     "MORIThresholdSensitivity.csv",
     "ScenarioOutputs.csv",
+    "ScenarioAssumptions.csv",
+    "ScenarioMonitoringPlan.csv",
     "DecisionQueue.csv",
     "QualityPareto.csv",
     "QualityPChart.csv",
