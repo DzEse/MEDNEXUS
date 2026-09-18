@@ -33,3 +33,13 @@
 - Calibration diagnostics do not establish that probabilities are suitable for safety-critical decision-making.
 - Permutation importance measures predictive contribution, not causal effect.
 - No clinical, patient-safety or regulated medical-device inference should be drawn from the model.
+
+
+## Root-cause diagnostic limitations
+
+- The diagnostic layer identifies associations and investigation priorities, not proven causal root causes.
+- Statistical significance can be amplified by the large synthetic sample; practical effect sizes and confidence intervals must also be considered.
+- The grouped-binomial regression can adjust only for measured predictors included in the model; omitted-variable bias remains possible.
+- Kruskal-Wallis results identify distribution differences but do not identify which operational mechanism created the difference.
+- Diagnostic-tree split importance is exploratory and in-sample; it is not causal attribution.
+- Synthetic generator relationships are known by construction and do not establish real-world generalization.
