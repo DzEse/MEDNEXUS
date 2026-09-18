@@ -1,54 +1,49 @@
 # Power BI Semantic Model
 
-Use `EnterpriseMonthly` as the executive monthly mart and the detailed fact tables for domain pages and drill-through.
+The final model uses a **controlled star/snowflake design**. The repository validates the relationship contract before the user builds it in Power BI Desktop.
+
+Machine-readable contract:
+
+- `artifacts/validation/powerbi_semantic_relationships.csv`
+- `artifacts/validation/powerbi_table_roles.csv`
+- `artifacts/validation/powerbi_semantic_audit.json`
 
 ## Core dimensions
 
-- `DimDate` — one row per calendar date; use as the primary date dimension.
+- `DimDate` — one row per calendar date; mark as the Date table.
 - `DimPlant`
 - `DimLine`
 - `DimMachine`
 - `DimProduct`
 - `DimSupplier`
 - `DimCustomer`
-- `DimEmployee`
 
-## Recommended active relationships
+`DimEmployee` remains disconnected because the current workforce/recruitment facts are plant-month aggregates rather than employee-grain facts.
 
-Use one-to-many (`1:*`) relationships with **single-direction filtering from dimension to fact** unless a documented analytical requirement proves otherwise.
+## Cardinality and filtering rules
 
-### Date
+Every canonical active relationship is:
 
-- `DimDate[date]` 1:* `EnterpriseMonthly[month_date]`
-- `DimDate[date]` 1:* `MORI[month_date]`
-- `DimDate[date]` 1:* `ProductionKPI[date]`
-- `DimDate[date]` 1:* `Downtime[date]`
-- `DimDate[date]` 1:* `QualityEvents[date]`
-- `DimDate[date]` 1:* `Maintenance[date]`
-- `DimDate[date]` 1:* `PredictiveMaintenanceScores[date]`
-- `DimDate[date]` 1:* `Workforce[month]`
-- `DimDate[date]` 1:* `Recruitment[month]`
-- `DimDate[date]` 1:* `Supply[month]`
-- `DimDate[date]` 1:* `Finance[month]`
-- `DimDate[date]` 1:* `DemandForecast[month]`
-- `DimDate[date]` 1:* `Orders[order_date]`
-- `DimDate[date]` 1:* `Shipments[ship_date]`
-- `DimDate[date]` 1:* `CustomerService[date]`
-- `DimDate[date]` 1:* `TechnologyIncidents[date]`
-- `DimDate[date]` 1:* `QualityPChart[date]`
-- `DimDate[date]` 1:* `SixBigLosses[month_date]`
-- `DimDate[date]` 1:* `CapacityWaterfall[month_date]`
-- `DimDate[date]` 1:* `ValueLeakage[month_date]`
+- **1:***;
+- **single-direction**;
+- dimension/hierarchy → fact or mart.
 
-For `Shipments[promised_date]` and `Shipments[actual_delivery_date]`, create inactive date relationships only if a measure explicitly needs them. Do not make multiple active date paths to the same fact.
+Prohibited unless a future documented bridge requires otherwise:
 
-### Operations hierarchy
+- many-to-many;
+- bidirectional filtering;
+- fact-to-fact relationships;
+- parallel active paths from the same dimension into the same fact.
+
+## Operations hierarchy — important
+
+Use exactly:
 
 - `DimPlant[plant_id]` 1:* `DimLine[plant_id]`
 - `DimLine[line_id]` 1:* `DimMachine[line_id]`
-- `DimPlant[plant_id]` 1:* `ProductionKPI[plant_id]`
-- `DimPlant[plant_id]` 1:* `QualityPChart[plant_id]`
-- `DimLine[line_id]` 1:* `ProductionKPI[line_id]`
+
+Machine-grain facts then relate through **DimMachine only**:
+
 - `DimMachine[machine_id]` 1:* `ProductionKPI[machine_id]`
 - `DimMachine[machine_id]` 1:* `Downtime[machine_id]`
 - `DimMachine[machine_id]` 1:* `QualityEvents[machine_id]`
@@ -56,37 +51,119 @@ For `Shipments[promised_date]` and `Shipments[actual_delivery_date]`, create ina
 - `DimMachine[machine_id]` 1:* `Reliability[machine_id]`
 - `DimMachine[machine_id]` 1:* `PredictiveMaintenanceScores[machine_id]`
 
-### Product / supplier / customer
+**Do not create direct active DimPlant→ProductionKPI or DimLine→ProductionKPI relationships.**
 
-- `DimProduct[product_id]` 1:* `ProductionKPI[product_id]`
-- `DimProduct[product_id]` 1:* `QualityEvents[product_id]`
-- `DimProduct[product_id]` 1:* `Orders[product_id]`
-- `DimSupplier[supplier_id]` 1:* `Supply[supplier_id]`
-- `DimCustomer[customer_id]` 1:* `Orders[customer_id]`
-- `DimCustomer[customer_id]` 1:* `Shipments[customer_id]`
-- `DimCustomer[customer_id]` 1:* `CustomerService[customer_id]`
+Plant and line filtering reaches machine-grain facts through:
 
-### Workforce
+`DimPlant → DimLine → DimMachine → Fact`
 
-- `DimPlant[plant_id]` 1:* `Workforce[plant_id]`
-- `DimPlant[plant_id]` 1:* `Recruitment[plant_id]`
+This removes the prior multiple-active-path risk.
 
-`DimEmployee` is available for portfolio extension, but the current workforce/recruitment facts are plant-month aggregates and should not be falsely joined to individual employees.
+Plant-grain facts/marts connect directly to `DimPlant`:
 
-## Modeling rules
+- Workforce;
+- Recruitment;
+- QualityPChart.
 
-- Avoid fact-to-fact joins.
-- Avoid many-to-many relationships unless a real bridge table is introduced and documented.
-- Mark `DimDate` as the Date table using `DimDate[date]`.
-- Hide surrogate/technical key columns from report view where they are not useful to report consumers.
-- Keep scenario outputs disconnected unless using a deliberate scenario-selector pattern.
-- `ScenarioAssumptions` and `ScenarioMonitoringPlan` are disconnected scenario-evidence marts. They must not filter operational facts or be interpreted as observed outcomes.
-- `ProcessEventLog`, `ProcessCases`, and `ProcessTransitions` are order-fulfillment process-analysis marts. Keep them disconnected from the operational star schema unless a dedicated case-analysis page is built; they do not represent full manufacturing process mining.
-- `QualityPareto` and `DecisionQueue` are presentation marts and can remain disconnected.
-- `PredictiveMaintenanceModelComparison`, `PredictiveMaintenanceCalibration`, and `PredictiveMaintenanceFeatureImportance` are validation/explainability marts and should remain disconnected from the operational star schema. Use them only on model-validation/reporting surfaces.
-- `RootCauseSegments`, `RootCauseAssociations`, `RootCauseGroupTests`, `RootCauseRegression`, `RootCauseTreeImportance`, and `RootCausePriorities` are diagnostic evidence marts. Keep them disconnected; they summarize evidence at mixed grains and must not filter operational facts.
-- `DemandForecastModelComparison` and `DemandForecastDiagnostics` are disconnected validation marts. `DemandForecastBacktest` may be used as a disconnected validation surface; do not join it to operational facts merely to drive filters. `DemandForecast` remains the future monthly model-derived forecast table.
-- `MORIComponentContributions`, `MORIWeightSensitivity`, and `MORIThresholdSensitivity` are MORI evidence/sensitivity marts. Keep them disconnected from the operational star schema; use them to explain the project-defined index and its robustness rather than to filter operational facts.
-- `SixBigLosses`, `CapacityWaterfall`, and `ValueLeakage` are monthly analytical marts; relate them to `DimDate[date]` through `month_date` only, not to detailed facts.
-- Do not fabricate relationships for gated metrics such as RTY, DPMO, capability indices, startup rejects, or full COPQ.
-- Validate totals after every relationship change to ensure filters do not duplicate fact rows.
+## Date relationships
+
+Use `DimDate[date]` as the one side.
+
+Canonical active date relationships:
+
+- EnterpriseMonthly → `month_date`
+- MORI → `month_date`
+- ProductionKPI → `date`
+- Downtime → `date`
+- QualityEvents → `date`
+- Maintenance → `date`
+- PredictiveMaintenanceScores → `date`
+- Workforce → `month`
+- Recruitment → `month`
+- Supply → `month`
+- Finance → `month`
+- DemandForecast → `month`
+- Orders → `order_date`
+- Shipments → `ship_date`
+- CustomerService → `date`
+- TechnologyIncidents → `date`
+- SaaSUsage → `date`
+- QualityPChart → `date`
+- SixBigLosses → `month_date`
+- CapacityWaterfall → `month_date`
+- ValueLeakage → `month_date`
+
+Optional inactive shipment date roles:
+
+- `Shipments[promised_date]`
+- `Shipments[actual_delivery_date]`
+
+Use them only with an explicit `USERELATIONSHIP` measure when a business question requires that date role.
+
+## Product / supplier / customer
+
+Product:
+
+- DimProduct → ProductionKPI
+- DimProduct → QualityEvents
+- DimProduct → Orders
+
+Supplier:
+
+- DimSupplier → Supply
+
+Customer:
+
+- DimCustomer → Orders
+- DimCustomer → Shipments
+- DimCustomer → CustomerService
+
+Orders and Shipments remain separate facts. Do not create a fact-to-fact relationship merely because both contain `order_id`.
+
+## Enterprise-level marts
+
+`EnterpriseMonthly` and `MORI` relate to `DimDate` only. They are enterprise-wide monthly marts and must not be falsely filtered by plant/product dimensions that do not exist at their grain.
+
+## Explicitly disconnected tables
+
+Keep the following disconnected:
+
+- DimEmployee
+- MORIComponentContributions
+- MORIWeightSensitivity
+- MORIThresholdSensitivity
+- ScenarioOutputs
+- ScenarioAssumptions
+- ScenarioMonitoringPlan
+- ProcessEventLog
+- ProcessCases
+- ProcessTransitions
+- DecisionQueue
+- QualityPareto
+- PredictiveMaintenanceModelComparison
+- PredictiveMaintenanceCalibration
+- PredictiveMaintenanceFeatureImportance
+- RootCauseSegments
+- RootCauseAssociations
+- RootCauseGroupTests
+- RootCauseRegression
+- RootCauseTreeImportance
+- RootCausePriorities
+- DemandForecastBacktest
+- DemandForecastModelComparison
+- DemandForecastDiagnostics
+
+These tables are evidence, validation, simulated, diagnostic, case-analysis or presentation marts. They must not filter operational facts.
+
+## Validation rule
+
+Before a PBIX is accepted:
+
+1. Build only the relationships in `powerbi_semantic_relationships.csv`.
+2. Confirm all active relationships are 1:* and single direction.
+3. Confirm exactly one active date relationship per fact.
+4. Confirm all disconnected tables remain disconnected.
+5. Compare Page 1 headline measures to `powerbi_headline_reconciliation_targets.csv`.
+6. Recheck totals after every relationship change.
+
+The repository validates the **contract**. The final PBIX still requires user-side construction and reconciliation in Power BI Desktop.
