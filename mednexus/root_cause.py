@@ -419,7 +419,7 @@ def investigation_priorities(
 
     reg = regression[
         (regression['term'] != 'const')
-        & (regression['statistically_detected_fdr_0_05'].fillna(False))
+        & (regression['statistically_detected_fdr_0_05'].eq(True))
     ].copy()
     reg['distance_from_one'] = (reg['odds_ratio_per_1sd'] - 1).abs()
     for row in reg.sort_values('distance_from_one', ascending=False).head(5).itertuples(index=False):
