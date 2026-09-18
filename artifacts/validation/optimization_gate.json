@@ -1,0 +1,17 @@
+{
+  "optimization_status": "NOT_ADMITTED_INSUFFICIENT_DECISION_MODEL_EVIDENCE",
+  "solver_executed": false,
+  "recommendation_type": "SCENARIO_PRIORITIZATION_ONLY",
+  "objective_function_status": "NOT_DEFENSIBLE_FOR_OPTIMIZATION",
+  "constraint_model_status": "NOT_DEFENSIBLE_FOR_OPTIMIZATION",
+  "response_function_status": "ILLUSTRATIVE_SCENARIO_RELATIONSHIPS_ONLY",
+  "missing_required_evidence": [
+    "observed intervention implementation costs by lever",
+    "validated budget/resource constraints",
+    "validated causal or prospectively supported response functions",
+    "capacity/resource consumption per intervention",
+    "management objective trade-off weights or utility function"
+  ],
+  "admission_rule": "Optimization may be implemented only when the objective, decision variables, intervention costs, resource/budget constraints and response functions are defensible.",
+  "current_decision": "Keep scenario comparison and prioritization; do not claim a mathematically optimal intervention."
+}

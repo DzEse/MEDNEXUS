@@ -209,9 +209,19 @@
       "bytes": 149921
     },
     {
+      "file": "powerbi\\exports\\ScenarioAssumptions.csv",
+      "sha256": "7f54544d7cfbc97a22aac4374e6e2cf1509511ef01be203913ef71e060e50438",
+      "bytes": 1696
+    },
+    {
+      "file": "powerbi\\exports\\ScenarioMonitoringPlan.csv",
+      "sha256": "abd76b77d0ef625cbca5a82ce9c55d876333e4673fc248e39bceec600b47bfad",
+      "bytes": 6760
+    },
+    {
       "file": "powerbi\\exports\\ScenarioOutputs.csv",
-      "sha256": "a584222ec40f50563f38371ac3dda8c699fdfe2084315ebd377b583fb892ecef",
-      "bytes": 678
+      "sha256": "4d49c90f0551e8e4bc5063f1259b8c9bd79255acc8b7830ec67014a1029392fd",
+      "bytes": 4561
     },
     {
       "file": "powerbi\\exports\\Shipments.csv",

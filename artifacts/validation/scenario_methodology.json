@@ -1,0 +1,23 @@
+{
+  "scenario_status": "SIMULATED",
+  "scenario_count_including_baseline": 5,
+  "canonical_flow": [
+    "Baseline",
+    "Assumption",
+    "Expected Change",
+    "Result",
+    "Difference",
+    "Monitoring"
+  ],
+  "baseline_period": "2026-08",
+  "ranking_basis": "Simulated opportunity value, then simulated good-unit improvement. This is a prioritization heuristic, not mathematical optimization.",
+  "financial_semantics": "SIMULATED_OPPORTUNITY_NOT_REALIZED_SAVINGS",
+  "causal_claim": false,
+  "optimization_status": "NOT_ADMITTED_INSUFFICIENT_DECISION_MODEL_EVIDENCE",
+  "limitations": [
+    "Scenario response relationships are illustrative assumptions.",
+    "Simulated opportunity values are not realized savings.",
+    "No causal intervention effect is claimed.",
+    "Optimization is not admitted without defensible objective, constraints, costs and response functions."
+  ]
+}
