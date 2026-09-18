@@ -69,6 +69,12 @@ The full report currently has these additional exported tables available:
 - PredictiveMaintenanceModelComparison
 - PredictiveMaintenanceCalibration
 - PredictiveMaintenanceFeatureImportance
+- RootCauseSegments
+- RootCauseAssociations
+- RootCauseGroupTests
+- RootCauseRegression
+- RootCauseTreeImportance
+- RootCausePriorities
 - Finance
 - Workforce
 - Recruitment
