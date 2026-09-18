@@ -202,15 +202,9 @@ def compare_forecasts(backtest: pd.DataFrame) -> pd.DataFrame:
         0.0,
         (baseline['mae'] - comparison['mae']) / baseline['mae'] * 100.0,
     )
-    comparison['selection_rank'] = (
-        comparison.sort_values(['mae', 'rmse', 'smape_pct'])
-        .reset_index()
-        .reset_index()
-        .set_index('index')['level_0']
-        .add(1)
-        .reindex(comparison.index)
-        .astype(int)
-    )
+    ordered_index = comparison.sort_values(['mae', 'rmse', 'smape_pct']).index.tolist()
+    rank_map = {original_index: rank for rank, original_index in enumerate(ordered_index, start=1)}
+    comparison['selection_rank'] = comparison.index.map(rank_map).astype(int)
     comparison['interpretation'] = (
         'Rolling-origin one-step-ahead model comparison on synthetic monthly demand; '
         'forecast performance is model-derived and not guaranteed to generalize.'
