@@ -151,9 +151,23 @@ def run(clean=False, seed=None):
     save_frame(leakage,path('data','curated','value_leakage.csv'))
     save_frame(quality_gates,path('artifacts','validation','quality_methodology_gates.csv'))
 
-    print('[4/9] Training predictive-maintenance baseline...')
-    model_metrics,scored=train_predictive_maintenance(frames['fact_sensor'],path('artifacts','models','predictive_maintenance_logreg.joblib'))
+    print('[4/9] Training and validating predictive-maintenance candidates...')
+    (
+        model_metrics,
+        scored,
+        model_comparison,
+        threshold_analysis,
+        calibration,
+        feature_importance,
+    )=train_predictive_maintenance(
+        frames['fact_sensor'],
+        path('artifacts','models','predictive_maintenance_selected.joblib'),
+    )
     save_frame(scored,path('data','curated','predictive_maintenance_scores.csv'))
+    save_frame(model_comparison,path('artifacts','validation','predictive_maintenance_model_comparison.csv'))
+    save_frame(threshold_analysis,path('artifacts','validation','predictive_maintenance_threshold_analysis.csv'))
+    save_frame(calibration,path('artifacts','validation','predictive_maintenance_calibration.csv'))
+    save_frame(feature_importance,path('artifacts','validation','predictive_maintenance_feature_importance.csv'))
     write_json(model_metrics,path('artifacts','validation','predictive_maintenance_metrics.json'))
 
     print('[5/9] Building demand forecast...')
@@ -211,6 +225,9 @@ def run(clean=False, seed=None):
         'ValueLeakage':_with_month_date(leakage),
         'Reliability':rel,
         'PredictiveMaintenanceScores':scored,
+        'PredictiveMaintenanceModelComparison':model_comparison,
+        'PredictiveMaintenanceCalibration':calibration,
+        'PredictiveMaintenanceFeatureImportance':feature_importance,
         'DemandForecast':forecast_future,
         'Finance':frames['fact_finance'],
         'Workforce':frames['fact_workforce'],
