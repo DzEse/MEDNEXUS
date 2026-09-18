@@ -94,6 +94,9 @@ The full report currently has these additional exported tables available:
 - ScenarioOutputs
 - ScenarioAssumptions
 - ScenarioMonitoringPlan
+- ProcessEventLog
+- ProcessCases
+- ProcessTransitions
 
 The export contract may expand as unresolved canonical domains such as observability, inventory/material detail, statistical quality or final scenario outputs are implemented. Never fabricate missing tables in Power BI; regenerate them from the analytical pipeline when valid.
 
