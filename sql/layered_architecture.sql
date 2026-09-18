@@ -63,7 +63,18 @@ SELECT
     capacity_gap_pct,
     on_time_delivery,
     shortage_hours,
-    technology_downtime_min
+    technology_downtime_min,
+    LAG(revenue) OVER (ORDER BY month) AS prior_month_revenue,
+    revenue - LAG(revenue) OVER (ORDER BY month) AS revenue_change_vs_prior_month,
+    AVG(oee) OVER (
+        ORDER BY month
+        ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+    ) AS oee_3_month_rolling_avg,
+    CASE
+        WHEN capacity_gap_pct >= 0.10 THEN 'High capacity pressure'
+        WHEN capacity_gap_pct >= 0.05 THEN 'Moderate capacity pressure'
+        ELSE 'Lower capacity pressure'
+    END AS capacity_pressure_band
 FROM mart_enterprise_monthly;
 
 DROP VIEW IF EXISTS val_order_fulfillment_grain;
@@ -81,3 +92,30 @@ SELECT
     COUNT(DISTINCT machine_id) AS distinct_machine_count,
     COUNT(*) - COUNT(DISTINCT machine_id) AS duplicate_machine_rows
 FROM dim_machine_hierarchy;
+
+
+DROP VIEW IF EXISTS kpi_supplier_risk_ranked;
+CREATE VIEW kpi_supplier_risk_ranked AS
+WITH supplier_summary AS (
+    SELECT
+        supplier_id,
+        AVG(supplier_reliability) AS avg_supplier_reliability,
+        SUM(shortage_hours) AS total_shortage_hours,
+        SUM(material_defects) AS total_material_defects
+    FROM fact_supply
+    GROUP BY supplier_id
+)
+SELECT
+    supplier_id,
+    avg_supplier_reliability,
+    total_shortage_hours,
+    total_material_defects,
+    RANK() OVER (
+        ORDER BY total_shortage_hours DESC, total_material_defects DESC
+    ) AS shortage_risk_rank,
+    CASE
+        WHEN avg_supplier_reliability < 0.90 THEN 'High'
+        WHEN avg_supplier_reliability < 0.95 THEN 'Watch'
+        ELSE 'Stable'
+    END AS reliability_band
+FROM supplier_summary;
