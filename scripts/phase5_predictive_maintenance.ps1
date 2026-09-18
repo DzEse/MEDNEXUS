@@ -62,10 +62,10 @@ if ($models.Count -ne 2 -or -not ($models -contains "LogisticRegression") -or -n
     throw "Model comparison contract failed. Expected LogisticRegression and RandomForest."
 }
 
-if ($metrics.train_end -ge $metrics.validation_start) {
+if ([datetime]$metrics.train_end -ge [datetime]$metrics.validation_start) {
     throw "Temporal leakage gate failed between train and validation."
 }
-if ($metrics.validation_end -ge $metrics.test_start) {
+if ([datetime]$metrics.validation_end -ge [datetime]$metrics.test_start) {
     throw "Temporal leakage gate failed between validation and test."
 }
 
@@ -74,7 +74,7 @@ if ($selectedRows.Count -eq 0) {
     throw "Threshold analysis does not contain the selected model."
 }
 
-$minimumCost = ($selectedRows | Measure-Object -Property weighted_error_cost -Minimum).Minimum
+$minimumCost = ($selectedRows | ForEach-Object { [double]$_.weighted_error_cost } | Measure-Object -Minimum).Minimum
 $chosen = @(
     $selectedRows | Where-Object {
         [math]::Abs([double]$_.threshold - [double]$metrics.threshold) -lt 0.0000001
