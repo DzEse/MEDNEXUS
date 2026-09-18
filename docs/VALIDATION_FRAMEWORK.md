@@ -59,6 +59,19 @@ Validation evidence includes:
 
 Gradient boosting, SHAP/PDP and probability recalibration remain conditional extensions rather than forced complexity.
 
+## Root-cause diagnostics
+
+Automated validation covers:
+
+- unique diagnostic grain;
+- bounded defect rates and Wilson confidence intervals;
+- FDR-adjusted Spearman associations;
+- practical high-vs-low quartile contrasts;
+- Kruskal-Wallis effect sizes;
+- grouped-binomial GLM convergence, finite robust standard errors and VIF;
+- shallow-tree depth and feature-importance integrity;
+- explicit non-causal labels on all investigation-priority outputs.
+
 ## Forecasting
 
 Backtest against observed monthly demand using MAE, RMSE and bias. Comparator expansion remains an open canonical requirement.
