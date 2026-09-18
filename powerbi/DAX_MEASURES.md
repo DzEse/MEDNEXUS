@@ -395,3 +395,30 @@ SUM(ScenarioOutputs[difference_capacity_gap_pct])
 ```
 
 Every scenario visual must retain a visible **Simulated** label. `simulated_opportunity_value` must never be relabeled as realized savings. Scenario ranking is a prioritization heuristic, not mathematical optimization.
+
+
+## Process analytics measures
+
+The process tables cover **supported order fulfillment only**. They are not a full manufacturing process-mining model.
+
+```DAX
+Average Order-to-Ship Days =
+AVERAGE(ProcessCases[order_to_ship_days])
+
+Average Ship-to-Delivery Days =
+AVERAGE(ProcessCases[ship_to_delivery_days])
+
+Average Order-to-Delivery Days =
+AVERAGE(ProcessCases[order_to_delivery_days])
+
+Late Delivery Cases =
+CALCULATE(
+    COUNTROWS(ProcessCases),
+    ProcessCases[delivery_vs_promise_days] > 0
+)
+
+Process Cases =
+DISTINCTCOUNT(ProcessCases[order_id])
+```
+
+Do not infer Production/Inspection/Rework/Release activities from these tables. Those events are not linked to `order_id` in the canonical data model.
