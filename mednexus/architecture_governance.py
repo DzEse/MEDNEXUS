@@ -8,6 +8,15 @@ import numpy as np
 import pandas as pd
 
 
+CATEGORY_FIELDS = {
+    'fact_quality': 'defect_category',
+    'fact_downtime': 'downtime_reason',
+    'fact_maintenance': 'maintenance_type',
+    'fact_customer_service': 'issue_type',
+    'fact_technology_incident': 'severity',
+}
+
+
 DRIFT_THRESHOLDS = {
     'row_count_relative_change': 0.10,
     'null_rate_absolute_change': 0.02,
@@ -107,6 +116,7 @@ def build_drift_profile(
     table_quality: pd.DataFrame,
     model_profile: pd.DataFrame,
     enterprise_mart: pd.DataFrame,
+    frames: dict[str, pd.DataFrame] | None = None,
 ) -> pd.DataFrame:
     rows = []
 
@@ -132,6 +142,32 @@ def build_drift_profile(
             'metric': 'schema_signature_numeric',
             'value': float(schema_numeric),
         })
+
+    if frames is not None:
+        for table_name, field in CATEGORY_FIELDS.items():
+            if table_name not in frames or field not in frames[table_name].columns:
+                continue
+            values = sorted(
+                frames[table_name][field].dropna().astype(str).unique().tolist()
+            )
+            payload = '|'.join(values)
+            signature_numeric = int(
+                hashlib.sha256(payload.encode('utf-8')).hexdigest()[:12], 16
+            )
+            rows.extend([
+                {
+                    'scope': 'category',
+                    'entity': f'{table_name}.{field}',
+                    'metric': 'category_count',
+                    'value': float(len(values)),
+                },
+                {
+                    'scope': 'category',
+                    'entity': f'{table_name}.{field}',
+                    'metric': 'category_set_signature_numeric',
+                    'value': float(signature_numeric),
+                },
+            ])
 
     target = model_profile.loc[model_profile['role'] == 'target']
     if not target.empty:
@@ -210,6 +246,12 @@ def compare_drift(current: pd.DataFrame, baseline: pd.DataFrame | None) -> pd.Da
         if row.metric == 'schema_signature_numeric':
             threshold = 0.0
             status = 'PASS' if float(value) == float(baseline_value) else 'ALERT_SCHEMA_CHANGED'
+        elif row.metric == 'category_set_signature_numeric':
+            threshold = 0.0
+            status = 'PASS' if float(value) == float(baseline_value) else 'ALERT_CATEGORY_DRIFT'
+        elif row.metric == 'category_count':
+            threshold = 0.0
+            status = 'PASS' if float(value) == float(baseline_value) else 'ALERT_CATEGORY_DRIFT'
         elif row.metric == 'row_count':
             threshold = DRIFT_THRESHOLDS['row_count_relative_change']
             status = 'PASS' if relative_change <= threshold else 'ALERT_ROW_COUNT_DRIFT'
@@ -246,8 +288,9 @@ def run_persistent_drift_monitor(
     model_profile: pd.DataFrame,
     enterprise_mart: pd.DataFrame,
     baseline_path: Path,
+    frames: dict[str, pd.DataFrame] | None = None,
 ):
-    current = build_drift_profile(table_quality, model_profile, enterprise_mart)
+    current = build_drift_profile(table_quality, model_profile, enterprise_mart, frames=frames)
     baseline = None
     if baseline_path.exists():
         baseline = pd.read_csv(baseline_path)
