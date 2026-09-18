@@ -83,8 +83,20 @@ $chosen = @(
 if ($chosen.Count -eq 0) {
     throw "Selected threshold is missing from the validation threshold table."
 }
-if ([math]::Abs([double]$chosen[0].weighted_error_cost - [double]$minimumCost) -gt 0.0000001) {
-    throw "Selected threshold does not minimize the validation weighted error cost."
+if ([double]$chosen[0].recall -lt [double]$metrics.minimum_validation_recall) {
+    throw "Selected threshold violates the minimum validation recall floor."
+}
+$feasibleCosts = @(
+    $selectedRows |
+    Where-Object { [double]$_.recall -ge [double]$metrics.minimum_validation_recall } |
+    ForEach-Object { [double]$_.weighted_error_cost }
+)
+if ($feasibleCosts.Count -eq 0) {
+    throw "No threshold satisfies the minimum validation recall floor."
+}
+$minimumFeasibleCost = ($feasibleCosts | Measure-Object -Minimum).Minimum
+if ([math]::Abs([double]$chosen[0].weighted_error_cost - [double]$minimumFeasibleCost) -gt 0.0000001) {
+    throw "Selected threshold does not minimize cost among recall-feasible thresholds."
 }
 
 if ($calibration.Count -eq 0) {
@@ -103,6 +115,9 @@ Write-Host "TEMPORAL_SPLIT_GATE=PASS"
 Write-Host "MODEL_COMPARISON=PASS"
 Write-Host "THRESHOLD_COST_ANALYSIS=PASS"
 Write-Host "CALIBRATION_ASSESSMENT=PASS"
+Write-Host "CALIBRATION_STATUS=$($metrics.calibration_status)"
+Write-Host "SCORE_SEMANTICS=$($metrics.score_semantics)"
+Write-Host "MIN_VALIDATION_RECALL=$($metrics.minimum_validation_recall)"
 Write-Host "PERMUTATION_IMPORTANCE=PASS"
 Write-Host "SELECTED_MODEL=$($metrics.model)"
 Write-Host "SELECTED_THRESHOLD=$($metrics.threshold)"
