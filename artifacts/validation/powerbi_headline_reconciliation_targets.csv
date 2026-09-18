@@ -1,0 +1,20 @@
+measure,source_table,source_field_or_formula,expected_numeric_value,reconciliation_rule,latest_month,pbix_status,tolerance
+Latest Revenue,EnterpriseMonthly,revenue,79962618.61,SUM at latest visible month,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,0.01
+Latest Operating Cost,EnterpriseMonthly,operating_cost,31046396.29345631,SUM at latest visible month,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,0.01
+Latest Operating Margin Proxy,EnterpriseMonthly,revenue-operating_cost,48916222.31654369,Revenue minus Operating Cost,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,0.01
+Latest OEE,EnterpriseMonthly,oee,0.7871550824396587,single monthly value / AVERAGE,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,1e-09
+Latest OLI,EnterpriseMonthly,oli,0.23273266727511877,single monthly value / AVERAGE,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,1e-09
+Latest FPY,EnterpriseMonthly,fpy,0.9715715820254223,single monthly value / AVERAGE,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,1e-09
+Latest Total Units,EnterpriseMonthly,total_units,134056.0,SUM at latest visible month,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,0.01
+Latest Good Units,EnterpriseMonthly,good_units,132193.0,SUM at latest visible month,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,0.01
+Latest Defect Units,EnterpriseMonthly,defect_units,3811.0,SUM at latest visible month,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,0.01
+Latest Defect Rate,EnterpriseMonthly,defect_units/total_units,0.028428417974577787,ratio of latest defect units to total units,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,1e-09
+Latest On-Time Delivery,EnterpriseMonthly,on_time_delivery,0.579175704989154,single monthly value / AVERAGE,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,1e-09
+Latest Capacity Gap %,EnterpriseMonthly,capacity_gap_pct,0.07548076923076924,single monthly value / AVERAGE,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,1e-09
+Latest Vacancies,EnterpriseMonthly,vacancies,12.0,SUM at latest visible month,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,0.01
+Latest Supplier Reliability,EnterpriseMonthly,supplier_reliability,0.9021237982840995,single monthly value / AVERAGE,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,1e-09
+Latest Shortage Hours,EnterpriseMonthly,shortage_hours,123.775097231811,SUM at latest visible month,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,0.01
+Latest Technology Downtime Minutes,EnterpriseMonthly,technology_downtime_min,990.4051863627383,SUM at latest visible month,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,0.01
+Latest Major Technology Incidents,EnterpriseMonthly,major_incidents,2.0,SUM at latest visible month,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,0.01
+Latest MORI,MORI,mori_score,70.05450716728754,MAX at latest visible month,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,0.01
+Latest MORI Band,MORI,mori_band,,Expected text: Elevated,2026-08-01,TO_BE_RECONCILED_AFTER_USER_BUILDS_REPORT,

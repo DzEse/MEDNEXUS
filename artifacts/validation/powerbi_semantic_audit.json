@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "expected_export_count": 53,
+  "actual_export_count": 53,
+  "active_relationship_count": 39,
+  "inactive_relationship_count": 2,
+  "disconnected_table_count": 24,
+  "issue_count": 0,
+  "model_rules": {
+    "cardinality": "1:* only",
+    "cross_filter": "single direction only",
+    "fact_to_fact": "prohibited",
+    "many_to_many": "prohibited unless future documented bridge exists",
+    "operations_hierarchy": "DimPlant\u2192DimLine\u2192DimMachine\u2192machine-grain facts",
+    "date_roles": "one active date role per fact; optional alternate shipment dates inactive"
+  }
+}
