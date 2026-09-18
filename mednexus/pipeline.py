@@ -29,6 +29,12 @@ from .forecasting import forecast_demand
 from .risk import run_mori_validation
 from .scenarios import run_scenarios
 from .process_analytics import run_process_and_experiment_gates
+from .semantic_model import (
+    build_relationship_contract,
+    build_table_role_contract,
+    validate_semantic_model_contract,
+    build_headline_reconciliation_targets,
+)
 from .architecture_governance import (
     build_operations_twin_catalog,
     build_output_lineage_registry,
@@ -56,13 +62,20 @@ def _clean():
 
 
 def _build_date_dimension(frames, forecast_future):
-    start=pd.to_datetime(frames['fact_production']['date']).min()
-    end_candidates=[
-        pd.to_datetime(frames['fact_production']['date']).max(),
-        pd.to_datetime(frames['fact_shipment']['actual_delivery_date']).max(),
-        pd.to_datetime(forecast_future['month']).max(),
-    ]
-    end=max(x for x in end_candidates if pd.notna(x))
+    date_columns={'date','month','order_date','ship_date','promised_date','actual_delivery_date'}
+    observed=[]
+    for df in frames.values():
+        for column in date_columns.intersection(df.columns):
+            parsed=pd.to_datetime(df[column],errors='coerce').dropna()
+            if not parsed.empty:
+                observed.extend([parsed.min(),parsed.max()])
+    forecast_dates=pd.to_datetime(forecast_future['month'],errors='coerce').dropna()
+    if not forecast_dates.empty:
+        observed.extend([forecast_dates.min(),forecast_dates.max()])
+    if not observed:
+        raise RuntimeError('Cannot build DimDate without observed dates.')
+    start=min(observed)
+    end=max(observed)
     d=pd.DataFrame({'date':pd.date_range(start.normalize(),end.normalize(),freq='D')})
     d['year']=d['date'].dt.year
     d['quarter']='Q'+d['date'].dt.quarter.astype(str)
@@ -365,6 +378,20 @@ def run(clean=False, seed=None):
         'TechnologyIncidents':frames['fact_technology_incident'],
         'SaaSUsage':frames['fact_saas_usage'],
     }
+    semantic_relationships=build_relationship_contract()
+    semantic_roles=build_table_role_contract()
+    semantic_issues,semantic_summary=validate_semantic_model_contract(exports)
+    headline_targets=build_headline_reconciliation_targets(exports)
+    save_frame(semantic_relationships,path('artifacts','validation','powerbi_semantic_relationships.csv'))
+    save_frame(semantic_roles,path('artifacts','validation','powerbi_table_roles.csv'))
+    save_frame(semantic_issues,path('artifacts','validation','powerbi_semantic_issues.csv'))
+    save_frame(headline_targets,path('artifacts','validation','powerbi_headline_reconciliation_targets.csv'))
+    write_json(semantic_summary,path('artifacts','validation','powerbi_semantic_audit.json'))
+    if semantic_summary['status'] != 'PASS':
+        raise RuntimeError(
+            f"Power BI semantic-model contract failed with {semantic_summary['issue_count']} issue(s)."
+        )
+
     for name,df in exports.items():
         save_frame(df,path('powerbi','exports',f'{name}.csv'))
     write_management_summary(path('artifacts','reports','management_summary.md'),mart,risk,qp,model_metrics,forecast_metrics,trust)
