@@ -106,6 +106,19 @@ Automated validation covers:
 
 MORI sensitivity evaluates robustness to analytical design choices. It does not establish external calibration, predictive validity or causation.
 
+## Scenario and optimization validation
+
+Automated validation covers:
+
+- baseline reconciliation to zero change;
+- explicit Baseline → Assumption → Expected Change → Result → Difference → Monitoring structure;
+- simulated downtime, defect, capacity and good-unit effects;
+- simulated opportunity-value reconciliation to supported downtime/scrap cost proxies only;
+- deterministic scenario-priority ranking;
+- monitoring plans requiring future observed validation;
+- fail-closed optimization admission with no solver execution when objective/constraint/response evidence is insufficient;
+- explicit Simulated / not-realized-savings / non-causal labeling.
+
 ## Business
 
 Finance is built from synthetic operational components plus explicitly documented illustrative overhead/cost assumptions. OEE, OLI, FPY, MORI, value leakage and scenarios are separately defined and reconciled where valid.
