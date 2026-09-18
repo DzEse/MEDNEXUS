@@ -14,6 +14,22 @@ Before treating the report as final, review:
 
 The existing report work is a **preserved shell** while unresolved predecessor analytical requirements are completed/gated. Final BI acceptance follows analytical reconciliation, not the other way around.
 
+## Phase 12 prerequisite — semantic-model audit
+
+Before building or refreshing the PBIX, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File ".\\scripts\\phase12_powerbi_semantic_audit.ps1"
+```
+
+Do not proceed to final report acceptance unless the semantic contract passes with zero issues.
+
+Review:
+
+- `powerbi/SEMANTIC_MODEL_AUDIT.md`
+- `artifacts/validation/powerbi_semantic_relationships.csv`
+- `artifacts/validation/powerbi_headline_reconciliation_targets.csv`
+
 ## 1. Generate the Power BI handoff
 
 From the repository root in VS Code PowerShell:
@@ -121,8 +137,8 @@ Create the relationships in `SEMANTIC_MODEL.md`.
 
 Rules:
 
-- one-to-many where possible;
-- single-direction filtering from dimensions to facts;
+- use only the machine-readable canonical relationship contract;\n- one-to-many for every canonical relationship;
+- single-direction filtering from dimensions/hierarchy to facts;\n- for machine-grain facts, filter Plant → Line → Machine → Fact; do not add direct parallel Plant/Line paths;
 - no fact-to-fact relationships merely for convenience;
 - no many-to-many relationship without a documented bridge/grain rationale;
 - only one active date path per fact unless a deliberate inactive date role is activated by a measure;
