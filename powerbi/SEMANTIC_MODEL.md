@@ -81,6 +81,7 @@ For `Shipments[promised_date]` and `Shipments[actual_delivery_date]`, create ina
 - Hide surrogate/technical key columns from report view where they are not useful to report consumers.
 - Keep scenario outputs disconnected unless using a deliberate scenario-selector pattern.
 - `ScenarioAssumptions` and `ScenarioMonitoringPlan` are disconnected scenario-evidence marts. They must not filter operational facts or be interpreted as observed outcomes.
+- `ProcessEventLog`, `ProcessCases`, and `ProcessTransitions` are order-fulfillment process-analysis marts. Keep them disconnected from the operational star schema unless a dedicated case-analysis page is built; they do not represent full manufacturing process mining.
 - `QualityPareto` and `DecisionQueue` are presentation marts and can remain disconnected.
 - `PredictiveMaintenanceModelComparison`, `PredictiveMaintenanceCalibration`, and `PredictiveMaintenanceFeatureImportance` are validation/explainability marts and should remain disconnected from the operational star schema. Use them only on model-validation/reporting surfaces.
 - `RootCauseSegments`, `RootCauseAssociations`, `RootCauseGroupTests`, `RootCauseRegression`, `RootCauseTreeImportance`, and `RootCausePriorities` are diagnostic evidence marts. Keep them disconnected; they summarize evidence at mixed grains and must not filter operational facts.
