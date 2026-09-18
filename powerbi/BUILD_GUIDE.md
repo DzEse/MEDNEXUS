@@ -66,6 +66,9 @@ The full report currently has these additional exported tables available:
 - ValueLeakage
 - Reliability
 - PredictiveMaintenanceScores
+- PredictiveMaintenanceModelComparison
+- PredictiveMaintenanceCalibration
+- PredictiveMaintenanceFeatureImportance
 - Finance
 - Workforce
 - Recruitment
