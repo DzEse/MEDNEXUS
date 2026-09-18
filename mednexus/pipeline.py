@@ -292,6 +292,7 @@ def run(clean=False, seed=None):
         'kpi_monthly_operations',
         'val_order_fulfillment_grain',
         'val_machine_hierarchy_grain',
+        'kpi_supplier_risk_ranked',
     ]
     missing_layered_views = [name for name in expected_layered_views if name not in sql_views]
     if missing_layered_views:
