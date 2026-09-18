@@ -75,14 +75,14 @@ def test_analysis_design_checklist_enforces_all_required_questions():
 
 def test_drift_profile_is_stable_against_itself(canonical):
     _, table_q, model_profile, mart = canonical
-    profile = build_drift_profile(table_q, model_profile, mart)
+    profile = build_drift_profile(table_q, model_profile, mart, frames=canonical[0])
     comparison = compare_drift(profile, profile.copy())
     assert comparison['status'].eq('PASS').all()
 
 
 def test_row_count_drift_alerts_on_material_change(canonical):
     _, table_q, model_profile, mart = canonical
-    baseline = build_drift_profile(table_q, model_profile, mart)
+    baseline = build_drift_profile(table_q, model_profile, mart, frames=canonical[0])
     current = baseline.copy()
     mask = (
         (current['scope'] == 'table')
@@ -100,19 +100,42 @@ def test_row_count_drift_alerts_on_material_change(canonical):
     assert status == 'ALERT_ROW_COUNT_DRIFT'
 
 
+
+
+def test_category_drift_alerts_on_changed_domain(canonical):
+    frames, table_q, model_profile, mart = canonical
+    baseline = build_drift_profile(table_q, model_profile, mart, frames=frames)
+    current = baseline.copy()
+    mask = (
+        (current['scope'] == 'category')
+        & (current['entity'] == 'fact_quality.defect_category')
+        & (current['metric'] == 'category_set_signature_numeric')
+    )
+    assert mask.any()
+    current.loc[mask, 'value'] = current.loc[mask, 'value'] + 1
+    comparison = compare_drift(current, baseline)
+    status = comparison.loc[
+        (comparison['scope'] == 'category')
+        & (comparison['entity'] == 'fact_quality.defect_category')
+        & (comparison['metric'] == 'category_set_signature_numeric'),
+        'status',
+    ].iloc[0]
+    assert status == 'ALERT_CATEGORY_DRIFT'
+
+
 def test_persistent_runtime_baseline_survives_between_runs(canonical, tmp_path):
     _, table_q, model_profile, mart = canonical
     baseline_path = tmp_path / 'runtime' / 'observability_baseline.csv'
 
     _, first, first_summary = run_persistent_drift_monitor(
-        table_q, model_profile, mart, baseline_path
+        table_q, model_profile, mart, baseline_path, frames=canonical[0]
     )
     assert baseline_path.exists()
     assert first_summary['baseline_previously_available'] is False
     assert first['status'].eq('BASELINE_INITIALIZED').all()
 
     _, second, second_summary = run_persistent_drift_monitor(
-        table_q, model_profile, mart, baseline_path
+        table_q, model_profile, mart, baseline_path, frames=canonical[0]
     )
     assert second_summary['baseline_previously_available'] is True
     assert second_summary['alert_count'] == 0
