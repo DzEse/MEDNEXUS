@@ -207,10 +207,18 @@ def run(clean=False, seed=None):
     save_frame(mori_validation['threshold_sensitivity'],path('artifacts','validation','mori_threshold_sensitivity.csv'))
     write_json(mori_validation['sensitivity_summary'],path('artifacts','validation','mori_sensitivity_summary.json'))
     write_json(mori_validation['methodology'],path('artifacts','validation','mori_methodology.json'))
-    scenarios=run_scenarios(mart)
+    scenario_validation=run_scenarios(mart)
+    scenarios=scenario_validation['scenarios']
+    scenario_assumptions=scenario_validation['assumptions']
+    scenario_monitoring=scenario_validation['monitoring_plan']
+    optimization=scenario_validation['optimization_gate']
     dq=build_decision_queue(mart,risk,rel,qp,forecast_metrics)
     save_frame(risk,path('data','curated','mori.csv'))
     save_frame(scenarios,path('data','curated','scenario_outputs.csv'))
+    save_frame(scenario_assumptions,path('data','curated','scenario_assumptions.csv'))
+    save_frame(scenario_monitoring,path('data','curated','scenario_monitoring_plan.csv'))
+    write_json(scenario_validation['methodology'],path('artifacts','validation','scenario_methodology.json'))
+    write_json(optimization,path('artifacts','validation','optimization_gate.json'))
     save_frame(dq,path('data','curated','decision_queue.csv'))
 
     print('[7/9] Loading SQLite analytical database and SQL views...')
@@ -220,6 +228,8 @@ def run(clean=False, seed=None):
     mart.to_sql('mart_enterprise_monthly',con,if_exists='replace',index=False)
     risk.to_sql('mart_mori',con,if_exists='replace',index=False)
     scenarios.to_sql('mart_scenarios',con,if_exists='replace',index=False)
+    scenario_assumptions.to_sql('mart_scenario_assumptions',con,if_exists='replace',index=False)
+    scenario_monitoring.to_sql('mart_scenario_monitoring',con,if_exists='replace',index=False)
     dq.to_sql('mart_decision_queue',con,if_exists='replace',index=False)
     p_chart.to_sql('mart_quality_p_chart',con,if_exists='replace',index=False)
     loss_decomposition.to_sql('mart_six_big_losses',con,if_exists='replace',index=False)
@@ -255,6 +265,8 @@ def run(clean=False, seed=None):
         'MORIWeightSensitivity':_with_month_date(mori_validation['weight_sensitivity']),
         'MORIThresholdSensitivity':_with_month_date(mori_validation['threshold_sensitivity']),
         'ScenarioOutputs':scenarios,
+        'ScenarioAssumptions':scenario_assumptions,
+        'ScenarioMonitoringPlan':scenario_monitoring,
         'DecisionQueue':dq,
         'QualityPareto':qp,
         'QualityPChart':p_chart,
