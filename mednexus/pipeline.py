@@ -24,6 +24,7 @@ from .statistical_quality import (
     value_leakage,
 )
 from .models import train_predictive_maintenance
+from .root_cause import run_root_cause_analysis
 from .forecasting import forecast_demand
 from .risk import build_mori
 from .scenarios import run_scenarios
@@ -151,6 +152,20 @@ def run(clean=False, seed=None):
     save_frame(leakage,path('data','curated','value_leakage.csv'))
     save_frame(quality_gates,path('artifacts','validation','quality_methodology_gates.csv'))
 
+    root_cause=run_root_cause_analysis(frames)
+    save_frame(root_cause['segments'],path('data','curated','root_cause_segments.csv'))
+    save_frame(root_cause['associations'],path('data','curated','root_cause_associations.csv'))
+    save_frame(root_cause['group_tests'],path('data','curated','root_cause_group_tests.csv'))
+    save_frame(root_cause['regression'],path('data','curated','root_cause_regression.csv'))
+    save_frame(root_cause['vif'],path('data','curated','root_cause_vif.csv'))
+    save_frame(root_cause['tree_importance'],path('data','curated','root_cause_tree_importance.csv'))
+    save_frame(root_cause['priorities'],path('data','curated','root_cause_investigation_priorities.csv'))
+    write_json(root_cause['methodology'],path('artifacts','validation','root_cause_methodology.json'))
+    path('artifacts','validation','root_cause_tree_rules.txt').write_text(
+        root_cause['tree_rules'],
+        encoding='utf-8',
+    )
+
     print('[4/9] Training and validating predictive-maintenance candidates...')
     (
         model_metrics,
@@ -196,6 +211,10 @@ def run(clean=False, seed=None):
     loss_decomposition.to_sql('mart_six_big_losses',con,if_exists='replace',index=False)
     capacity_flow.to_sql('mart_capacity_waterfall',con,if_exists='replace',index=False)
     leakage.to_sql('mart_value_leakage',con,if_exists='replace',index=False)
+    root_cause['segments'].to_sql('mart_root_cause_segments',con,if_exists='replace',index=False)
+    root_cause['associations'].to_sql('mart_root_cause_associations',con,if_exists='replace',index=False)
+    root_cause['regression'].to_sql('mart_root_cause_regression',con,if_exists='replace',index=False)
+    root_cause['priorities'].to_sql('mart_root_cause_priorities',con,if_exists='replace',index=False)
     execute_sql_file(con,path('sql','analytical_views.sql'))
     con.close()
 
@@ -228,6 +247,12 @@ def run(clean=False, seed=None):
         'PredictiveMaintenanceModelComparison':model_comparison,
         'PredictiveMaintenanceCalibration':calibration,
         'PredictiveMaintenanceFeatureImportance':feature_importance,
+        'RootCauseSegments':root_cause['segments'],
+        'RootCauseAssociations':root_cause['associations'],
+        'RootCauseGroupTests':root_cause['group_tests'],
+        'RootCauseRegression':root_cause['regression'],
+        'RootCauseTreeImportance':root_cause['tree_importance'],
+        'RootCausePriorities':root_cause['priorities'],
         'DemandForecast':forecast_future,
         'Finance':frames['fact_finance'],
         'Workforce':frames['fact_workforce'],
