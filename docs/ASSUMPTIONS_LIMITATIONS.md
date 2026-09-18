@@ -74,3 +74,12 @@
 - The scenario ranking is a prioritization heuristic rather than mathematical optimization.
 - Formal optimization is not admitted because defensible intervention costs, resource/budget constraints, response functions and objective trade-off weights are not all available.
 - Monitoring plans are prospective only; no intervention has been executed or experimentally evaluated.
+
+
+## Process analytics / experimentation limitations
+
+- Current process analytics cover linked order fulfillment only; they are not full manufacturing process mining.
+- Production, inspection, rework and release events are not linked to customer order cases and are therefore not synthesized into the event log.
+- Transition duration concentration is descriptive process evidence, not causal proof of a bottleneck mechanism.
+- No intervention has been executed, randomized or observed prospectively, so no treatment effect is estimated.
+- The experimentation framework is prospective and does not represent an actual experiment.
