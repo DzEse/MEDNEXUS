@@ -89,6 +89,23 @@ Automated validation covers:
 
 Forecast validation is fail-closed on insufficient history and does not require a more complex model to win. If no candidate outperforms naive forecasting, the limitation is retained rather than hidden.
 
+## MORI risk-index validation
+
+Automated validation covers:
+
+- exact canonical component set and weight sum-to-one;
+- nonnegative finite weights;
+- 0–100 score bounds;
+- exact component-contribution reconciliation to the composite score;
+- canonical band cutpoints;
+- fail-closed missing-data behavior with no partial-score renormalization;
+- ±25% one-at-a-time weight perturbation with weight-vector renormalization;
+- ±5-point band-threshold sensitivity;
+- explicit project-defined / not-industry-standard labeling;
+- sensitivity summary and limitations evidence.
+
+MORI sensitivity evaluates robustness to analytical design choices. It does not establish external calibration, predictive validity or causation.
+
 ## Business
 
 Finance is built from synthetic operational components plus explicitly documented illustrative overhead/cost assumptions. OEE, OLI, FPY, MORI, value leakage and scenarios are separately defined and reconciled where valid.
