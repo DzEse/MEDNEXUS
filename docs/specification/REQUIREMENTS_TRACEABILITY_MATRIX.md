@@ -32,8 +32,8 @@ Existing validated work remains authoritative unless superseded by a stronger, t
 | 8 | Process capability & statistical quality | IMPLEMENTED/PARTIAL + CONDITIONAL GATE | Plant-day p-chart control layer implemented and tested; Cp/Cpk/Pp/Ppk explicitly NOT_CALCULABLE | Add other control-chart forms only when data structure supports them; capability remains gated until valid specification limits exist |
 | 9 | OEE & loss intelligence | IMPLEMENTED/PARTIAL | Aggregate-grain OEE/OLI, Five calculable Big Loss categories, explicit Startup Reject gate, theoretical-capacity waterfall | Startup Rejects remain NOT_CALCULABLE until startup-period reject evidence exists |
 | 10 | Maintenance & reliability | PARTIAL | Preventive/corrective maintenance, downtime, MTTR, MTBF proxy, machine age | Add utilization, backlog concept if supported, failure trends and stronger risk diagnostics |
-| 11 | Predictive maintenance | PARTIAL | Logistic Regression baseline, temporal split, precision/recall/F1/ROC-AUC/PR-AUC/confusion matrix | Add Random Forest comparison, threshold/false-negative cost analysis, calibration assessment; advanced boosting only if justified |
-| 12 | Model explainability | PLANNED | Causality warnings documented | Add permutation importance; SHAP/PDP only if technically justified and stable |
+| 11 | Predictive maintenance | IMPLEMENTED/PARTIAL | Logistic Regression vs Random Forest, strict train/validation/test temporal split, validation-only model/threshold selection, holdout precision/recall/F1/ROC-AUC/PR-AUC/Brier/confusion matrix, weighted error-cost analysis | Gradient boosting and recalibration remain conditional; persistent model-drift monitoring remains a later observability extension |
+| 12 | Model explainability | IMPLEMENTED/PARTIAL | Holdout permutation importance with anti-causal interpretation labels | SHAP/PDP remain conditional and should be added only if stable and decision-useful beyond permutation importance |
 | 13 | Supply chain | PARTIAL | Supplier reliability, lead-time proxy, shortages, material defects | Add material/inventory/purchase-order/stockout/excess-inventory structure if needed to support decisions |
 | 14 | Logistics | PARTIAL | Orders, shipments, promised/actual dates, delays, on-time delivery | Add warehouse/carrier/route/exception/OTIF analysis where justified |
 | 15 | Healthcare customer environment | PARTIAL | Customer types, orders, shipment reliability, service events | Add service-level/fulfillment/customer-pattern analytics while retaining no-PII rule |
@@ -63,7 +63,7 @@ Existing validated work remains authoritative unless superseded by a stronger, t
 | 39 | Power BI story structure | PARTIAL | Current 10-page architecture + Page 1 detailed spec | Reconcile all 13 canonical business questions. Pages may be consolidated only if every question/requirement remains explicitly covered |
 | 40 | Executive narrative | PARTIAL | Business health→loss→risk→scenario→action story | Extend to expected result and monitoring/learning evidence |
 | 41 | Experimentation | CONDITIONAL-GATED | No fabricated experiment | Define pre/post or treatment/control framework for future interventions; only calculate when valid evidence exists |
-| 42 | Testing & validation | IMPLEMENTED/PARTIAL | 26-test suite covering reproducibility, governance, KPI aggregation, FPY, p-chart, loss gates, SQL finance/quality/production reconciliation and master-spec traceability | Model threshold/false-negative/calibration, forecast comparator and later analytics still require dedicated tests |
+| 42 | Testing & validation | IMPLEMENTED/PARTIAL | 32-test suite covering reproducibility, governance, KPI aggregation, FPY, p-chart, loss gates, SQL reconciliation, strict ML temporal separation, candidate comparison, threshold/error-cost selection, calibration and permutation importance | Forecast comparator, MORI sensitivity, scenario/optimization gates and later analytics still require dedicated tests |
 | 43 | Data lineage | PARTIAL | LINEAGE.md and manifests | Expand output-level Source→Transformation→Table→Method→KPI/Model→BI→Decision lineage |
 | 44 | Documentation | IMPLEMENTED/PARTIAL | Named core docs plus generated field-level Data Dictionary and table register | Continue updating canonical docs as later analytics close; keep interview defense outside repo |
 | 45 | Repository structure | IMPLEMENTED/PARTIAL | Professional compact structure | Add substructure only when real artifacts exist; do not create empty appearance folders |
@@ -83,7 +83,7 @@ Existing validated work remains authoritative unless superseded by a stronger, t
 The project had begun Power BI Page 1 preparation before all predecessor analytical requirements were closed. The Power BI handoff already created remains valid and is preserved, but **final report development is paused as the next major workstream** until the following predecessor gaps are closed or explicitly condition-gated:
 
 1. statistical/quality-analysis layer and capability/control gate;
-2. predictive-maintenance model comparison, calibration/threshold evidence and explainability;
+2. predictive-maintenance model comparison, calibration/threshold evidence and explainability — **resolved in Phase 5**; advanced boosting/SHAP remain condition-gated;
 3. expanded data quality, referential-integrity and observability controls;
 4. diagnostic/root-cause statistical layer;
 5. forecast comparator/validation expansion;
