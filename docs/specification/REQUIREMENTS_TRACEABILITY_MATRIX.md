@@ -77,6 +77,23 @@ Existing validated work remains authoritative unless superseded by a stronger, t
 | 53 | Judgment over superficial complexity | IMPLEMENTED AS POLICY | Methodology and repository approach | Continue conditional gating instead of forced techniques |
 | 54 | Final success chain | IMPLEMENTED/PARTIAL | Problem→validated data→diagnostics→statistics→prediction/forecast→risk→scenario/decision→monitoring framework is implemented; optimization/process mining/experimentation are condition-gated where evidence is insufficient | Actual Power BI communication/reconciliation and observed post-intervention learning remain final-stage work |
 | 55 | Non-negotiable professional standard | ACTIVE GOVERNANCE | Canonical specification + this matrix | Use as final acceptance gate across analytics, engineering, BI, finance and operations |
+| 56 | Enterprise Dataset & Digital Twin Enhancement | PARTIAL / ACTIVE EXPANSION REQUIREMENT | Canonical 32-requirement enhancement spec plus dedicated A01–A32 traceability matrix; current deterministic enterprise/twin baseline preserved | Design grains/dependencies, prototype enhanced data, validate relationships/calculations/performance, then promote justified tables/entities/events without row-count inflation |
+| 57 | Flagship Executive Command Center Enhancement | PARTIAL / DESIGN-READY, BUILD DEFERRED | Canonical 28-requirement Command Center spec plus B01–B28 traceability; existing Page 1 shell and Phase-12 semantic contract preserved | Complete enhanced data/twin predecessor work, regenerate semantic contract, then build/reconcile actual flagship PBIX, navigation, map, scenarios, commentary and evidence pack |
+
+## Enhancement sequencing correction
+
+The September 2026 enhancement adds new inventory, geospatial, event, workforce, recruitment, logistics, technology and cross-domain requirements that can change Power BI grains and relationships. Therefore:
+
+1. preserve the Phase-12 53-export / ambiguity-safe semantic-model contract as a validated baseline;
+2. define enhanced business questions, grains, KPI dependencies and required fields;
+3. build a small deterministic prototype rather than immediately scaling row counts;
+4. validate referential integrity, event chronology, inventory balance logic, temporal behavior, calculations and local-compute cost;
+5. validate Power BI filter behavior against the prototype;
+6. promote only justified entities/tables/fields;
+7. regenerate the semantic-model audit and reconciliation targets;
+8. then resume final PBIX construction and flagship Command Center implementation.
+
+The existing Power BI shell is not discarded. Final PBIX construction is simply moved behind the richer-data validation gate to avoid deliberate rework.
 
 ## Immediate sequencing correction
 
