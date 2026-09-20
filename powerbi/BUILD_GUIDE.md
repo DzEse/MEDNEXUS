@@ -14,6 +14,22 @@ Before treating the report as final, review:
 
 The existing report work is a **preserved shell** while unresolved predecessor analytical requirements are completed/gated. Final BI acceptance follows analytical reconciliation, not the other way around.
 
+## Enhancement gate before final PBIX
+
+The Phase-12 semantic-model audit remains a validated baseline, but the September 2026 enterprise dataset/twin enhancement introduces new candidate grains, dimensions and relationships.
+
+Before final Power BI construction:
+
+1. review `docs/ENHANCED_ENTERPRISE_DATA_ARCHITECTURE_BLUEPRINT.md`;
+2. resolve/prototype A01–A32 from `docs/specification/ENHANCEMENT_TRACEABILITY_MATRIX.md`;
+3. validate the small deterministic enhanced-data prototype;
+4. promote only justified fields/tables/entities/events;
+5. regenerate the semantic-model relationship/table-role/reconciliation contracts;
+6. rerun the full suite;
+7. then build the flagship Command Center using `powerbi/EXECUTIVE_COMMAND_CENTER_BLUEPRINT.md`.
+
+The existing four-table Page 1 shell may still be opened for reference/reconciliation, but it is **not** the final build target.
+
 ## Phase 12 prerequisite — semantic-model audit
 
 Before building or refreshing the PBIX, run:
@@ -40,16 +56,16 @@ powershell -ExecutionPolicy Bypass -File ".\scripts\phase2_powerbi_prep.ps1"
 
 This regenerates the current canonical datasets and verifies the Power BI export contract.
 
-## 2. Start with Page 1 as the report shell
+## 2. Preserve Page 1 as the baseline report shell
 
-Build the **Enterprise Command Center** semantic/visual shell first using:
+Preserve/review the existing **Enterprise Command Center** semantic/visual shell using:
 
 - `PAGE_01_ENTERPRISE_COMMAND_CENTER.md`
 - `DAX_MEASURES.md`
 - `SEMANTIC_MODEL.md`
 - `MEDNEXUS_THEME.json`
 
-Do not treat the page as analytically final until predecessor analytical requirements in the traceability matrix are resolved or explicitly condition-gated.
+Do not treat the page as final. The flagship target now also requires the enhanced dataset/twin prototype, regenerated semantic contract, global navigation, map/twin/value-loss/risk/forecast/scenario/decision interactions and real PBIX reconciliation.
 
 ## 3. Import data
 
@@ -137,8 +153,10 @@ Create the relationships in `SEMANTIC_MODEL.md`.
 
 Rules:
 
-- use only the machine-readable canonical relationship contract;\n- one-to-many for every canonical relationship;
-- single-direction filtering from dimensions/hierarchy to facts;\n- for machine-grain facts, filter Plant → Line → Machine → Fact; do not add direct parallel Plant/Line paths;
+- use only the machine-readable canonical relationship contract;
+- one-to-many for every canonical relationship;
+- single-direction filtering from dimensions/hierarchy to facts;
+- for machine-grain facts, filter Plant → Line → Machine → Fact; do not add direct parallel Plant/Line paths;
 - no fact-to-fact relationships merely for convenience;
 - no many-to-many relationship without a documented bridge/grain rationale;
 - only one active date path per fact unless a deliberate inactive date role is activated by a measure;
