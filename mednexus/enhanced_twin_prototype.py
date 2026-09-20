@@ -498,8 +498,9 @@ def _split_production_events(frames: dict[str, pd.DataFrame], lookback_days: int
     events = []
     inspections = []
     for row in source.itertuples(index=False):
-        int_columns = ["total_count", "good_count", "defect_units", "rework_units", "scrap_units"]
-        split_ints = {column: _split_integer(int(getattr(row, column)), [0.5, 0.5]) for column in int_columns}
+        split_total = _split_integer(int(row.total_count), [0.5, 0.5])
+        split_rework = _split_integer(int(row.rework_units), [0.5, 0.5])
+        split_scrap = _split_integer(int(row.scrap_units), [0.5, 0.5])
         float_columns = [
             "planned_production_min",
             "planned_downtime_min",
@@ -527,11 +528,11 @@ def _split_production_events(frames: dict[str, pd.DataFrame], lookback_days: int
                 "planned_downtime_min": split_floats["planned_downtime_min"][idx],
                 "unplanned_downtime_min": split_floats["unplanned_downtime_min"][idx],
                 "run_time_min": run_minutes,
-                "total_count": split_ints["total_count"][idx],
-                "good_count": split_ints["good_count"][idx],
-                "defect_units": split_ints["defect_units"][idx],
-                "rework_units": split_ints["rework_units"][idx],
-                "scrap_units": split_ints["scrap_units"][idx],
+                "total_count": split_total[idx],
+                "good_count": split_total[idx] - split_scrap[idx],
+                "defect_units": split_rework[idx] + split_scrap[idx],
+                "rework_units": split_rework[idx],
+                "scrap_units": split_scrap[idx],
                 "ideal_cycle_min": float(row.ideal_cycle_min),
                 "prototype_status": PROTOTYPE_SCOPE,
             }
