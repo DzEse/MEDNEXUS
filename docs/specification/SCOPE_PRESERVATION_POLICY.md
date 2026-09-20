@@ -2,13 +2,18 @@
 
 ## Authority
 
-The canonical requirements source is:
+The canonical requirements sources are:
 
-`docs/specification/MEDNEXUS_MASTER_BUILD_SPECIFICATION.md`
+- `docs/specification/MEDNEXUS_MASTER_BUILD_SPECIFICATION.md`
+- `docs/specification/MEDNEXUS_ENTERPRISE_DATASET_DIGITAL_TWIN_ENHANCEMENT.md`
+- `docs/specification/MEDNEXUS_EXECUTIVE_COMMAND_CENTER_ENHANCEMENT.md`
 
-The implementation status authority is:
+Sections 56 and 57 of the master specification make the two enhancement documents binding and additive.
 
-`docs/specification/REQUIREMENTS_TRACEABILITY_MATRIX.md`
+The implementation status authorities are:
+
+- `docs/specification/REQUIREMENTS_TRACEABILITY_MATRIX.md`
+- `docs/specification/ENHANCEMENT_TRACEABILITY_MATRIX.md`
 
 This policy governs all future MEDNEXUS changes.
 
@@ -48,13 +53,15 @@ The following completed work is therefore preserved:
 - MORI baseline;
 - scenario baseline;
 - decision queue;
-- 29-file Power BI export contract;
-- semantic-model blueprint;
-- Page 1 Enterprise Command Center shell/design;
+- Phase-12 53-file Power BI export/semantic-model contract baseline;
+- ambiguity-safe semantic-model blueprint and reconciliation targets;
+- Page 1 Enterprise Command Center shell/design, now preserved beneath the flagship Command Center enhancement;
 - fictional/synthetic/simulated/model-derived disclosures;
 - GitHub/VS Code build workflow.
 
 These are baselines, not proof that every canonical requirement is finished.
+
+The September 2026 enhancement requirements A01–A32 and B01–B28 are also protected by this policy. A later implementation may refine them, but may not silently omit inventory, geospatial, event-log, cross-domain, prototype-before-scale, Command Center navigation, map/twin, evidence-pack, reconciliation, or closed-loop decision-intelligence requirements.
 
 ## Priority hierarchy
 
