@@ -12,6 +12,22 @@ This page is an executive summary. It must represent the enterprise rather than 
 
 > Synthetic enterprise data. Scenario outputs are simulated. Predictive outputs are model-derived. Project-defined indices/financial assumptions are labeled where applicable.
 
+## Flagship enhancement overlay
+
+This file remains the preserved **baseline Page 1 shell**. The target Command Center is now governed by:
+
+- `docs/specification/MEDNEXUS_EXECUTIVE_COMMAND_CENTER_ENHANCEMENT.md`
+- `docs/specification/MEDNEXUS_ENTERPRISE_DATASET_DIGITAL_TWIN_ENHANCEMENT.md`
+- `powerbi/EXECUTIVE_COMMAND_CENTER_BLUEPRINT.md`
+
+The final page must evolve into the executive operating interface for:
+
+**OBSERVE → DIAGNOSE → QUANTIFY → PREDICT → PRIORITIZE → SIMULATE → DECIDE → MONITOR → LEARN**
+
+The baseline four-table shell is not discarded. It remains a valid reconciliation anchor while the richer data/twin prototype is designed and validated.
+
+Do not begin final PBIX acceptance from this shell until the enhanced-data prototype and regenerated semantic contract pass.
+
 ## 1. Required tables for Page 1
 
 Import these CSVs from `powerbi/exports/`:
@@ -324,15 +340,30 @@ Before considering the executive page technically valid:
 
 ## 10. Finalization dependency
 
-This Page 1 design is preserved as the executive shell, but it is **provisional** until the canonical predecessor work is closed/gated, especially:
+This Page 1 design is preserved as the executive shell and current reconciliation anchor.
 
-- full COPQ remains gated, while Six Big Losses/capacity/value-leakage outputs are now available;
-- expanded statistical/root-cause analysis;
-- expanded Data Trust/observability;
-- strengthened predictive/forecast/risk evidence;
-- scenario/optimization suitability decisions.
+The earlier analytical predecessor work is now closed or explicitly gated. A **new additive predecessor** was introduced by the September 2026 enhancement:
 
-When those layers are validated, refresh the executive measures/driver visuals instead of rebuilding the page concept from scratch.
+- richer temporal/entity/event coverage;
+- inventory and warehouse modeling;
+- geospatial entities;
+- deeper workforce/recruitment grains;
+- supplier/material/PO/lot/receipt relationships;
+- carrier/route/delivery events;
+- stronger production/quality/process-event linkage;
+- Command Center drill paths and map/twin interactions.
+
+Before final PBIX construction:
+
+1. define the enhanced grains and KPI dependencies;
+2. build a small deterministic prototype;
+3. validate RI, chronology, inventory balance, calculations and compute cost;
+4. validate Power BI filter behavior;
+5. promote only justified additions;
+6. regenerate the semantic-model contract and reconciliation targets;
+7. then implement the flagship zones/navigation/map/twin/forecast/scenario/decision experience in `EXECUTIVE_COMMAND_CENTER_BLUEPRINT.md`.
+
+The existing page concept is not discarded; it becomes the baseline executive-health layer inside the richer flagship Command Center.
 
 ## 11. Save convention
 
