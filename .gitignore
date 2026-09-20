@@ -17,3 +17,5 @@ powerbi/exports/*.csv
 *.pbix
 .DS_Store
 Thumbs.db
+
+data/prototype/*.csv
