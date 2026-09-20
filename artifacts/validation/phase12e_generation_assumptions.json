@@ -1,0 +1,14 @@
+{
+  "prototype_version": "12E.1",
+  "status": "STRUCTURAL_PROTOTYPE_NOT_CANONICAL_PRODUCTION_DATA",
+  "causal_status": "Synthetic generation assumptions are not empirical causal findings.",
+  "geography": "Coordinates are simulated representative enterprise locations for analytical map testing.",
+  "workforce": "Roles, shifts and line assignments are deterministic synthetic prototype enrichments.",
+  "recruitment": "Vacancies/candidate stages are prototype disaggregation rules, not observed applicant histories.",
+  "production": "Canonical daily production orders are split into two shift events and must reaggregate exactly.",
+  "quality": "One inspection event is created per prototype production event; no specification limits are invented.",
+  "supply": "Canonical monthly supplier quantities are deterministically split into two prototype PO lines and reconcile exactly.",
+  "inventory": "Inventory demand is a scaled production-linked proxy constrained by physical availability; balances must reconcile and never become negative.",
+  "process": "Order fulfillment only is admitted. Full Order\u2192Production\u2192Inspection\u2192Rework\u2192Release\u2192Shipment\u2192Delivery process mining remains gated until explicit order-production linkage exists.",
+  "power_bi": "No prototype relationship is promoted to the canonical Power BI model in Phase 12E."
+}

@@ -1,0 +1,13 @@
+{
+  "phase": "12E",
+  "prototype_version": "12E.1",
+  "status": "PASS",
+  "canonical_semantic_model_changed": false,
+  "canonical_powerbi_export_contract_changed": false,
+  "prototype_table_count": 20,
+  "prototype_row_count": 6450,
+  "validation_check_count": 62,
+  "validation_failure_count": 0,
+  "full_process_mining_status": "NOT_ADMITTED_NO_EXPLICIT_ORDER_PRODUCTION_LINK",
+  "next_gate": "Review prototype evidence before promotion into canonical generator/semantic model."
+}
