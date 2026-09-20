@@ -2218,3 +2218,58 @@ Do not omit difficult technical areas merely because they require more planning.
 Resolve design decisions professionally, document assumptions, and produce one coherent, implementation-ready master blueprint.
 
 **Accuracy and quality supremacy are mandatory.**
+
+
+---
+
+# 56. ENTERPRISE DATASET & DIGITAL TWIN ENHANCEMENT
+
+This section incorporates the complete binding requirements in:
+
+`docs/specification/MEDNEXUS_ENTERPRISE_DATASET_DIGITAL_TWIN_ENHANCEMENT.md`
+
+The enhancement contains **32 additive requirements** governing:
+
+- compact synthetic enterprise digital-twin design;
+- 24–36 month temporal depth where analytically justified;
+- entity scale and segmentation;
+- finance, workforce, recruitment, manufacturing, quality/SPC, equipment, sensor/predictive-maintenance, supply, inventory, logistics, healthcare-customer and technology data;
+- geospatially useful simulated enterprise entities;
+- defensible cross-domain linkage;
+- process/event-log design;
+- table grain contracts;
+- rule-driven synthetic generation;
+- volume/computational strategy;
+- raw/staging/quality/curated/analytical/BI architecture;
+- provenance and data-product governance;
+- expanded data-quality/Data Trust evidence;
+- Command Center drill paths;
+- prototype-before-scale validation;
+- Python/SQL/Power BI reconciliation;
+- final coherent-enterprise quality standard.
+
+These requirements are **additive**. Existing validated data, analytical methods and gates remain authoritative baselines until stronger expanded implementations are tested and explicitly promoted.
+
+Do not interpret planning ranges as fabricated final dataset statistics.
+
+Do not increase row counts without a defined analytical or decision purpose.
+
+---
+
+# 57. FLAGSHIP EXECUTIVE COMMAND CENTER ENHANCEMENT
+
+This section incorporates the complete binding requirements in:
+
+`docs/specification/MEDNEXUS_EXECUTIVE_COMMAND_CENTER_ENHANCEMENT.md`
+
+The enhancement contains **28 additive requirements** that promote the Enterprise Command Center into the primary executive operating interface for MEDNEXUS.
+
+The required executive lifecycle is:
+
+**OBSERVE → DIAGNOSE → QUANTIFY → PREDICT → PRIORITIZE → SIMULATE → DECIDE → MONITOR → LEARN**
+
+The Command Center must ultimately include governed information architecture, global navigation, concise KPI interactions, enterprise map analysis, value-loss intelligence, Enterprise Operations Twin navigation, MORI risk intelligence, Decision Queue, forecast/early warning, scenario launchpad, executive commentary, drill-through/filter architecture, validation, reconciliation and evidence packaging.
+
+The existing Page 1 shell and Phase-12 semantic-model contract are preserved as validated baselines. They must not be treated as the final Command Center until the richer dataset/twin requirements are implemented or explicitly gated and the actual PBIX is built and reconciled.
+
+Do not claim PBIX completion, screenshot evidence, navigation testing, map validation, DAX reconciliation or Command Center acceptance until those artifacts actually exist.
