@@ -12,9 +12,26 @@ Every page must state or imply a clear decision question and must avoid unsuppor
 
 ## Page 1 — Enterprise Command Center
 
-**Question:** Where is MEDNEXUS losing operational value?
+**Question:** Where is MEDNEXUS losing operational value, what is changing, what is likely to happen next, and what requires management attention?
 
-Required evidence groups:
+The existing Page 1 shell remains the validated baseline. The target is now the **flagship executive operating interface**, governed by `EXECUTIVE_COMMAND_CENTER_BLUEPRINT.md`.
+
+Required lifecycle:
+
+**OBSERVE → DIAGNOSE → QUANTIFY → PREDICT → PRIORITIZE → SIMULATE → DECIDE → MONITOR → LEARN**
+
+Required information zones:
+
+- **Enterprise Status** — reporting period, refresh/freshness, analytical mode, version, Data Trust and enterprise status;
+- **KPI Snapshot** — concise governed executive subset across finance, operations, quality, workforce, supply/logistics and enterprise intelligence;
+- **Geographic Intelligence** — simulated enterprise footprint only after geospatial data and relationship validation;
+- **Value-Loss Intelligence** — capacity/loss chain plus valid cross-domain contributors with Observed/Derived/Model-Derived/Simulated/Conceptual labeling;
+- **Risk Intelligence** — MORI, band, trend, components, sensitivity/limitations;
+- **Forecast / Early Warning** — validated forecast surfaces with method/error/bias/assumptions;
+- **Decision Queue** — priority actions with evidence, affected entity, risk, impact, confidence, owner, urgency, analytical basis, limitations and status;
+- **Navigation** — persistent entry to all major domains, Scenario Engine, Decision Queue and Analytics Assurance.
+
+Required baseline evidence groups remain:
 
 - revenue, operating cost and margin;
 - workforce/capacity pressure;
@@ -27,17 +44,25 @@ Required evidence groups:
 - top value-loss drivers;
 - priority decision queue.
 
-Recommended layout:
+New target interactions:
 
-- compact executive KPI row for financial health, OEE/OLI, delivery and MORI;
-- enterprise health strip/matrix for margin, capacity gap, quality, supplier reliability, technology health/Data Trust;
-- revenue vs operating-cost trend;
-- MORI trend/component indicator;
-- current value-loss-driver bar/waterfall;
-- priority decision queue;
-- month slicer and plant slicer only when filter semantics remain valid across displayed facts.
+- KPI value → trend → benchmark/target where valid → variance → risk → driver → drill path;
+- Enterprise → Region → Plant → Line → Machine → Product → Shift → Event where the enhanced data supports it;
+- Supplier → Material → Inventory → Production → Shipment → Customer where defensible;
+- Workforce → Department → Role → Capacity → Recruitment → Operations where defensible;
+- entity-specific map interaction without ambiguous filter paths;
+- Enterprise Operations Twin navigation;
+- Scenario launchpad with explicit simulated-state labeling;
+- evidence-class-aware executive commentary;
+- context-preserving drill-through and back navigation.
 
-Detailed build: `PAGE_01_ENTERPRISE_COMMAND_CENTER.md`.
+The map, advanced drill paths and expanded cross-domain filters remain **deferred** until the enhanced dataset/twin prototype is validated and the semantic-model contract is regenerated.
+
+Detailed build:
+
+- `PAGE_01_ENTERPRISE_COMMAND_CENTER.md` — preserved baseline shell;
+- `EXECUTIVE_COMMAND_CENTER_BLUEPRINT.md` — target flagship implementation;
+- `docs/specification/MEDNEXUS_EXECUTIVE_COMMAND_CENTER_ENHANCEMENT.md` — canonical requirements.
 
 ---
 
