@@ -13,7 +13,7 @@ This is not a school assignment, a collection of disconnected dashboards, or a K
 The full project specification is preserved verbatim in the repository:
 
 - [`docs/specification/MEDNEXUS_MASTER_BUILD_SPECIFICATION.md`](docs/specification/MEDNEXUS_MASTER_BUILD_SPECIFICATION.md) — canonical 57-section production-grade specification.
-- [`docs/MASTER_IMPLEMENTATION_BLUEPRINT.md`](docs/MASTER_IMPLEMENTATION_BLUEPRINT.md) — implementation blueprint covering all 60 required output areas.
+- [`docs/MASTER_IMPLEMENTATION_BLUEPRINT.md`](docs/MASTER_IMPLEMENTATION_BLUEPRINT.md) — preserves all 60 original implementation areas and adds binding A01–A32/B01–B28 enhancement annexes.
 - [`docs/specification/REQUIREMENTS_TRACEABILITY_MATRIX.md`](docs/specification/REQUIREMENTS_TRACEABILITY_MATRIX.md) — section-by-section implementation status and remaining work.
 - [`docs/specification/MEDNEXUS_ENTERPRISE_DATASET_DIGITAL_TWIN_ENHANCEMENT.md`](docs/specification/MEDNEXUS_ENTERPRISE_DATASET_DIGITAL_TWIN_ENHANCEMENT.md) — binding A01–A32 enterprise data/digital-twin enhancement.
 - [`docs/specification/MEDNEXUS_EXECUTIVE_COMMAND_CENTER_ENHANCEMENT.md`](docs/specification/MEDNEXUS_EXECUTIVE_COMMAND_CENTER_ENHANCEMENT.md) — binding B01–B28 flagship Command Center enhancement.
