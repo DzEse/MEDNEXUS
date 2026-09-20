@@ -16,6 +16,7 @@ Statuses use the same evidence discipline as the main traceability matrix:
 - **PLANNED** — required, not yet implemented.
 - **CONDITIONAL-GATED** — only implement when the required data/methodological assumptions are valid.
 - **DOCUMENTED** — architecture/requirement is defined but execution evidence is incomplete.
+- **PROTOTYPED / NOT PROMOTED** — executable structural prototype is validated, but the table/relationship is not yet part of the canonical dataset or Power BI model.
 
 No row may disappear from future revisions.
 
@@ -29,32 +30,32 @@ No row may disappear from future revisions.
 | A02 | 24–36 month temporal depth where analytically justified | PARTIAL | 24-month forecast history exists; other domains vary | Establish domain-by-domain history windows and YoY/MoM support without forced seasonality |
 | A03 | Enterprise entity scale and segmentation | PARTIAL | Current plants/lines/machines/products/suppliers/customers/workforce dimensions exist | Reassess scale against final grain; expand only after prototype validation |
 | A04 | Expanded finance data | PARTIAL | Revenue, operating cost, budget proxy, cost/value-leakage marts exist | Add defensible cost-center/department/product-family/business-unit structure and richer budget/actuals |
-| A05 | Interconnected workforce / HR data | PARTIAL | Plant-month workforce facts, employee dimension and capacity metrics exist | Add role/skill/shift/manager/training/employment-event structure without PII |
-| A06 | Recruitment pipeline linked to capacity | PARTIAL | Recruitment funnel/time-to-fill/cost-per-hire baseline exists | Add vacancy/application/stage-event/skill/criticality/onboarding grain |
-| A07 | Production-event manufacturing layer | PARTIAL | Production facts and OEE inputs exist | Add explicit production-order/shift/product/event grains, schedule adherence/changeover where supportable |
-| A08 | Independent quality-event layer | PARTIAL | Quality events, true single-stage FPY and Pareto exist | Add production-order/process-stage/inspection-event linkage, rework/disposition, valid RTY/DPMO opportunities |
+| A05 | Interconnected workforce / HR data | PROTOTYPED / NOT PROMOTED | Phase 12E adds deterministic employee→department→role→plant→shift→line assignment prototype without PII | Skills, manager, training and employment-event history remain for canonical design/promotion |
+| A06 | Recruitment pipeline linked to capacity | PROTOTYPED / NOT PROMOTED | Phase 12E vacancy and candidate-stage event grains validate chronology and critical-role linkage | Reconcile final event volumes/skills/onboarding semantics before canonical promotion |
+| A07 | Production-event manufacturing layer | PROTOTYPED / NOT PROMOTED | Phase 12E splits recent canonical production into internally consistent shift events that reaggregate exactly to daily source totals | Decide canonical event grain/history scale; schedule adherence/changeover remain open |
+| A08 | Independent quality-event layer | PROTOTYPED / NOT PROMOTED | Phase 12E creates one inspection event per production event with explicit production linkage, disposition and no fabricated specification limits | Add process-stage semantics and only enable RTY/DPMO when opportunities/stages are valid |
 | A09 | Process capability / SPC characteristic data | PARTIAL + CONDITIONAL-GATED | p-chart implemented; capability indices gated | Add measurement/specification structure only with valid limits/sampling; preserve stability vs capability distinction |
 | A10 | Equipment / maintenance hierarchy and events | PARTIAL | Machine, downtime, maintenance, reliability facts exist | Add component/failure-mode/operating-hours/backlog/resource detail where useful |
 | A11 | Sensor / predictive-maintenance data integrity | IMPLEMENTED/PARTIAL | Temporal validation, leakage controls and uncalibrated-risk labeling exist | Expand synthetic/public methodology and provenance only where new sensor data is activated |
-| A12 | Supplier→PO→material→lot→receipt→inventory | PARTIAL | Supplier reliability, shortage and lead-time proxies exist | Add material, lot, purchase-order and receipt entities |
-| A13 | Inventory data and balance reconciliation | PLANNED | No canonical inventory movement ledger yet | Add warehouse/material/product stock movement model and balance equation validation |
-| A14 | Logistics order→shipment→carrier→route→delivery events | PARTIAL | Orders/shipments/promised/actual delivery and process cycle time exist | Add carrier/route/warehouse/delivery-event/exception detail and OTIF semantics |
+| A12 | Supplier→PO→material→lot→receipt→inventory | PROTOTYPED / NOT PROMOTED | Phase 12E material, PO-line, receipt, lot and warehouse structures reconcile PO quantities back to canonical monthly supply facts | Review scale/cardinality and promote only after semantic/filter-behavior assessment |
+| A13 | Inventory data and balance reconciliation | PROTOTYPED / NOT PROMOTED | Phase 12E inventory movements/snapshots pass opening + receipts − consumption ± adjustments = closing and movement-to-snapshot delta checks | Validate final demand/consumption assumptions, history and working-capital semantics before canonical promotion |
+| A14 | Logistics order→shipment→carrier→route→delivery events | PROTOTYPED/PARTIAL | Phase 12E validates Order Created→Shipped→Delivered event chronology and warehouse structure | Carrier/route/exception dimensions and final OTIF semantics remain open |
 | A15 | Simulated healthcare customer environment | PARTIAL | Customer types, orders, shipments and service issues exist | Expand region/service/demand structure while preserving no-PII rule |
 | A16 | Technology / SaaS operational support model | PARTIAL | Incidents, severity, downtime and SaaS usage exist | Add system/application/deployment/support-ticket/response/availability linkage |
-| A17 | Geospatial enterprise entities | PLANNED | No validated geospatial contract in semantic model | Add simulated coordinates/regions for plants, suppliers, warehouses and customers with map-use rationale |
-| A18 | Cross-domain enterprise relationships | PARTIAL | Conceptual twin, lineage and several generated dependencies exist | Add defensible employee/shift, supplier/material/inventory, production/quality/shipment/customer and cost links |
-| A19 | Event-based end-to-end process log | PARTIAL + CONDITIONAL-GATED | Order Created→Shipped→Delivered→optional Service Issue supported; full manufacturing mining gated | Add scheduled/start/inspection/rework/release linkage only after valid case identifiers and timestamps exist |
-| A20 | Explicit table-grain contracts | IMPLEMENTED/PARTIAL | Table register, data dictionary, SQL grain checks and semantic contract exist | Extend register to every new table/field with source/refresh/transformation metadata |
-| A21 | Rule-driven synthetic generation dependencies | PARTIAL | Workforce, machine, downtime and supplier-related synthetic dependencies exist | Expand documented business-rule dependency graph; avoid independent random-field generation |
-| A22 | Manageable data-volume strategy | IMPLEMENTED AS POLICY / PARTIAL | Compact CSV/SQLite/reproducible generator baseline | Benchmark expanded prototype, consider Parquet only where it materially improves local performance/storage |
+| A17 | Geospatial enterprise entities | PROTOTYPED / NOT PROMOTED | Phase 12E validates explicitly simulated region/city/latitude/longitude for plants, suppliers, warehouses and customers with range checks | Validate Power BI map/filter behavior and ambiguity safeguards before semantic promotion |
+| A18 | Cross-domain enterprise relationships | PROTOTYPED/PARTIAL | Phase 12E validates employee/role/shift, supplier/material/receipt/inventory, production/inspection and order/shipment event links | Customer-order→production and cost-allocation linkage remain unproven/canonical work |
+| A19 | Event-based end-to-end process log | PARTIAL + CONDITIONAL-GATED | Phase 12E validates Order Created→Shipped→Delivered chronology; full process gate remains fail-closed because canonical production lacks explicit customer-order linkage | Add scheduled/start/inspection/rework/release only after the generator creates explicit order→production case linkage |
+| A20 | Explicit table-grain contracts | IMPLEMENTED/PARTIAL | Phase 12E adds machine-readable contracts for all 20 prototype tables plus relationship contract and promotion status | Merge accepted tables into canonical register/data dictionary only after promotion decision |
+| A21 | Rule-driven synthetic generation dependencies | PROTOTYPED/PARTIAL | Phase 12E uses deterministic geography, role/shift, PO disaggregation, production-linked inventory demand and event-sequencing rules with explicit assumption labels | Extend rule graph for any promoted canonical additions and future finance/technology links |
+| A22 | Manageable data-volume strategy | IMPLEMENTED AS POLICY / PROTOTYPED | Full CI Phase 12E prototype is 20 tables / 6,450 rows and remains isolated from the canonical BI export contract | Run local hardware/storage benchmark during evidence run; consider scale-up only after promotion review |
 | A23 | Raw→Staging→Quality→Curated→Analytical→BI→Decision architecture | IMPLEMENTED | Layered architecture and logical staging SQL documented/tested | Extend physical/source handling only when new public/raw sources are activated |
 | A24 | Source and synthetic data provenance | PARTIAL | Provenance register and synthetic reproducibility manifest exist | Add generator-version/generation-date/assumption/relationship metadata for expansion; verify public licenses when used |
-| A25 | Expanded automated data quality | IMPLEMENTED/PARTIAL | Null, PK/FK, schema, freshness, drift, category, model target and KPI checks exist | Add inventory balance, timestamp-ordering, sparsity/class-imbalance and new-domain checks |
+| A25 | Expanded automated data quality | IMPLEMENTED/PARTIAL | Phase 12E adds PK/FK, geography, production/PO reconciliation, inspection/recruitment/fulfillment chronology, inventory balance and volume checks; 62 full-prototype checks pass in CI | Add promoted-domain observability/freshness/drift checks when tables enter canonical pipeline |
 | A26 | Enterprise Data Trust Score | IMPLEMENTED | Transparent project-defined Data Trust v2, score 100 canonical baseline | Revalidate weights/components when new domains/tables enter the data product |
-| A27 | Command Center drillable data paths | PARTIAL | Enterprise mart and semantic baseline exist | Enable Enterprise→Region→Plant→Line→Machine→Product→Shift→Event and cross-domain drill paths without ambiguity |
+| A27 | Command Center drillable data paths | PROTOTYPED/PARTIAL | Prototype provides Region/Plant/Warehouse, Plant/Line/shift production, supplier/material/inventory and workforce role/shift keys without changing canonical semantic model | Validate actual Power BI filter paths and then promote accepted conformed dimensions |
 | A28 | Analytical richness over row count | IMPLEMENTED AS POLICY | Quality hierarchy and scope-preservation policy | Apply explicit decision-supported-data gate to every expansion |
-| A29 | Prototype-before-expansion validation | PLANNED / MANDATORY GATE | Phase-12 semantic contract is the current validated baseline | Build small enhanced prototype, validate calculations/relationships/Power BI behavior, then scale |
-| A30 | Synthetic↔SQL↔Python↔Power BI reconciliation | PARTIAL | SQL/Python reconciliation and Power BI headline target framework exist | Add inventory/OTIF/rework/new KPI tolerances and actual PBIX reconciliation |
+| A29 | Prototype-before-expansion validation | IMPLEMENTED/PARTIAL | Phase 12E.1 full 24-month structural prototype passes CI: 20 tables, 6,450 rows, 62 checks, 0 failures; canonical semantic/53-export contracts unchanged | Complete local evidence run and prototype Power BI filter-behavior assessment before any promotion/scale-up |
+| A30 | Synthetic↔SQL↔Python↔Power BI reconciliation | PARTIAL | Phase 12E adds source→prototype reconciliation for production and supply plus inventory ledger reconciliation; canonical SQL/Python and headline target framework remain | Promote accepted data, extend SQL, then perform actual Power BI reconciliation/tolerance checks |
 | A31 | MEDNEXUS as governed data product | PARTIAL | Charter, architecture, contracts, lineage, observability and versioned repo exist | Add ownership/change-management/data-product metadata for new domains |
 | A32 | Coherent enterprise final dataset standard | PLANNED OUTCOME | Current system demonstrates many linked domains | Achieve Finance→People→Recruitment→Workforce→Manufacturing→Quality→Maintenance→Supply→Inventory→Logistics→Customer→Technology→Risk→Forecast→Scenario→Decision chain |
 
@@ -103,11 +104,12 @@ Because requirements A01–A32 introduce new grains, dimensions and relationship
 
 1. preserve the current validated baseline;
 2. design the enhanced grains and dependency map;
-3. create a small deterministic prototype;
-4. validate keys, relationships, calculations, temporal behavior and computational cost;
-5. promote only justified additions;
-6. regenerate the semantic-model contract;
-7. rerun reconciliation;
-8. then build the final flagship Command Center and remaining Power BI pages.
+3. create a small deterministic prototype — **completed in Phase 12E.1**;
+4. validate keys, relationships, calculations and temporal behavior — **completed in CI with 62/62 checks**;
+5. run the local evidence/storage benchmark and prototype Power BI filter-behavior assessment;
+6. promote only justified additions;
+7. regenerate the semantic-model contract;
+8. rerun reconciliation;
+9. then build the final flagship Command Center and remaining Power BI pages.
 
 This sequencing change preserves all prior work while preventing rework and model ambiguity.
