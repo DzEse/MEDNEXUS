@@ -70,3 +70,23 @@ It cannot establish:
 **PBIX MODEL BUILT / REPORT RECONCILED**
 
 Those require the user to create/open the model in Power BI Desktop and verify the actual relationships and displayed values.
+
+
+## Enhancement consequence
+
+The Phase-12 result remains a valid baseline audit.
+
+The A01–A32 enhancement may introduce new conformed dimensions and fact grains. Therefore the current 53-export/39-active-relationship contract must **not** be assumed to be the final enhanced contract.
+
+After the enhanced prototype is promoted:
+
+1. regenerate exports;
+2. rebuild table-role and relationship contracts;
+3. rerun one-side key/orphan checks;
+4. prove no ambiguous active filter paths;
+5. validate new date roles and geography behavior;
+6. regenerate reconciliation targets;
+7. rerun the full test suite;
+8. then build/reconcile the final PBIX.
+
+Until that happens, speculative relationships must not be added manually to the final report.
