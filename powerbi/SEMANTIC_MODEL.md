@@ -1,5 +1,13 @@
 # Power BI Semantic Model
 
+## Enhancement status
+
+This document is the **validated Phase-12 baseline semantic contract**.
+
+The September 2026 enterprise dataset/twin enhancement introduces candidate inventory, warehouse, material, carrier, route, shift, department/role/skill, geospatial, process-event and technology entities. Those additions are **not yet admitted** to this contract.
+
+The baseline relationships remain authoritative until the enhanced prototype passes A01–A32 validation and this contract is regenerated. Do not manually add speculative relationships to the final PBIX.
+
 The final model uses a **controlled star/snowflake design**. The repository validates the relationship contract before the user builds it in Power BI Desktop.
 
 Machine-readable contract:
