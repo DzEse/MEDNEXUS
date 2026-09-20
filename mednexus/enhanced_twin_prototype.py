@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import timedelta
 from pathlib import Path
 from typing import Iterable
 
@@ -435,7 +436,7 @@ def _workforce_prototype(frames: dict[str, pd.DataFrame]) -> dict[str, pd.DataFr
                     "plant_id": row.plant_id,
                     "department_id": dept_map[dept],
                     "job_role_id": role_id,
-                    "opening_date": (pd.Timestamp(row.month) + pd.Timedelta(days=2 + idx)).date(),
+                    "opening_date": (pd.Timestamp(row.month) + timedelta(days=int(2 + idx))).date(),
                     "criticality": "High" if dept in {"Manufacturing", "Maintenance"} else "Medium",
                     "vacancy_status": "Accepted" if idx < int(row.accepted) else "Open",
                     "generation_assumption": "Prototype vacancy disaggregation from monthly recruitment pressure.",
@@ -473,7 +474,7 @@ def _workforce_prototype(frames: dict[str, pd.DataFrame]) -> dict[str, pd.DataFr
                         "candidate_id": candidate_id,
                         "vacancy_id": vacancy.vacancy_id,
                         "stage": stage,
-                        "event_timestamp": pd.Timestamp(vacancy.opening_date) + pd.Timedelta(days=stage_offsets[stage], hours=10),
+                        "event_timestamp": pd.Timestamp(vacancy.opening_date) + timedelta(days=int(stage_offsets[stage]), hours=10),
                         "event_class": "SYNTHETIC_RECRUITMENT_PROTOTYPE",
                     }
                 )
@@ -492,7 +493,7 @@ def _workforce_prototype(frames: dict[str, pd.DataFrame]) -> dict[str, pd.DataFr
 def _split_production_events(frames: dict[str, pd.DataFrame], lookback_days: int = 45) -> dict[str, pd.DataFrame]:
     source = frames["fact_production"].copy()
     source["date"] = pd.to_datetime(source["date"])
-    cutoff = source["date"].max() - pd.Timedelta(days=max(1, lookback_days - 1))
+    cutoff = source["date"].max() - timedelta(days=int(max(1, lookback_days - 1)))
     source = source[source["date"] >= cutoff].copy()
 
     events = []
@@ -510,9 +511,9 @@ def _split_production_events(frames: dict[str, pd.DataFrame], lookback_days: int
         split_floats = {column: [float(getattr(row, column)) / 2.0] * 2 for column in float_columns}
         for idx, (shift_id, start_hour) in enumerate((("S_DAY", 6), ("S_EVE", 14))):
             event_id = f"PE-{row.production_order_id}-{idx+1}"
-            start_ts = pd.Timestamp(row.date) + pd.Timedelta(hours=start_hour)
+            start_ts = pd.Timestamp(row.date) + timedelta(hours=int(start_hour))
             run_minutes = split_floats["run_time_min"][idx]
-            end_ts = start_ts + pd.Timedelta(minutes=run_minutes)
+            end_ts = start_ts + timedelta(minutes=float(run_minutes))
             event = {
                 "production_event_id": event_id,
                 "production_order_id": row.production_order_id,
@@ -548,7 +549,7 @@ def _split_production_events(frames: dict[str, pd.DataFrame], lookback_days: int
                     "inspection_id": f"INSP-{event_id}",
                     "production_event_id": event_id,
                     "production_order_id": row.production_order_id,
-                    "inspection_timestamp": end_ts + pd.Timedelta(minutes=10),
+                    "inspection_timestamp": end_ts + timedelta(minutes=10),
                     "plant_id": row.plant_id,
                     "line_id": row.line_id,
                     "machine_id": row.machine_id,
@@ -599,9 +600,9 @@ def _supply_inventory_prototype(
         base_lead = int(suppliers.loc[row.supplier_id, "base_lead_time_days"])
         for idx, material_id in enumerate(selected):
             po_line_id = f"POL{po_counter:07d}"
-            order_date = pd.Timestamp(row.month) + pd.Timedelta(days=2 + idx * 8)
-            promised_date = order_date + pd.Timedelta(days=base_lead)
-            actual_receipt = promised_date + pd.Timedelta(days=int(round(float(row.avg_late_days))))
+            order_date = pd.Timestamp(row.month) + timedelta(days=int(2 + idx * 8))
+            promised_date = order_date + timedelta(days=int(base_lead))
+            actual_receipt = promised_date + timedelta(days=int(round(float(row.avg_late_days))))
             warehouse_id = warehouse_ids[_stable_index(row.supplier_id, material_id, n=len(warehouse_ids))]
             po_rows.append(
                 {
@@ -747,7 +748,7 @@ def _fulfillment_events(frames: dict[str, pd.DataFrame], lookback_days: int = 60
     orders["order_date"] = pd.to_datetime(orders["order_date"])
     shipments["ship_date"] = pd.to_datetime(shipments["ship_date"])
     shipments["actual_delivery_date"] = pd.to_datetime(shipments["actual_delivery_date"])
-    cutoff = orders["order_date"].max() - pd.Timedelta(days=max(1, lookback_days - 1))
+    cutoff = orders["order_date"].max() - timedelta(days=int(max(1, lookback_days - 1)))
     joined = orders[orders["order_date"] >= cutoff].merge(
         shipments[
             [
@@ -766,9 +767,9 @@ def _fulfillment_events(frames: dict[str, pd.DataFrame], lookback_days: int = 60
     counter = 1
     for row in joined.itertuples(index=False):
         for event_type, timestamp in (
-            ("Order Created", pd.Timestamp(row.order_date) + pd.Timedelta(hours=9)),
-            ("Shipped", pd.Timestamp(row.ship_date) + pd.Timedelta(hours=12)),
-            ("Delivered", pd.Timestamp(row.actual_delivery_date) + pd.Timedelta(hours=16)),
+            ("Order Created", pd.Timestamp(row.order_date) + timedelta(hours=9)),
+            ("Shipped", pd.Timestamp(row.ship_date) + timedelta(hours=12)),
+            ("Delivered", pd.Timestamp(row.actual_delivery_date) + timedelta(hours=16)),
         ):
             rows.append(
                 {
