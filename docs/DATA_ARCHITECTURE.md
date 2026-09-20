@@ -55,3 +55,22 @@ SQLite is embedded, reproducible and personal-machine friendly. CSV keeps the Po
 ## Duplicate-minimization rule
 
 MEDNEXUS does not persist a second full staging copy merely to imitate enterprise tooling. Staging is represented through validation logic and SQL views unless a genuine acquisition/cleaning requirement justifies persisted staging data.
+
+
+## Enhancement architecture status
+
+The September 2026 A01–A32 requirements extend this architecture toward a richer but still compact enterprise digital twin.
+
+Implementation design is defined in:
+
+`docs/ENHANCED_ENTERPRISE_DATA_ARCHITECTURE_BLUEPRINT.md`
+
+Candidate additions include inventory/warehouse/material/PO/receipt, carrier/route/delivery events, workforce/recruitment event grains, production-order/inspection/process-event linkage, geospatial entity attributes and richer technology events.
+
+These additions are **not yet canonical facts** merely because they are documented.
+
+Promotion sequence:
+
+**Requirements → Grain/keys → Small deterministic prototype → Quality/reconciliation → Power BI behavior → Runtime/storage benchmark → Promotion → Scale**
+
+The Phase-12 data/semantic baseline remains authoritative until the enhancement prototype passes.
