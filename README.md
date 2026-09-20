@@ -48,7 +48,7 @@ Implemented or substantially implemented today:
 - CI-compatible automated tests;
 - explicit fictional/synthetic/model-derived/simulated disclosures.
 
-Earlier analytical predecessor work is now substantially implemented or explicitly gated. The current major open work is the **enterprise dataset/digital-twin enhancement** (A01–A32) and subsequent **flagship Executive Command Center build** (B01–B28), including richer workforce/recruitment/manufacturing/quality/supply/inventory/logistics/technology grains, geospatial entities, stronger cross-domain linkage, prototype-before-scale validation, regenerated semantic contracts, actual PBIX construction, navigation/map/twin interactions and final Power BI reconciliation.
+Earlier analytical predecessor work is now substantially implemented or explicitly gated. **Phase 12E.1 now provides a validated structural prototype** for the enterprise dataset/digital-twin enhancement: 20 prototype tables, 6,450 rows and 62 validation checks with 0 failures in full CI, while leaving the canonical semantic model and 53-file Power BI contract unchanged. Remaining enhancement work is local evidence/performance validation, Power BI filter-behavior testing, selective promotion, semantic-contract regeneration, and then the flagship Executive Command Center build.
 
 Nothing is silently treated as complete simply because a baseline exists.
 
@@ -122,16 +122,22 @@ Phase 12 is closed as a **validated baseline**, not discarded.
 
 Before final PBIX construction, MEDNEXUS now requires:
 
-1. enhanced-grain/business-question design;
-2. a small deterministic prototype;
-3. key/relationship/event/inventory/calculation validation;
-4. local runtime/storage benchmarking;
+1. enhanced-grain/business-question design — **completed for Phase 12E.1**;
+2. a small deterministic prototype — **completed**;
+3. key/relationship/event/inventory/calculation validation — **completed in CI (62/62 checks)**;
+4. local Phase 12E evidence/runtime/storage validation — **next**;
 5. prototype Power BI filter-behavior validation;
 6. promotion of only decision-useful additions;
 7. regeneration of the semantic-model audit and reconciliation targets;
 8. then the actual flagship Executive Command Center and remaining Power BI report build.
 
 See `docs/ENHANCED_ENTERPRISE_DATA_ARCHITECTURE_BLUEPRINT.md` and `powerbi/EXECUTIVE_COMMAND_CENTER_BLUEPRINT.md`.
+
+The Phase 12E local evidence runner is:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File ".\scripts\phase12e_enhanced_twin_prototype.ps1"
+```
 
 ## Power BI handoff
 
