@@ -40,3 +40,30 @@ This checklist is the final cross-functional acceptance framework. It is not con
 - [ ] Public sources actually used have verified provenance/license/usage notes.
 - [ ] README and screenshots reflect validated outputs only.
 - [ ] Requirements traceability contains no silently unresolved requirement.
+
+
+## Enhanced dataset / twin acceptance
+
+- [ ] Every promoted new table/field has a documented business/analytical/decision purpose.
+- [ ] A01–A32 are resolved through evidence or explicit gate.
+- [ ] Enhanced grains, PKs, FKs, cardinalities, refresh logic and transformation rules are documented.
+- [ ] Event chronology is valid and optional events are not fabricated.
+- [ ] Inventory opening + receipts − consumption ± adjustments = closing within documented tolerance where applicable.
+- [ ] Geospatial entities are synthetic/public as labeled and coordinates are plausible.
+- [ ] Synthetic dependency rules are documented as generation assumptions rather than empirical causality.
+- [ ] Expanded temporal depth supports the intended comparisons without forced seasonality.
+- [ ] Prototype runtime/storage remains manageable on a personal development machine.
+- [ ] Full scale-up occurred only after prototype relationship/calculation/Power BI-behavior validation.
+
+## Flagship Command Center acceptance
+
+- [ ] B01–B28 are resolved through evidence or explicit gate.
+- [ ] Analytical mode visibly distinguishes Actual/Observed, Baseline, Simulated Scenario, Model-Derived and Forecast.
+- [ ] Global navigation, bookmarks, drill-through, back buttons and filter persistence have real test evidence.
+- [ ] Enterprise map entities/filters are validated and do not introduce ambiguous relationships.
+- [ ] Enterprise Operations Twin drill paths expose only evidence-backed contributions.
+- [ ] Enterprise Value-Loss Map distinguishes Observed, Derived, Model-Derived, Simulated Opportunity and Conceptual relationships.
+- [ ] Forecast/early-warning surfaces expose method, validation, error, bias, assumptions and limitations.
+- [ ] Scenario launchpad remains visibly simulated and non-causal.
+- [ ] Executive commentary is evidence-class-aware and contains no unsupported causal claims.
+- [ ] Evidence pack contains real KPI/DAX/map/MORI/OLI/scenario/navigation/reconciliation evidence and actual screenshots/walkthrough only after creation.
