@@ -13,8 +13,9 @@ Canonical governance:
 
 ## 1. Specification closure
 
-- every one of the 55 canonical specification sections is represented in the traceability matrix;
-- every one of the 60 master-blueprint areas is present;
+- every one of the 57 canonical specification sections is represented in the traceability matrix;
+- every one of the 60 original master-blueprint areas is present;
+- every A01–A32 dataset/twin enhancement requirement and B01–B28 Command Center enhancement requirement is preserved in the enhancement traceability matrix and blueprint annexes;
 - no canonical requirement is silently dropped, weakened or renamed away;
 - every requirement is either implemented/evidenced or explicitly condition-gated with a defensible methodological reason;
 - automated specification-preservation tests pass.
@@ -27,6 +28,10 @@ Canonical governance:
 - raw/staging/curated/analytical/BI responsibilities are clear;
 - dimensional grains, keys, cardinalities and refresh logic are documented;
 - fact-to-fact/many-to-many ambiguity and duplicate multiplication are prevented;
+- new table grains, keys, cross-domain links, event chronology and geospatial semantics are documented before promotion;
+- inventory movement data reconciles opening balance + receipts − consumption ± adjustments = closing balance where applicable;
+- enhanced dataset scale is justified by analytical/decision value rather than row-count optics;
+- a small deterministic enhanced-data prototype passes relationship/calculation/Power BI-behavior validation before full scale-up;
 - data-quality and referential-integrity gates pass;
 - observability records freshness, row counts, schema, quality failures and pipeline status.
 
@@ -98,16 +103,22 @@ Canonical governance:
 - semantic relationships are valid and unambiguous;
 - rate measures aggregate correctly;
 - all canonical business questions are covered even if pages are consolidated;
+- the flagship Command Center supports the governed Observe → Diagnose → Quantify → Predict → Prioritize → Simulate → Decide → Monitor → Learn lifecycle;
+- global navigation, drill-through, map/twin behavior, filter persistence and back navigation are tested;
+- map entities are synthetic/public as labeled and provide analytical value rather than decoration;
+- analytical mode states distinguish Actual/Observed, Baseline, Simulated Scenario, Model-Derived and Forecast;
 - drill-through/tooltips/bookmarks/field parameters/what-if parameters/dynamic titles/conditional formatting are used only where analytically useful;
 - decomposition tree/Key Influencers are used only where their data/model semantics are defensible;
 - synthetic/simulated/model-derived disclosures are visible;
-- no PBIX file or screenshot is fabricated by the repository.
+- no PBIX file or screenshot is fabricated by the repository;
+- real Command Center reconciliation/evidence is stored only after it exists, including KPI/DAX/map/navigation/scenario/reconciliation evidence and final screenshots/walkthrough.
 
 ## 11. Documentation, lineage and portfolio credibility
 
 - Project Charter, Statement of Work, Business/Analytical Requirements, Data Architecture, Data Dictionary, KPI Dictionary, Provenance, Data Quality/Observability, Methodologies, Assumptions/Limitations, Validation, Lineage, Technical Documentation, Power BI guides and Repository/Reproducibility guides are complete;
 - lineage can answer **“Where did this number come from?”** for important outputs;
 - README accurately distinguishes implemented work from planned/conditional work;
+- the final portfolio identifies the Executive Command Center, Enterprise Operations Twin, Enterprise Value-Loss Map, MORI, OLI, Data Trust Score, Decision Queue, Scenario Engine, Raw Data → Decision Trace and Analytics Assurance Report as signature artifacts only when their actual completion status supports it;
 - no fabricated employment, client, customer outcome, savings, source, license, model performance or causal claim exists;
 - user positioning demonstrates capability without exaggerating professional analytics experience;
 - repository remains lightweight and feasible on a personal development machine.
