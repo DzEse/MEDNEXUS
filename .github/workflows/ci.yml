@@ -14,4 +14,5 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python setup_project.py
       - run: python run_pipeline.py --clean
+      - run: python -c "from mednexus.enhanced_twin_prototype import run_phase12e; print(run_phase12e())"
       - run: pytest -q
