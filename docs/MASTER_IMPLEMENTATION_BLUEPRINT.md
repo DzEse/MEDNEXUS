@@ -624,3 +624,114 @@ Before portfolio completion verify:
 ## Current execution decision
 
 Do **not** discard the existing Power BI Page 1 work. Preserve it as a report shell. The next implementation work returns to unresolved predecessor analytical requirements identified in `REQUIREMENTS_TRACEABILITY_MATRIX.md`. Once those layers are validated, regenerate the canonical exports and finalize Power BI against the stronger evidence base.
+
+
+---
+
+# ENHANCEMENT ANNEX A — ENTERPRISE DATASET & DIGITAL TWIN
+
+This annex is binding and additive to blueprint areas 1–60. Detailed requirement text is preserved in:
+
+`docs/specification/MEDNEXUS_ENTERPRISE_DATASET_DIGITAL_TWIN_ENHANCEMENT.md`
+
+Implementation status is controlled in:
+
+`docs/specification/ENHANCEMENT_TRACEABILITY_MATRIX.md`
+
+The following requirement IDs must remain explicitly accounted for:
+
+| ID | Blueprint requirement |
+|---|---|
+| A01 | Compact synthetic enterprise digital twin / analytical richness per unit of data |
+| A02 | 24–36 month temporal depth where justified |
+| A03 | Enterprise entity scale and segmentation |
+| A04 | Expanded finance data |
+| A05 | Interconnected workforce / HR data |
+| A06 | Recruitment pipeline linked to workforce capacity |
+| A07 | Production-event manufacturing layer |
+| A08 | Independent quality-event layer |
+| A09 | Process capability / SPC data with validity gates |
+| A10 | Equipment / maintenance hierarchy and events |
+| A11 | Sensor / predictive-maintenance provenance and leakage controls |
+| A12 | Supplier → purchase order → material → lot → receipt → inventory |
+| A13 | Inventory ledger, safety stock and balance reconciliation |
+| A14 | Order → shipment → carrier → route → delivery event logistics |
+| A15 | Simulated healthcare customer environment |
+| A16 | Enterprise-connected technology / SaaS operations |
+| A17 | Geospatial enterprise entities for analytical mapping |
+| A18 | Defensible cross-domain relationships |
+| A19 | Event-based end-to-end process log where valid |
+| A20 | Explicit table-grain / PK / FK / cardinality / refresh contracts |
+| A21 | Rule-driven synthetic generation dependencies |
+| A22 | Manageable data-volume and storage strategy |
+| A23 | Raw → Staging → Quality → Curated → Analytical → BI → Decision architecture |
+| A24 | Public/synthetic provenance and generator metadata |
+| A25 | Expanded automated data-quality evidence |
+| A26 | Transparent project-defined Enterprise Data Trust Score |
+| A27 | Command Center drillable data paths across domains |
+| A28 | Analytical richness over row count |
+| A29 | Prototype-before-expansion validation gate |
+| A30 | Synthetic ↔ SQL ↔ Python ↔ Power BI reconciliation |
+| A31 | MEDNEXUS governed data-product design |
+| A32 | Coherent enterprise final dataset quality standard |
+
+## Annex A execution rule
+
+No expanded table, field, grain, entity population or event stream is admitted solely for scale. Each addition must trace to at least one business question, KPI, analytical method, forecast/model, risk/scenario, Power BI interaction, decision, or validation requirement.
+
+A small deterministic prototype must pass relationship, calculation, temporal and Power BI-behavior checks before full expansion.
+
+---
+
+# ENHANCEMENT ANNEX B — FLAGSHIP EXECUTIVE COMMAND CENTER
+
+This annex is binding and additive to blueprint areas 1–60. Detailed requirement text is preserved in:
+
+`docs/specification/MEDNEXUS_EXECUTIVE_COMMAND_CENTER_ENHANCEMENT.md`
+
+Implementation status is controlled in:
+
+`docs/specification/ENHANCEMENT_TRACEABILITY_MATRIX.md`
+
+The following requirement IDs must remain explicitly accounted for:
+
+| ID | Blueprint requirement |
+|---|---|
+| B01 | Executive control-room purpose and decision lifecycle |
+| B02 | Connected enterprise story |
+| B03 | Executive header and analytical-mode information architecture |
+| B04 | Persistent global navigation system |
+| B05 | Concise governed enterprise KPI strip |
+| B06 | KPI value → trend → benchmark → variance → risk → driver → drill interaction |
+| B07 | Simulated Enterprise Operations Map |
+| B08 | Map entity interaction and semantic-model safeguards |
+| B09 | Enterprise Value-Loss Map |
+| B10 | Interactive Enterprise Operations Twin entry |
+| B11 | Dynamic Enterprise Risk Panel / MORI |
+| B12 | Prominent navigable Decision Queue |
+| B13 | Forecast / early-warning panel |
+| B14 | Scenario launchpad |
+| B15 | Closed-loop decision-intelligence communication |
+| B16 | Evidence-class-aware executive commentary |
+| B17 | Enterprise/entity drill-through architecture |
+| B18 | High-value filter architecture |
+| B19 | Eight-zone visual hierarchy |
+| B20 | Executive visual-design and accessibility principles |
+| B21 | Full Power BI implementation blueprint |
+| B22 | Power BI performance requirements |
+| B23 | Source → quality → transformation → logic → BI → decision provenance |
+| B24 | Command Center data / SQL / DAX / business / navigation / reconciliation validation |
+| B25 | Real Command Center evidence pack |
+| B26 | Ten signature Command Center artifacts |
+| B27 | Command Center-led portfolio walkthrough |
+| B28 | Enterprise decision-support control-room final standard |
+
+## Annex B execution rule
+
+The existing Page 1 shell is preserved but is not final acceptance evidence.
+
+The final Command Center must support:
+
+**OBSERVE → DIAGNOSE → QUANTIFY → PREDICT → PRIORITIZE → SIMULATE → DECIDE → MONITOR → LEARN**
+
+No PBIX, screenshot, navigation, DAX reconciliation, map validation or executive-walkthrough evidence may be claimed until it actually exists and passes validation.
