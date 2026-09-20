@@ -12,9 +12,12 @@ This is not a school assignment, a collection of disconnected dashboards, or a K
 
 The full project specification is preserved verbatim in the repository:
 
-- [`docs/specification/MEDNEXUS_MASTER_BUILD_SPECIFICATION.md`](docs/specification/MEDNEXUS_MASTER_BUILD_SPECIFICATION.md) — canonical 55-section production-grade specification.
+- [`docs/specification/MEDNEXUS_MASTER_BUILD_SPECIFICATION.md`](docs/specification/MEDNEXUS_MASTER_BUILD_SPECIFICATION.md) — canonical 57-section production-grade specification.
 - [`docs/MASTER_IMPLEMENTATION_BLUEPRINT.md`](docs/MASTER_IMPLEMENTATION_BLUEPRINT.md) — implementation blueprint covering all 60 required output areas.
 - [`docs/specification/REQUIREMENTS_TRACEABILITY_MATRIX.md`](docs/specification/REQUIREMENTS_TRACEABILITY_MATRIX.md) — section-by-section implementation status and remaining work.
+- [`docs/specification/MEDNEXUS_ENTERPRISE_DATASET_DIGITAL_TWIN_ENHANCEMENT.md`](docs/specification/MEDNEXUS_ENTERPRISE_DATASET_DIGITAL_TWIN_ENHANCEMENT.md) — binding A01–A32 enterprise data/digital-twin enhancement.
+- [`docs/specification/MEDNEXUS_EXECUTIVE_COMMAND_CENTER_ENHANCEMENT.md`](docs/specification/MEDNEXUS_EXECUTIVE_COMMAND_CENTER_ENHANCEMENT.md) — binding B01–B28 flagship Command Center enhancement.
+- [`docs/specification/ENHANCEMENT_TRACEABILITY_MATRIX.md`](docs/specification/ENHANCEMENT_TRACEABILITY_MATRIX.md) — per-requirement status for all 60 enhancement requirements.
 - [`docs/specification/SCOPE_PRESERVATION_POLICY.md`](docs/specification/SCOPE_PRESERVATION_POLICY.md) — additive/no-silent-dropping change-control policy.
 - [`docs/DEFINITION_OF_DONE.md`](docs/DEFINITION_OF_DONE.md) — final evidence-based completion gate.
 
@@ -40,12 +43,12 @@ Implemented or substantially implemented today:
 - evidence/confidence/limitations management decision queue;
 - automated data-quality/business checks;
 - reproducibility manifest and cross-process determinism guard;
-- 29-file Power BI export contract;
-- Power BI semantic-model/DAX/build specifications and Page 1 report shell;
+- Phase-12 53-file Power BI export contract with ambiguity-safe relationship/table-role audit and headline reconciliation targets;
+- Power BI semantic-model/DAX/build specifications, preserved Page 1 shell, and flagship Executive Command Center implementation blueprint;
 - CI-compatible automated tests;
 - explicit fictional/synthetic/model-derived/simulated disclosures.
 
-Important open/partial canonical work remains visible in the traceability matrix, including statistical process/control analysis, Six Big Losses/COPQ decomposition, deeper model comparison/calibration/explainability, expanded observability/referential-integrity checks, diagnostic/root-cause statistics, forecast comparator validation, optimization/process-mining gates, deeper SQL layer/reconciliation and the complete advanced Power BI interaction set.
+Earlier analytical predecessor work is now substantially implemented or explicitly gated. The current major open work is the **enterprise dataset/digital-twin enhancement** (A01–A32) and subsequent **flagship Executive Command Center build** (B01–B28), including richer workforce/recruitment/manufacturing/quality/supply/inventory/logistics/technology grains, geospatial entities, stronger cross-domain linkage, prototype-before-scale validation, regenerated semantic contracts, actual PBIX construction, navigation/map/twin interactions and final Power BI reconciliation.
 
 Nothing is silently treated as complete simply because a baseline exists.
 
@@ -113,6 +116,23 @@ pytest -q
 
 Outputs are written to `artifacts/`, `data/curated/`, `powerbi/exports/` and local `mednexus.db`.
 
+## Current enhancement execution boundary
+
+Phase 12 is closed as a **validated baseline**, not discarded.
+
+Before final PBIX construction, MEDNEXUS now requires:
+
+1. enhanced-grain/business-question design;
+2. a small deterministic prototype;
+3. key/relationship/event/inventory/calculation validation;
+4. local runtime/storage benchmarking;
+5. prototype Power BI filter-behavior validation;
+6. promotion of only decision-useful additions;
+7. regeneration of the semantic-model audit and reconciliation targets;
+8. then the actual flagship Executive Command Center and remaining Power BI report build.
+
+See `docs/ENHANCED_ENTERPRISE_DATA_ARCHITECTURE_BLUEPRINT.md` and `powerbi/EXECUTIVE_COMMAND_CENTER_BLUEPRINT.md`.
+
 ## Power BI handoff
 
 The repository does **not** pretend a PBIX file exists. The user builds the final report in Power BI Desktop using the generated BI exports and documented semantic model/DAX/page specifications.
@@ -123,7 +143,7 @@ The current preparation command is:
 powershell -ExecutionPolicy Bypass -File ".\scripts\phase2_powerbi_prep.ps1"
 ```
 
-This validates the 29-file export contract. The existing Page 1 Enterprise Command Center design is preserved as a report shell, but final Power BI acceptance follows completion/gating of unresolved predecessor analytical requirements in the traceability matrix.
+The Phase-12 baseline validates the 53-file export/semantic-model contract. The existing Page 1 Enterprise Command Center design is preserved as a report shell. Final PBIX construction is now deliberately gated behind the enhanced enterprise-data prototype so new grains/relationships can be validated before the final model is built.
 
 ## Repository map
 
@@ -166,7 +186,7 @@ The build currently includes:
 - generated-output SHA-256 manifest;
 - model/forecast validation metrics;
 - pytest suite;
-- canonical specification preservation tests that require all 55 specification sections, all 60 master-blueprint areas and all traceability rows to remain present.
+- canonical specification preservation tests that require all 57 specification sections, all 60 original master-blueprint areas, all A01–A32/B01–B28 enhancement requirements and their traceability rows to remain present.
 
 ## GitHub publishing
 
