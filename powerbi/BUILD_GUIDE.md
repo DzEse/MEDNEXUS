@@ -14,47 +14,43 @@ Before treating the report as final, review:
 
 The existing report work is a **preserved shell** while unresolved predecessor analytical requirements are completed/gated. Final BI acceptance follows analytical reconciliation, not the other way around.
 
-## Enhancement gate before final PBIX
+## Current gate before final PBIX
 
-The Phase-12 semantic-model audit remains a validated baseline, but the September 2026 enterprise dataset/twin enhancement introduces new candidate grains, dimensions and relationships.
+The September 2026 enhancement predecessor work is now closed through Phase 12G:
 
-Before final Power BI construction:
+1. Phase 12E structural prototype — validated;
+2. Phase 12F promotion/filter-behavior decision — validated;
+3. Phase 12G canonical promotion — validated;
+4. canonical contract — 58 exports, 45 active relationships, 2 inactive shipment date roles, 0 semantic issues;
+5. Data Trust — 100/100.
 
-1. review `docs/ENHANCED_ENTERPRISE_DATA_ARCHITECTURE_BLUEPRINT.md`;
-2. resolve/prototype A01–A32 from `docs/specification/ENHANCEMENT_TRACEABILITY_MATRIX.md`;
-3. validate the small deterministic enhanced-data prototype;
-4. promote only justified fields/tables/entities/events;
-5. regenerate the semantic-model relationship/table-role/reconciliation contracts;
-6. rerun the full suite;
-7. then build the flagship Command Center using `powerbi/EXECUTIVE_COMMAND_CENTER_BLUEPRINT.md`.
+The active repository-to-Power-BI transition is **Phase 12H — Power BI Desktop handoff and reconciliation preparation**.
 
-The existing four-table Page 1 shell may still be opened for reference/reconciliation, but it is **not** the final build target.
-
-## Phase 12 prerequisite — semantic-model audit
-
-Before building or refreshing the PBIX, run:
+Before building or refreshing the final PBIX, run:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File ".\\scripts\\phase12_powerbi_semantic_audit.ps1"
+powershell -ExecutionPolicy Bypass -File ".\\scripts\\phase12h_powerbi_handoff_prep.ps1"
 ```
 
-Do not proceed to final report acceptance unless the semantic contract passes with zero issues.
+Then follow:
 
-Review:
+- `powerbi/PHASE_12H_DESKTOP_HANDOFF.md`
+- `powerbi/handoff/import_plan.csv`
+- `powerbi/handoff/relationship_build_order.csv`
+- `powerbi/handoff/headline_reconciliation_checklist.csv`
+- `powerbi/handoff/pbix_acceptance_checklist.csv`
 
-- `powerbi/SEMANTIC_MODEL_AUDIT.md`
-- `artifacts/validation/powerbi_semantic_relationships.csv`
-- `artifacts/validation/powerbi_headline_reconciliation_targets.csv`
+The handoff files are build/control templates. They do **not** claim that a PBIX has been built, reconciled or validated.
 
 ## 1. Generate the Power BI handoff
 
 From the repository root in VS Code PowerShell:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File ".\scripts\phase2_powerbi_prep.ps1"
+powershell -ExecutionPolicy Bypass -File ".\scripts\phase12h_powerbi_handoff_prep.ps1"
 ```
 
-This regenerates the current canonical datasets and verifies the Power BI export contract.
+This validates the current 58-export canonical package and generates the Desktop import, relationship, reconciliation and acceptance control files. Run `phase2_powerbi_prep.ps1` only when you intentionally need to regenerate the underlying canonical exports.
 
 ## 2. Preserve Page 1 as the baseline report shell
 
@@ -71,14 +67,7 @@ Do not treat the page as final. The flagship target now also requires the enhanc
 
 In Power BI Desktop choose **Get data → Text/CSV** and import the required files from `powerbi/exports/`.
 
-For Page 1, the current shell can begin with:
-
-- DimDate
-- EnterpriseMonthly
-- MORI
-- DecisionQueue
-
-The full report currently has these additional exported tables available:
+Build the final model from `powerbi/handoff/import_plan.csv`. Load connected tables first, validate the semantic model and headline measures, then load disconnected evidence tables. The current canonical exports include:
 
 - DimPlant
 - DimLine
@@ -130,7 +119,7 @@ The full report currently has these additional exported tables available:
 - ProcessCases
 - ProcessTransitions
 
-The export contract may expand as unresolved canonical domains such as observability, inventory/material detail, statistical quality or final scenario outputs are implemented. Never fabricate missing tables in Power BI; regenerate them from the analytical pipeline when valid.
+The current accepted canonical contract is fixed at 58 exports for the Phase 12H PBIX build. Rework-required/deferred prototype structures remain excluded. Never add them manually in Power BI.
 
 ## 4. Apply the report theme
 
