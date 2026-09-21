@@ -5,6 +5,7 @@ import sqlite3
 import pandas as pd
 from .config import load_config, path
 from .synthetic import generate
+from .canonical_enhancement import promote_approved_structures, validate_phase12g_source_package
 from .database import connect, load_frames, execute_sql_file
 from .quality import (
     evaluate,
@@ -103,7 +104,11 @@ def run(clean=False, seed=None):
         d.mkdir(parents=True,exist_ok=True)
 
     print('[1/9] Generating synthetic enterprise data...')
-    frames=generate(seed=seed)
+    frames=promote_approved_structures(generate(seed=seed))
+    phase12g_source_checks=validate_phase12g_source_package(frames)
+    save_frame(phase12g_source_checks,path('artifacts','validation','phase12g_source_promotion_checks.csv'))
+    if not phase12g_source_checks['status'].eq('PASS').all():
+        raise RuntimeError('Phase 12G source-promotion gate failed. See artifacts/validation/phase12g_source_promotion_checks.csv')
     for name,df in frames.items():
         save_frame(df,path('data','synthetic',f'{name}.csv'))
 
@@ -332,6 +337,11 @@ def run(clean=False, seed=None):
         'DimSupplier':frames['dim_supplier'],
         'DimCustomer':frames['dim_customer'],
         'DimEmployee':frames['dim_employee'],
+        'DimWarehouse':frames['dim_warehouse'],
+        'DimShift':frames['dim_shift'],
+        'DimDepartment':frames['dim_department'],
+        'DimJobRole':frames['dim_job_role'],
+        'EmployeeAssignment':frames['fact_employee_assignment'],
         'EnterpriseMonthly':_with_month_date(mart),
         'ProductionKPI':production_enriched,
         'Downtime':frames['fact_downtime'],
