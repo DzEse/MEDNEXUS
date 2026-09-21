@@ -128,8 +128,10 @@ Before final PBIX construction, MEDNEXUS now requires:
 4. Phase 12E structural evidence — **completed**;
 5. Phase 12F promotion/filter-behavior contract validation — **completed locally and in CI**;
 6. physical implementation of only the 8 approved structures — **completed in Phase 12G**;
-7. canonical semantic-model audit and reconciliation-target regeneration — **completed in Phase 12G; local evidence run next**;
-8. then actual Power BI Desktop relationship/measure reconciliation and the flagship Executive Command Center build.
+7. canonical semantic-model audit and reconciliation-target regeneration — **completed in Phase 12G**;
+8. Phase 12H Power BI Desktop handoff pack — **repository implementation in progress / PBIX remains user-side**;
+9. actual Power BI Desktop relationship/measure reconciliation;
+10. flagship Executive Command Center build after model reconciliation passes.
 
 See `docs/ENHANCED_ENTERPRISE_DATA_ARCHITECTURE_BLUEPRINT.md` and `powerbi/EXECUTIVE_COMMAND_CENTER_BLUEPRINT.md`.
 
@@ -140,6 +142,12 @@ powershell -ExecutionPolicy Bypass -File ".\scripts\phase12g_canonical_promotion
 ```
 
 Phase 12E and Phase 12F evidence remains preserved as historical predecessor evidence.
+
+The Phase 12H Desktop handoff prep command is:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File ".\\scripts\\phase12h_powerbi_handoff_prep.ps1"
+```
 
 ## Power BI handoff
 
