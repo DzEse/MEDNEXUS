@@ -1,0 +1,48 @@
+build_group,build_sequence,one_table,one_column,many_table,many_column,cardinality,cross_filter_direction,active,relationship_class,rationale,pbix_creation_status,pbix_validation_status
+10,1,DimPlant,plant_id,DimLine,plant_id,1:*,single,True,canonical_active,Plant filters line; no parallel direct plant path into machine-grain facts.,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+10,2,DimPlant,plant_id,DimWarehouse,plant_id,1:*,single,True,canonical_active,Plant filters warehouse; geography remains role-specific attributes rather than a shared Region dimension.,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+10,3,DimPlant,plant_id,EmployeeAssignment,plant_id,1:*,single,True,canonical_active,Current assignment snapshot uses one direct Plant path; no active Line relationship is admitted.,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+11,4,DimLine,line_id,DimMachine,line_id,1:*,single,True,canonical_active,Line filters machine; machine becomes the operational fact filter key.,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+12,5,DimDepartment,department_id,DimJobRole,department_id,1:*,single,True,canonical_active,Department filters Job Role as the only department route into EmployeeAssignment.,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+12,6,DimEmployee,employee_id,EmployeeAssignment,employee_id,1:*,single,True,canonical_active,One current assignment per synthetic employee.,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+12,7,DimJobRole,job_role_id,EmployeeAssignment,job_role_id,1:*,single,True,canonical_active,Job Role filters EmployeeAssignment; no direct Department→EmployeeAssignment relationship is active.,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+12,8,DimShift,shift_id,EmployeeAssignment,shift_id,1:*,single,True,canonical_active,Shift filters the current assignment snapshot only; true shift production remains gated.,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,9,DimDate,date,CapacityWaterfall,month_date,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,10,DimDate,date,CustomerService,date,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,11,DimDate,date,DemandForecast,month,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,12,DimDate,date,Downtime,date,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,13,DimDate,date,EnterpriseMonthly,month_date,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,14,DimDate,date,Finance,month,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,15,DimDate,date,MORI,month_date,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,16,DimDate,date,Maintenance,date,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,17,DimDate,date,Orders,order_date,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,18,DimDate,date,PredictiveMaintenanceScores,date,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,19,DimDate,date,ProductionKPI,date,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,20,DimDate,date,QualityEvents,date,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,21,DimDate,date,QualityPChart,date,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,22,DimDate,date,Recruitment,month,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,23,DimDate,date,SaaSUsage,date,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,24,DimDate,date,Shipments,ship_date,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,25,DimDate,date,SixBigLosses,month_date,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,26,DimDate,date,Supply,month,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,27,DimDate,date,TechnologyIncidents,date,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,28,DimDate,date,ValueLeakage,month_date,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+20,29,DimDate,date,Workforce,month,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+30,30,DimCustomer,customer_id,CustomerService,customer_id,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+30,31,DimCustomer,customer_id,Orders,customer_id,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+30,32,DimCustomer,customer_id,Shipments,customer_id,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+30,33,DimMachine,machine_id,Downtime,machine_id,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+30,34,DimMachine,machine_id,Maintenance,machine_id,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+30,35,DimMachine,machine_id,PredictiveMaintenanceScores,machine_id,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+30,36,DimMachine,machine_id,ProductionKPI,machine_id,1:*,single,True,canonical_active,Avoid direct active Plant/Line relationships to ProductionKPI.,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+30,37,DimMachine,machine_id,QualityEvents,machine_id,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+30,38,DimMachine,machine_id,Reliability,machine_id,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+30,39,DimProduct,product_id,Orders,product_id,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+30,40,DimProduct,product_id,ProductionKPI,product_id,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+30,41,DimProduct,product_id,QualityEvents,product_id,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+30,42,DimSupplier,supplier_id,Supply,supplier_id,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+50,43,DimPlant,plant_id,QualityPChart,plant_id,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+50,44,DimPlant,plant_id,Recruitment,plant_id,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+50,45,DimPlant,plant_id,Workforce,plant_id,1:*,single,True,canonical_active,,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+90,46,DimDate,date,Shipments,actual_delivery_date,1:*,single,False,optional_inactive_date_role,Activate only through USERELATIONSHIP in a measure that explicitly needs actual delivery date.,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX
+90,47,DimDate,date,Shipments,promised_date,1:*,single,False,optional_inactive_date_role,Activate only through USERELATIONSHIP in a measure that explicitly needs promised date.,NOT_YET_CREATED_IN_PBIX,NOT_YET_VALIDATED_IN_PBIX

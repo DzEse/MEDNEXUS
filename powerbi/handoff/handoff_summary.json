@@ -1,0 +1,18 @@
+{
+  "phase": "12H",
+  "status": "PASS",
+  "handoff_status": "POWER_BI_DESKTOP_HANDOFF_PREPARED_NOT_PBIX_VALIDATED",
+  "canonical_export_count": 58,
+  "missing_export_count": 0,
+  "missing_exports": [],
+  "connected_table_count": 35,
+  "disconnected_table_count": 23,
+  "active_relationship_count": 45,
+  "inactive_relationship_count": 2,
+  "headline_reconciliation_target_count": 19,
+  "pbix_acceptance_check_count": 30,
+  "pbix_built": false,
+  "pbix_validated": false,
+  "evidence_status": "TEMPLATE_ONLY_NO_PBIX_EVIDENCE_YET",
+  "next_gate": "Build the model in Power BI Desktop exactly from the handoff files, reconcile headline values, then record real PBIX evidence."
+}
