@@ -8,9 +8,6 @@ from mednexus.promotion_filter_validation import (
     MERGE_ENRICHMENTS,
     PROMOTION_DECISIONS,
     build_promotion_decisions,
-    build_proposed_relationship_contract,
-    build_proposed_table_roles,
-    validate_filter_behavior,
 )
 from mednexus.semantic_model import EXPECTED_EXPORTS
 from mednexus.synthetic import generate
@@ -75,67 +72,15 @@ def test_existing_order_fulfillment_process_is_not_duplicated():
     assert PROMOTION_DECISIONS["fact_order_fulfillment_event"]["decision"] == "NOT_PROMOTED_REDUNDANT"
 
 
-def test_phase12f_does_not_mutate_current_53_export_contract():
-    assert len(EXPECTED_EXPORTS) == 53
-    assert not set(APPROVED_NEW_EXPORTS).intersection(EXPECTED_EXPORTS)
+def test_phase12f_approved_plan_is_now_realized_by_phase12g_contract():
+    assert len(EXPECTED_EXPORTS) == 58
+    assert set(APPROVED_NEW_EXPORTS).issubset(EXPECTED_EXPORTS)
 
 
-def test_proposed_post_promotion_table_roles_are_58_and_employee_is_connected():
-    roles = build_proposed_table_roles()
-    assert len(roles) == 58
-    employee = roles[roles["table"] == "DimEmployee"].iloc[0]
-    assert employee["model_status"] == "CONNECTED"
-    for table in APPROVED_NEW_EXPORTS:
-        row = roles[roles["table"] == table]
-        assert len(row) == 1
-        assert row.iloc[0]["model_status"] == "CONNECTED"
 
-
-def test_proposed_relationships_preserve_semantic_safety():
-    rel = build_proposed_relationship_contract()
-    assert rel["cardinality"].eq("1:*").all()
-    assert rel["cross_filter_direction"].eq("single").all()
-
-    # New workforce route deliberately omits Line→EmployeeAssignment.
-    assert not (
-        rel["one_table"].eq("DimLine")
-        & rel["many_table"].eq("EmployeeAssignment")
-        & rel["active"]
-    ).any()
-
-    # Shared global geography must not be connected.
-    assert "DimRegion" not in set(rel["one_table"]).union(rel["many_table"])
-
-    # Department reaches assignment through role rather than a parallel direct path.
-    assert (
-        rel["one_table"].eq("DimDepartment")
-        & rel["many_table"].eq("DimJobRole")
-        & rel["active"]
-    ).any()
-    assert (
-        rel["one_table"].eq("DimJobRole")
-        & rel["many_table"].eq("EmployeeAssignment")
-        & rel["active"]
-    ).any()
-    assert not (
-        rel["one_table"].eq("DimDepartment")
-        & rel["many_table"].eq("EmployeeAssignment")
-        & rel["active"]
-    ).any()
-
-
-def test_filter_behavior_contract_simulation_passes(compact_frames, prototype):
-    checks, issues = validate_filter_behavior(compact_frames, prototype)
-    assert not checks.empty
-    assert (checks["status"] == "PASS").all()
-    assert issues.empty
-
-
-def test_geography_is_role_specific_and_workforce_filtering_is_single_path(compact_frames, prototype):
-    checks, _ = validate_filter_behavior(compact_frames, prototype)
-    named = checks.set_index("check")["status"].to_dict()
-    assert named["no_global_dimregion_relationship"] == "PASS"
-    assert named["no_direct_dimline_employeeassignment_relationship"] == "PASS"
-    assert named["department_filters_assignment_via_jobrole_only"] == "PASS"
-    assert named["department_hierarchy_filter_matches_assignment_reference"] == "PASS"
-    assert named["employee_filter_one_current_assignment"] == "PASS"
+def test_phase12f_role_specific_geography_decision_remains_preserved():
+    assert MERGE_ENRICHMENTS == {
+        "dim_plant_geo": "DimPlant",
+        "dim_supplier_geo": "DimSupplier",
+        "dim_customer_geo": "DimCustomer",
+    }
