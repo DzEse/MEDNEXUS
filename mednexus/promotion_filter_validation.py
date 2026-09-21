@@ -521,12 +521,17 @@ def validate_filter_behavior(
         "bridge_product_material",
         "dim_material",
     }
-    proposed_export_names = set(EXPECTED_EXPORTS).union(APPROVED_NEW_EXPORTS)
+    unready_approved = sorted(
+        table
+        for table in risky_tables
+        if PROMOTION_DECISIONS[table]["decision"] == "APPROVED_FOR_CANONICAL_IMPLEMENTATION"
+    )
     add(
-        "unready_prototype_facts_not_in_proposed_exports",
-        not risky_tables.intersection(proposed_export_names),
+        "unready_prototype_facts_not_approved",
+        not unready_approved,
         "promotion_gate",
-        "Reverse-disaggregated/proxy facts remain outside the canonical target.",
+        "Reverse-disaggregated/proxy facts remain outside the approved canonical target."
+        + ("" if not unready_approved else " Unexpected approvals: " + "|".join(unready_approved)),
     )
 
     issues = pd.DataFrame(
