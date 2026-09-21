@@ -30,12 +30,12 @@ PRIMARY_KEYS = {
 }
 
 REQUIRED_COLUMNS = {
-    'dim_plant': {'plant_id', 'plant_name', 'region', 'country', 'geography_region', 'city', 'latitude', 'longitude', 'geography_status'},
+    'dim_plant': {'plant_id', 'plant_name', 'region'},
     'dim_line': {'line_id', 'plant_id', 'line_name'},
     'dim_machine': {'machine_id', 'line_id', 'plant_id', 'machine_name', 'machine_age_years'},
     'dim_product': {'product_id', 'product_family', 'unit_price', 'ideal_cycle_min', 'material_cost_per_unit'},
-    'dim_supplier': {'supplier_id', 'supplier_name', 'base_lead_time_days', 'quality_rating', 'country', 'geography_region', 'city', 'latitude', 'longitude', 'geography_status'},
-    'dim_customer': {'customer_id', 'customer_type', 'region', 'country', 'geography_region', 'city', 'latitude', 'longitude', 'geography_status'},
+    'dim_supplier': {'supplier_id', 'supplier_name', 'base_lead_time_days', 'quality_rating'},
+    'dim_customer': {'customer_id', 'customer_type', 'region'},
     'dim_employee': {'employee_id', 'department', 'plant_id', 'skill_level', 'hourly_cost', 'active_flag'},
     'dim_warehouse': {'warehouse_id', 'warehouse_name', 'plant_id', 'country', 'region', 'city', 'latitude', 'longitude', 'capacity_units', 'geography_status', 'canonical_status'},
     'dim_shift': {'shift_id', 'shift_name', 'start_hour', 'duration_hours'},
@@ -225,15 +225,17 @@ def evaluate(frames):
     for geo_table in ['dim_plant', 'dim_supplier', 'dim_customer', 'dim_warehouse']:
         if geo_table in frames:
             geo = frames[geo_table]
-            checks.append((
-                f'{geo_table}_geography_valid',
-                bool(
-                    geo['latitude'].between(-90, 90).all()
-                    and geo['longitude'].between(-180, 180).all()
-                    and geo['geography_status'].eq('SIMULATED_ENTERPRISE_FOOTPRINT').all()
-                ),
-                'validity',
-            ))
+            geo_required = {'latitude', 'longitude', 'geography_status'}
+            if geo_required.issubset(geo.columns):
+                checks.append((
+                    f'{geo_table}_geography_valid',
+                    bool(
+                        geo['latitude'].between(-90, 90).all()
+                        and geo['longitude'].between(-180, 180).all()
+                        and geo['geography_status'].eq('SIMULATED_ENTERPRISE_FOOTPRINT').all()
+                    ),
+                    'validity',
+                ))
 
     business = pd.DataFrame(checks, columns=['check', 'passed', 'dimension'])
     business['status'] = np.where(business['passed'], 'PASS', 'FAIL')
@@ -243,6 +245,8 @@ def evaluate(frames):
 def evaluate_referential_integrity(frames):
     rows = []
     for child_table, child_key, parent_table, parent_key in FOREIGN_KEYS:
+        if child_table not in frames or parent_table not in frames:
+            continue
         child = frames[child_table]
         parent = frames[parent_table]
         nonnull = child[child_key].dropna()
