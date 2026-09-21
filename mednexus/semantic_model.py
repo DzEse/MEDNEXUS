@@ -14,6 +14,11 @@ CONNECTED_TABLES = {
     'DimProduct': 'dimension',
     'DimSupplier': 'dimension',
     'DimCustomer': 'dimension',
+    'DimEmployee': 'dimension',
+    'DimWarehouse': 'dimension',
+    'DimShift': 'dimension',
+    'DimDepartment': 'dimension',
+    'DimJobRole': 'dimension',
     'EnterpriseMonthly': 'enterprise_mart',
     'ProductionKPI': 'fact',
     'Downtime': 'fact',
@@ -36,10 +41,10 @@ CONNECTED_TABLES = {
     'CustomerService': 'fact',
     'TechnologyIncidents': 'fact',
     'SaaSUsage': 'fact',
+    'EmployeeAssignment': 'workforce_snapshot_fact',
 }
 
 DISCONNECTED_TABLES = {
-    'DimEmployee': 'unused_dimension_current_grain',
     'MORIComponentContributions': 'risk_evidence',
     'MORIWeightSensitivity': 'risk_evidence',
     'MORIThresholdSensitivity': 'risk_evidence',
@@ -144,6 +149,20 @@ def build_relationship_contract() -> pd.DataFrame:
         _rel('DimPlant', 'plant_id', 'Workforce', 'plant_id'),
         _rel('DimPlant', 'plant_id', 'Recruitment', 'plant_id'),
         _rel('DimPlant', 'plant_id', 'QualityPChart', 'plant_id'),
+
+        # Phase 12G approved workforce / warehouse promotion.
+        _rel('DimPlant', 'plant_id', 'DimWarehouse', 'plant_id',
+             rationale='Plant filters warehouse; geography remains role-specific attributes rather than a shared Region dimension.'),
+        _rel('DimPlant', 'plant_id', 'EmployeeAssignment', 'plant_id',
+             rationale='Current assignment snapshot uses one direct Plant path; no active Line relationship is admitted.'),
+        _rel('DimShift', 'shift_id', 'EmployeeAssignment', 'shift_id',
+             rationale='Shift filters the current assignment snapshot only; true shift production remains gated.'),
+        _rel('DimEmployee', 'employee_id', 'EmployeeAssignment', 'employee_id',
+             rationale='One current assignment per synthetic employee.'),
+        _rel('DimDepartment', 'department_id', 'DimJobRole', 'department_id',
+             rationale='Department filters Job Role as the only department route into EmployeeAssignment.'),
+        _rel('DimJobRole', 'job_role_id', 'EmployeeAssignment', 'job_role_id',
+             rationale='Job Role filters EmployeeAssignment; no direct Department→EmployeeAssignment relationship is active.'),
 
         # Optional inactive date roles on Shipments.
         _rel(
@@ -262,7 +281,7 @@ def validate_semantic_model_contract(exports: dict[str, pd.DataFrame]) -> tuple[
 
     active = rel.loc[rel['active']].copy()
     adjacency = _active_adjacency(rel)
-    source_dimensions = ['DimDate', 'DimPlant', 'DimLine', 'DimMachine', 'DimProduct', 'DimSupplier', 'DimCustomer']
+    source_dimensions = ['DimDate', 'DimPlant', 'DimLine', 'DimMachine', 'DimProduct', 'DimSupplier', 'DimCustomer', 'DimEmployee', 'DimWarehouse', 'DimShift', 'DimDepartment', 'DimJobRole']
     targets = sorted(set(active['many_table']))
     for source in source_dimensions:
         for target in targets:
@@ -287,6 +306,8 @@ def validate_semantic_model_contract(exports: dict[str, pd.DataFrame]) -> tuple[
             'fact_to_fact': 'prohibited',
             'many_to_many': 'prohibited unless future documented bridge exists',
             'operations_hierarchy': 'DimPlant→DimLine→DimMachine→machine-grain facts',
+            'workforce_hierarchy': 'DimDepartment→DimJobRole→EmployeeAssignment plus independent DimPlant/DimShift/DimEmployee filters',
+            'geography': 'role-specific simulated geography attributes; no shared active DimRegion',
             'date_roles': 'one active date role per fact; optional alternate shipment dates inactive',
         },
     }
