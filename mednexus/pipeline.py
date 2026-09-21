@@ -405,6 +405,25 @@ def run(clean=False, seed=None):
             f"Power BI semantic-model contract failed with {semantic_summary['issue_count']} issue(s)."
         )
 
+    write_json({
+        'phase': '12G',
+        'status': 'PASS',
+        'canonical_promotion_status': 'APPLIED',
+        'approved_new_source_table_count': 5,
+        'approved_geo_merge_count': 3,
+        'canonical_export_count': int(len(exports)),
+        'active_relationship_count': int(semantic_relationships['active'].sum()),
+        'inactive_relationship_count': int((~semantic_relationships['active']).sum()),
+        'semantic_issue_count': int(len(semantic_issues)),
+        'source_promotion_check_count': int(len(phase12g_source_checks)),
+        'source_promotion_failure_count': int((phase12g_source_checks['status'] != 'PASS').sum()),
+        'data_trust_score': float(trust),
+        'pbix_model_validated': False,
+        'pbix_build_status': 'NOT_YET_BUILT_BY_USER',
+        'geography_label': 'SIMULATED_ENTERPRISE_FOOTPRINT',
+        'next_gate': 'Power BI Desktop physical relationship/model reconciliation and flagship Command Center implementation.',
+    },path('artifacts','validation','phase12g_summary.json'))
+
     for name,df in exports.items():
         save_frame(df,path('powerbi','exports',f'{name}.csv'))
     write_management_summary(path('artifacts','reports','management_summary.md'),mart,risk,qp,model_metrics,forecast_metrics,trust)
