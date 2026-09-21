@@ -5,6 +5,7 @@ import pandas as pd
 import pytest
 
 from mednexus.analytics import monthly_enterprise_mart
+from mednexus.canonical_enhancement import promote_approved_structures
 from mednexus.risk import run_mori_validation
 from mednexus.semantic_model import (
     DISCONNECTED_TABLES,
@@ -19,7 +20,7 @@ from mednexus.synthetic import generate
 
 @pytest.fixture(scope='module')
 def exports():
-    frames = generate(seed=42)
+    frames = promote_approved_structures(generate(seed=42))
     mart = monthly_enterprise_mart(frames).copy()
     mart['month_date'] = pd.to_datetime(mart['month'].astype(str).str.slice(0, 7) + '-01')
 
@@ -66,6 +67,11 @@ def exports():
         'DimSupplier': frames['dim_supplier'],
         'DimCustomer': frames['dim_customer'],
         'DimEmployee': frames['dim_employee'],
+        'DimWarehouse': frames['dim_warehouse'],
+        'DimShift': frames['dim_shift'],
+        'DimDepartment': frames['dim_department'],
+        'DimJobRole': frames['dim_job_role'],
+        'EmployeeAssignment': frames['fact_employee_assignment'],
         'EnterpriseMonthly': mart,
         'ProductionKPI': frames['fact_production'],
         'Downtime': frames['fact_downtime'],
@@ -194,3 +200,27 @@ def test_headline_targets_use_single_latest_enterprise_month(exports):
     assert targets['latest_month'].nunique() == 1
     expected = pd.to_datetime(exports['EnterpriseMonthly']['month_date']).max().date().isoformat()
     assert targets['latest_month'].iloc[0] == expected
+
+
+def test_phase12g_export_and_relationship_counts():
+    assert len(EXPECTED_EXPORTS) == 58
+    rel = build_relationship_contract()
+    assert int(rel['active'].sum()) == 45
+    assert int((~rel['active']).sum()) == 2
+
+
+def test_phase12g_workforce_paths_are_single_and_global_region_absent():
+    rel = build_relationship_contract()
+    active = rel[rel['active']]
+    observed = set(zip(active['one_table'], active['many_table']))
+    assert {
+        ('DimPlant', 'DimWarehouse'),
+        ('DimPlant', 'EmployeeAssignment'),
+        ('DimShift', 'EmployeeAssignment'),
+        ('DimEmployee', 'EmployeeAssignment'),
+        ('DimDepartment', 'DimJobRole'),
+        ('DimJobRole', 'EmployeeAssignment'),
+    }.issubset(observed)
+    assert ('DimLine', 'EmployeeAssignment') not in observed
+    assert ('DimDepartment', 'EmployeeAssignment') not in observed
+    assert 'DimRegion' not in set(active['one_table']).union(active['many_table'])
