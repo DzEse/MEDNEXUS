@@ -38,5 +38,11 @@ DimCustomer,customer_id,CustomerService,customer_id,1:*,single,True,canonical_ac
 DimPlant,plant_id,Workforce,plant_id,1:*,single,True,canonical_active,
 DimPlant,plant_id,Recruitment,plant_id,1:*,single,True,canonical_active,
 DimPlant,plant_id,QualityPChart,plant_id,1:*,single,True,canonical_active,
+DimPlant,plant_id,DimWarehouse,plant_id,1:*,single,True,canonical_active,Plant filters warehouse; geography remains role-specific attributes rather than a shared Region dimension.
+DimPlant,plant_id,EmployeeAssignment,plant_id,1:*,single,True,canonical_active,Current assignment snapshot uses one direct Plant path; no active Line relationship is admitted.
+DimShift,shift_id,EmployeeAssignment,shift_id,1:*,single,True,canonical_active,Shift filters the current assignment snapshot only; true shift production remains gated.
+DimEmployee,employee_id,EmployeeAssignment,employee_id,1:*,single,True,canonical_active,One current assignment per synthetic employee.
+DimDepartment,department_id,DimJobRole,department_id,1:*,single,True,canonical_active,Department filters Job Role as the only department route into EmployeeAssignment.
+DimJobRole,job_role_id,EmployeeAssignment,job_role_id,1:*,single,True,canonical_active,Job Role filters EmployeeAssignment; no direct Department→EmployeeAssignment relationship is active.
 DimDate,date,Shipments,promised_date,1:*,single,False,optional_inactive_date_role,Activate only through USERELATIONSHIP in a measure that explicitly needs promised date.
 DimDate,date,Shipments,actual_delivery_date,1:*,single,False,optional_inactive_date_role,Activate only through USERELATIONSHIP in a measure that explicitly needs actual delivery date.

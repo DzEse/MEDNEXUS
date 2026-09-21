@@ -1,0 +1,18 @@
+{
+  "phase": "12G",
+  "status": "PASS",
+  "canonical_promotion_status": "APPLIED",
+  "approved_new_source_table_count": 5,
+  "approved_geo_merge_count": 3,
+  "canonical_export_count": 58,
+  "active_relationship_count": 45,
+  "inactive_relationship_count": 2,
+  "semantic_issue_count": 0,
+  "source_promotion_check_count": 13,
+  "source_promotion_failure_count": 0,
+  "data_trust_score": 100.0,
+  "pbix_model_validated": false,
+  "pbix_build_status": "NOT_YET_BUILT_BY_USER",
+  "geography_label": "SIMULATED_ENTERPRISE_FOOTPRINT",
+  "next_gate": "Power BI Desktop physical relationship/model reconciliation and flagship Command Center implementation."
+}

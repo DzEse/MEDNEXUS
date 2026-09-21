@@ -40,8 +40,8 @@
     },
     {
       "file": "powerbi\\exports\\DimCustomer.csv",
-      "sha256": "fb2d7e7bbb33fbc9368abeb2c923f87f82db89809d36e68307ced2852584dcca",
-      "bytes": 382
+      "sha256": "35f87d6dea8d7a072eee0235fda2d76b39d8a512eaec5d13c7d55c9d4c91b6e2",
+      "bytes": 1616
     },
     {
       "file": "powerbi\\exports\\DimDate.csv",
@@ -49,9 +49,19 @@
       "bytes": 46584
     },
     {
+      "file": "powerbi\\exports\\DimDepartment.csv",
+      "sha256": "8c8ce5289436583b79fb3c9da2fa61d7f8011f8a700a588aaee880efa2e12cf7",
+      "bytes": 166
+    },
+    {
       "file": "powerbi\\exports\\DimEmployee.csv",
       "sha256": "9a7ef4fee731ce2a4970f1622ccbf62d9b37e5c1c65adc00a8ab600560c049b4",
       "bytes": 8272
+    },
+    {
+      "file": "powerbi\\exports\\DimJobRole.csv",
+      "sha256": "1fddce3ee66e2a82966eba9122e469775532067faf196231f362e0af6f836620",
+      "bytes": 592
     },
     {
       "file": "powerbi\\exports\\DimLine.csv",
@@ -65,8 +75,8 @@
     },
     {
       "file": "powerbi\\exports\\DimPlant.csv",
-      "sha256": "48e0925aebc9f25e2c41937fd95b99d2f0124bd26d0860fb8996bd26f129286d",
-      "bytes": 105
+      "sha256": "3bf9c5ece4a3516acb195c722be94b94f24babae984f2cd96514835c6b891eff",
+      "bytes": 333
     },
     {
       "file": "powerbi\\exports\\DimProduct.csv",
@@ -74,14 +84,29 @@
       "bytes": 300
     },
     {
+      "file": "powerbi\\exports\\DimShift.csv",
+      "sha256": "5a89597ada41b8faa33d07c72b20bb241d95d92d92fb62fcdd2c1aabe3efb5c8",
+      "bytes": 102
+    },
+    {
       "file": "powerbi\\exports\\DimSupplier.csv",
-      "sha256": "adfbfa5f09910c4b1324751c472051006458e924cb64e4c368f935a2d56c2055",
-      "bytes": 368
+      "sha256": "b4347450746831ab90d015b8d84110a8fcb5d0529e63120622656e2ec9c23343",
+      "bytes": 1233
+    },
+    {
+      "file": "powerbi\\exports\\DimWarehouse.csv",
+      "sha256": "fb110efb520f8caaebd20e82c8460643bd8edcfdb828382633a730491c24a347",
+      "bytes": 461
     },
     {
       "file": "powerbi\\exports\\Downtime.csv",
       "sha256": "d4ddd19c144ae4f26f2c900f6476da6b0e1850260cf982fb3eab7f6ea908a0dc",
       "bytes": 758644
+    },
+    {
+      "file": "powerbi\\exports\\EmployeeAssignment.csv",
+      "sha256": "6716a5862a19fdc2668c8c1e9b242b08e453ecc3b3c99d2ad0f3b7bf22040f24",
+      "bytes": 14952
     },
     {
       "file": "powerbi\\exports\\EnterpriseMonthly.csv",

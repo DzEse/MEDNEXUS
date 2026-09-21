@@ -1,0 +1,14 @@
+check,passed,status,detail
+approved_source_tables_present,True,PASS,dim_department|dim_job_role|dim_shift|dim_warehouse|fact_employee_assignment
+nonapproved_prototype_tables_absent,True,PASS,
+dim_plant_geography_columns_present,True,PASS,
+dim_plant_geography_valid,True,PASS,
+dim_supplier_geography_columns_present,True,PASS,
+dim_supplier_geography_valid,True,PASS,
+dim_customer_geography_columns_present,True,PASS,
+dim_customer_geography_valid,True,PASS,
+warehouse_geography_valid,True,PASS,
+warehouse_has_no_global_region_fk,True,PASS,
+one_current_assignment_per_employee,True,PASS,
+assignment_status_is_canonical,True,PASS,
+assignment_line_matches_assignment_plant,True,PASS,

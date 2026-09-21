@@ -1,10 +1,10 @@
 {
   "status": "PASS",
-  "expected_export_count": 53,
-  "actual_export_count": 53,
-  "active_relationship_count": 39,
+  "expected_export_count": 58,
+  "actual_export_count": 58,
+  "active_relationship_count": 45,
   "inactive_relationship_count": 2,
-  "disconnected_table_count": 24,
+  "disconnected_table_count": 23,
   "issue_count": 0,
   "model_rules": {
     "cardinality": "1:* only",
@@ -12,6 +12,8 @@
     "fact_to_fact": "prohibited",
     "many_to_many": "prohibited unless future documented bridge exists",
     "operations_hierarchy": "DimPlant\u2192DimLine\u2192DimMachine\u2192machine-grain facts",
+    "workforce_hierarchy": "DimDepartment\u2192DimJobRole\u2192EmployeeAssignment plus independent DimPlant/DimShift/DimEmployee filters",
+    "geography": "role-specific simulated geography attributes; no shared active DimRegion",
     "date_roles": "one active date role per fact; optional alternate shipment dates inactive"
   }
 }

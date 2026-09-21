@@ -2,6 +2,12 @@ table,column,dtype,semantic_role,description,foreign_key_target,observed_nullabl
 dim_plant,plant_id,object,primary_key,Stable synthetic plant identifier.,,False,0,2,PL0001,synthetic
 dim_plant,plant_name,object,attribute,Plant name.,,False,0,2,MEDNEXUS Plant A,synthetic
 dim_plant,region,object,attribute,Region.,,False,0,2,Ontario,synthetic
+dim_plant,country,object,attribute,Country.,,False,0,2,Canada,synthetic
+dim_plant,geography_region,object,attribute,Role-specific simulated geographic region used for mapping; not a shared active Region dimension.,,False,0,2,Ontario,synthetic
+dim_plant,city,object,attribute,City.,,False,0,2,Toronto,synthetic
+dim_plant,latitude,float64,measure,Simulated latitude used only for enterprise map analysis.,,False,0,2,43.6532,synthetic
+dim_plant,longitude,float64,measure,Simulated longitude used only for enterprise map analysis.,,False,0,2,-79.3832,synthetic
+dim_plant,geography_status,object,attribute,Explicit label identifying simulated enterprise geography.,,False,0,1,SIMULATED_ENTERPRISE_FOOTPRINT,synthetic
 dim_line,line_id,object,primary_key,Stable synthetic production-line identifier.,,False,0,4,PL0001-L1,synthetic
 dim_line,plant_id,object,foreign_key,Stable synthetic plant identifier.,dim_plant.plant_id,False,0,2,PL0001,synthetic
 dim_line,line_name,object,attribute,Line name.,,False,0,2,Line 1,synthetic
@@ -19,9 +25,21 @@ dim_supplier,supplier_id,object,primary_key,Stable synthetic supplier identifier
 dim_supplier,supplier_name,object,attribute,Supplier name.,,False,0,10,Supplier 01,synthetic
 dim_supplier,base_lead_time_days,int64,measure,Base lead time days.,,False,0,8,11,synthetic
 dim_supplier,quality_rating,float64,measure,Quality rating.,,False,0,10,0.9913,synthetic
+dim_supplier,country,object,attribute,Country.,,False,0,5,Canada,synthetic
+dim_supplier,geography_region,object,attribute,Role-specific simulated geographic region used for mapping; not a shared active Region dimension.,,False,0,5,Ontario,synthetic
+dim_supplier,city,object,attribute,City.,,False,0,5,Toronto,synthetic
+dim_supplier,latitude,float64,measure,Simulated latitude used only for enterprise map analysis.,,False,0,5,43.6532,synthetic
+dim_supplier,longitude,float64,measure,Simulated longitude used only for enterprise map analysis.,,False,0,5,-79.3832,synthetic
+dim_supplier,geography_status,object,attribute,Explicit label identifying simulated enterprise geography.,,False,0,1,SIMULATED_ENTERPRISE_FOOTPRINT,synthetic
 dim_customer,customer_id,object,primary_key,Stable synthetic healthcare-customer identifier.,,False,0,14,CUS0001,synthetic
 dim_customer,customer_type,object,attribute,Customer type.,,False,0,4,Hospital,synthetic
 dim_customer,region,object,attribute,Region.,,False,0,4,Canada,synthetic
+dim_customer,country,object,attribute,Country.,,False,0,5,Canada,synthetic
+dim_customer,geography_region,object,attribute,Role-specific simulated geographic region used for mapping; not a shared active Region dimension.,,False,0,5,Ontario,synthetic
+dim_customer,city,object,attribute,City.,,False,0,5,Toronto,synthetic
+dim_customer,latitude,float64,measure,Simulated latitude used only for enterprise map analysis.,,False,0,5,43.6532,synthetic
+dim_customer,longitude,float64,measure,Simulated longitude used only for enterprise map analysis.,,False,0,5,-79.3832,synthetic
+dim_customer,geography_status,object,attribute,Explicit label identifying simulated enterprise geography.,,False,0,1,SIMULATED_ENTERPRISE_FOOTPRINT,synthetic
 dim_employee,employee_id,object,primary_key,Stable synthetic employee identifier.,,False,0,180,EMP0001,synthetic
 dim_employee,department,object,attribute,Department.,,False,0,8,Logistics,synthetic
 dim_employee,plant_id,object,foreign_key,Stable synthetic plant identifier.,dim_plant.plant_id,False,0,2,PL0001,synthetic
@@ -151,3 +169,32 @@ fact_finance,budget_operating_cost,float64,measure,Illustrative synthetic operat
 fact_finance,gross_margin_proxy,float64,measure,Derived gross-margin proxy; not an audited accounting measure.,,False,0,24,54016367.0253932,synthetic
 fact_finance,operating_margin_proxy,float64,measure,Derived revenue minus operating-cost proxy.,,False,0,24,52939567.568816975,synthetic
 fact_finance,budget_variance,float64,measure,Derived operating cost minus synthetic budget operating cost.,,False,0,24,-583060.6762461327,synthetic
+dim_warehouse,warehouse_id,object,primary_key,Stable synthetic warehouse identifier.,,False,0,2,WH001,synthetic
+dim_warehouse,warehouse_name,object,attribute,Warehouse name.,,False,0,2,MEDNEXUS Plant A Warehouse,synthetic
+dim_warehouse,plant_id,object,foreign_key,Stable synthetic plant identifier.,dim_plant.plant_id,False,0,2,PL0001,synthetic
+dim_warehouse,country,object,attribute,Country.,,False,0,2,Canada,synthetic
+dim_warehouse,region,object,attribute,Region.,,False,0,2,Ontario,synthetic
+dim_warehouse,city,object,attribute,City.,,False,0,2,Toronto,synthetic
+dim_warehouse,latitude,float64,measure,Simulated latitude used only for enterprise map analysis.,,False,0,2,43.663199999999996,synthetic
+dim_warehouse,longitude,float64,measure,Simulated longitude used only for enterprise map analysis.,,False,0,2,-79.3732,synthetic
+dim_warehouse,capacity_units,int64,measure,Capacity units.,,False,0,2,65000,synthetic
+dim_warehouse,geography_status,object,attribute,Explicit label identifying simulated enterprise geography.,,False,0,1,SIMULATED_ENTERPRISE_FOOTPRINT,synthetic
+dim_warehouse,canonical_status,object,attribute,Canonical status.,,False,0,1,CANONICAL_PROMOTION_APPLIED,synthetic
+dim_shift,shift_id,object,primary_key,Stable synthetic shift identifier.,,False,0,3,S_DAY,synthetic
+dim_shift,shift_name,object,attribute,Shift name.,,False,0,3,Day,synthetic
+dim_shift,start_hour,int64,measure,Start hour.,,False,0,3,6,synthetic
+dim_shift,duration_hours,int64,measure,Duration hours.,,False,0,1,8,synthetic
+dim_department,department_id,object,primary_key,Stable synthetic department identifier.,,False,0,8,DEP01,synthetic
+dim_department,department_name,object,attribute,Department name.,,False,0,8,Finance,synthetic
+dim_job_role,job_role_id,object,primary_key,Stable synthetic job-role identifier.,,False,0,16,ROLE001,synthetic
+dim_job_role,department_id,object,foreign_key,Stable synthetic department identifier.,dim_department.department_id,False,0,8,DEP01,synthetic
+dim_job_role,job_role_name,object,attribute,Job role name.,,False,0,16,Financial Analyst,synthetic
+dim_job_role,critical_role_flag,int64,measure,Critical role flag.,,False,0,2,0,synthetic
+fact_employee_assignment,assignment_id,object,primary_key,Stable synthetic current-assignment identifier.,,False,0,180,ASN-EMP0001,synthetic
+fact_employee_assignment,employee_id,object,foreign_key,Stable synthetic employee identifier.,dim_employee.employee_id,False,0,180,EMP0001,synthetic
+fact_employee_assignment,department_id,object,foreign_key,Stable synthetic department identifier.,dim_department.department_id,False,0,8,DEP03,synthetic
+fact_employee_assignment,job_role_id,object,foreign_key,Stable synthetic job-role identifier.,dim_job_role.job_role_id,False,0,16,ROLE005,synthetic
+fact_employee_assignment,plant_id,object,foreign_key,Stable synthetic plant identifier.,dim_plant.plant_id,False,0,2,PL0001,synthetic
+fact_employee_assignment,shift_id,object,foreign_key,Stable synthetic shift identifier.,dim_shift.shift_id,False,0,3,S_EVE,synthetic
+fact_employee_assignment,line_id,object,foreign_key,Stable synthetic production-line identifier.,dim_line.line_id,False,0,5,,synthetic
+fact_employee_assignment,assignment_status,object,attribute,Current synthetic canonical assignment status.,,False,0,1,CURRENT_SYNTHETIC_CANONICAL,synthetic

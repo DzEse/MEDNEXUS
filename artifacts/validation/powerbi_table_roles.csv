@@ -8,13 +8,18 @@ DemandForecastDiagnostics,DISCONNECTED,forecast_validation,Must not filter opera
 DemandForecastModelComparison,DISCONNECTED,forecast_validation,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
 DimCustomer,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
 DimDate,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
-DimEmployee,DISCONNECTED,unused_dimension_current_grain,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+DimDepartment,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
+DimEmployee,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
+DimJobRole,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
 DimLine,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
 DimMachine,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
 DimPlant,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
 DimProduct,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
+DimShift,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
 DimSupplier,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
+DimWarehouse,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
 Downtime,CONNECTED,fact,Only relationships in powerbi_semantic_relationships.csv are permitted.
+EmployeeAssignment,CONNECTED,workforce_snapshot_fact,Only relationships in powerbi_semantic_relationships.csv are permitted.
 EnterpriseMonthly,CONNECTED,enterprise_mart,Only relationships in powerbi_semantic_relationships.csv are permitted.
 Finance,CONNECTED,fact,Only relationships in powerbi_semantic_relationships.csv are permitted.
 MORI,CONNECTED,risk_mart,Only relationships in powerbi_semantic_relationships.csv are permitted.
