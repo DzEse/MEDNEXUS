@@ -4,9 +4,9 @@
 
 This document is the **validated Phase-12 baseline semantic contract**.
 
-The September 2026 enterprise dataset/twin enhancement introduces candidate inventory, warehouse, material, carrier, route, shift, department/role/skill, geospatial, process-event and technology entities. Those additions are **not yet admitted** to this contract.
+The September 2026 enterprise dataset/twin enhancement introduced candidate inventory, warehouse, material, shift, workforce, geospatial and process-event structures. Phase 12E validated the structural prototype. Phase 12F then reviewed every prototype table and approved a limited promotion plan, but **the approved structures are not yet admitted to this canonical contract**.
 
-The baseline relationships remain authoritative until the enhanced prototype passes A01–A32 validation and this contract is regenerated. Do not manually add speculative relationships to the final PBIX.
+The current 53-export relationships remain authoritative until Phase 12G physically implements the approved structures and this contract is regenerated. Do not manually add Phase 12F proposed relationships to the PBIX before that regeneration.
 
 The final model uses a **controlled star/snowflake design**. The repository validates the relationship contract before the user builds it in Power BI Desktop.
 
@@ -15,6 +15,39 @@ Machine-readable contract:
 - `artifacts/validation/powerbi_semantic_relationships.csv`
 - `artifacts/validation/powerbi_table_roles.csv`
 - `artifacts/validation/powerbi_semantic_audit.json`
+
+## Phase 12F approved target — not canonical yet
+
+Phase 12F contract simulation proposes a post-promotion target of **58 exports, 45 active relationships and 2 inactive relationships** with **0 semantic issues**.
+
+Approved geography treatment:
+
+- merge simulated Plant geography into DimPlant;
+- merge simulated Supplier geography into DimSupplier;
+- merge simulated Customer geography into DimCustomer;
+- add DimWarehouse as a Plant child;
+- do **not** add one shared active DimRegion relationship.
+
+Approved workforce/reference additions:
+
+- DimShift;
+- DimDepartment;
+- DimJobRole;
+- EmployeeAssignment;
+- connect the existing DimEmployee to EmployeeAssignment.
+
+Approved proposed paths:
+
+- DimPlant → DimWarehouse;
+- DimPlant → EmployeeAssignment;
+- DimShift → EmployeeAssignment;
+- DimEmployee → EmployeeAssignment;
+- DimDepartment → DimJobRole;
+- DimJobRole → EmployeeAssignment.
+
+The proposed model deliberately excludes direct DimLine→EmployeeAssignment and DimDepartment→EmployeeAssignment relationships to preserve a single active filter route. High-risk reverse-disaggregated production, recruitment, supply and inventory prototype facts remain outside the canonical model until direct generation replaces pseudo-detail.
+
+This is a **contract simulation**, not actual PBIX validation.
 
 ## Core dimensions
 
