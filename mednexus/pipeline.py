@@ -53,6 +53,9 @@ def _clean():
             for p in d.glob('*'):
                 if p.name=='.gitkeep':
                     continue
+                if d == path('artifacts','validation') and p.name.startswith(('phase12e_', 'phase12f_')):
+                    # Closed enhancement-gate evidence is historical and must survive later clean canonical runs.
+                    continue
                 if p.is_file():
                     p.unlink()
                 elif p.is_dir():
