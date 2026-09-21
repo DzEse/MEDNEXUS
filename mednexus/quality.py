@@ -15,6 +15,11 @@ PRIMARY_KEYS = {
     'dim_supplier': 'supplier_id',
     'dim_customer': 'customer_id',
     'dim_employee': 'employee_id',
+    'dim_warehouse': 'warehouse_id',
+    'dim_shift': 'shift_id',
+    'dim_department': 'department_id',
+    'dim_job_role': 'job_role_id',
+    'fact_employee_assignment': 'assignment_id',
     'fact_production': 'production_order_id',
     'fact_downtime': 'downtime_event_id',
     'fact_quality': 'quality_event_id',
@@ -25,13 +30,18 @@ PRIMARY_KEYS = {
 }
 
 REQUIRED_COLUMNS = {
-    'dim_plant': {'plant_id', 'plant_name', 'region'},
+    'dim_plant': {'plant_id', 'plant_name', 'region', 'country', 'geography_region', 'city', 'latitude', 'longitude', 'geography_status'},
     'dim_line': {'line_id', 'plant_id', 'line_name'},
     'dim_machine': {'machine_id', 'line_id', 'plant_id', 'machine_name', 'machine_age_years'},
     'dim_product': {'product_id', 'product_family', 'unit_price', 'ideal_cycle_min', 'material_cost_per_unit'},
-    'dim_supplier': {'supplier_id', 'supplier_name', 'base_lead_time_days', 'quality_rating'},
-    'dim_customer': {'customer_id', 'customer_type', 'region'},
+    'dim_supplier': {'supplier_id', 'supplier_name', 'base_lead_time_days', 'quality_rating', 'country', 'geography_region', 'city', 'latitude', 'longitude', 'geography_status'},
+    'dim_customer': {'customer_id', 'customer_type', 'region', 'country', 'geography_region', 'city', 'latitude', 'longitude', 'geography_status'},
     'dim_employee': {'employee_id', 'department', 'plant_id', 'skill_level', 'hourly_cost', 'active_flag'},
+    'dim_warehouse': {'warehouse_id', 'warehouse_name', 'plant_id', 'country', 'region', 'city', 'latitude', 'longitude', 'capacity_units', 'geography_status', 'canonical_status'},
+    'dim_shift': {'shift_id', 'shift_name', 'start_hour', 'duration_hours'},
+    'dim_department': {'department_id', 'department_name'},
+    'dim_job_role': {'job_role_id', 'department_id', 'job_role_name', 'critical_role_flag'},
+    'fact_employee_assignment': {'assignment_id', 'employee_id', 'department_id', 'job_role_id', 'plant_id', 'shift_id', 'line_id', 'assignment_status'},
     'fact_workforce': {'month', 'plant_id', 'required_headcount', 'actual_headcount', 'vacancies', 'absence_rate', 'overtime_hours_per_employee', 'capacity_gap_pct', 'labor_cost'},
     'fact_recruitment': {'month', 'plant_id', 'open_positions', 'applicants', 'screened', 'interviews', 'offers', 'accepted', 'avg_time_to_fill_days', 'cost_per_hire'},
     'fact_production': {'production_order_id', 'date', 'plant_id', 'line_id', 'machine_id', 'product_id', 'planned_production_min', 'planned_downtime_min', 'unplanned_downtime_min', 'run_time_min', 'total_count', 'good_count', 'defect_units', 'rework_units', 'scrap_units', 'ideal_cycle_min'},
@@ -53,6 +63,14 @@ FOREIGN_KEYS = [
     ('dim_machine', 'line_id', 'dim_line', 'line_id'),
     ('dim_machine', 'plant_id', 'dim_plant', 'plant_id'),
     ('dim_employee', 'plant_id', 'dim_plant', 'plant_id'),
+    ('dim_warehouse', 'plant_id', 'dim_plant', 'plant_id'),
+    ('dim_job_role', 'department_id', 'dim_department', 'department_id'),
+    ('fact_employee_assignment', 'employee_id', 'dim_employee', 'employee_id'),
+    ('fact_employee_assignment', 'department_id', 'dim_department', 'department_id'),
+    ('fact_employee_assignment', 'job_role_id', 'dim_job_role', 'job_role_id'),
+    ('fact_employee_assignment', 'plant_id', 'dim_plant', 'plant_id'),
+    ('fact_employee_assignment', 'shift_id', 'dim_shift', 'shift_id'),
+    ('fact_employee_assignment', 'line_id', 'dim_line', 'line_id'),
     ('fact_workforce', 'plant_id', 'dim_plant', 'plant_id'),
     ('fact_recruitment', 'plant_id', 'dim_plant', 'plant_id'),
     ('fact_production', 'plant_id', 'dim_plant', 'plant_id'),
@@ -190,6 +208,33 @@ def evaluate(frames):
     sensor = frames['fact_sensor']
     checks.append(('failure_target_binary', bool(sensor['failure_next_7d'].isin([0, 1]).all()), 'validity'))
 
+
+    if 'fact_employee_assignment' in frames:
+        assignment = frames['fact_employee_assignment']
+        checks.extend([
+            ('employee_assignment_one_current_per_employee', bool(
+                assignment['employee_id'].notna().all()
+                and not assignment['employee_id'].duplicated().any()
+                and len(assignment) == len(frames['dim_employee'])
+            ), 'consistency'),
+            ('employee_assignment_status_canonical', bool(
+                assignment['assignment_status'].eq('CURRENT_SYNTHETIC_CANONICAL').all()
+            ), 'validity'),
+        ])
+
+    for geo_table in ['dim_plant', 'dim_supplier', 'dim_customer', 'dim_warehouse']:
+        if geo_table in frames:
+            geo = frames[geo_table]
+            checks.append((
+                f'{geo_table}_geography_valid',
+                bool(
+                    geo['latitude'].between(-90, 90).all()
+                    and geo['longitude'].between(-180, 180).all()
+                    and geo['geography_status'].eq('SIMULATED_ENTERPRISE_FOOTPRINT').all()
+                ),
+                'validity',
+            ))
+
     business = pd.DataFrame(checks, columns=['check', 'passed', 'dimension'])
     business['status'] = np.where(business['passed'], 'PASS', 'FAIL')
     return table_quality, business
@@ -201,6 +246,8 @@ def evaluate_referential_integrity(frames):
         child = frames[child_table]
         parent = frames[parent_table]
         nonnull = child[child_key].dropna()
+        if nonnull.dtype == object:
+            nonnull = nonnull[nonnull.astype(str) != '']
         orphan_mask = ~nonnull.isin(parent[parent_key].dropna())
         orphan_count = int(orphan_mask.sum())
         rows.append({
