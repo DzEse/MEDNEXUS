@@ -5,7 +5,7 @@
     "python": "3.13.14",
     "cpu_count": 4
   },
-  "generation_and_prototype_build_seconds": 22.2083,
+  "generation_and_prototype_build_seconds": 26.583,
   "prototype_memory_bytes": 3606354,
   "prototype_table_count": 20,
   "prototype_row_count": 6450,
