@@ -1,0 +1,13 @@
+{
+  "phase": "12F",
+  "environment": {
+    "platform": "Windows-10-10.0.19045-SP0",
+    "python": "3.13.14",
+    "cpu_count": 4
+  },
+  "generation_and_prototype_build_seconds": 22.2083,
+  "prototype_memory_bytes": 3606354,
+  "prototype_table_count": 20,
+  "prototype_row_count": 6450,
+  "note": "Runtime is environment-specific evidence, not a cross-machine performance target."
+}

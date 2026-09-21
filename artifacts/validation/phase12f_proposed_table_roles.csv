@@ -1,0 +1,59 @@
+table,model_status,role,filtering_rule
+CapacityWaterfall,CONNECTED,analytical_mart,Only relationships in powerbi_semantic_relationships.csv are permitted.
+CustomerService,CONNECTED,fact,Only relationships in powerbi_semantic_relationships.csv are permitted.
+DecisionQueue,DISCONNECTED,presentation_mart,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+DemandForecast,CONNECTED,forecast_output,Only relationships in powerbi_semantic_relationships.csv are permitted.
+DemandForecastBacktest,DISCONNECTED,forecast_validation,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+DemandForecastDiagnostics,DISCONNECTED,forecast_validation,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+DemandForecastModelComparison,DISCONNECTED,forecast_validation,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+DimCustomer,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
+DimDate,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
+DimDepartment,CONNECTED,dimension,Phase 12F approved candidate; becomes canonical only in the next implementation phase.
+DimEmployee,CONNECTED,dimension,Proposed Phase 12F target: filters EmployeeAssignment only; not yet canonical.
+DimJobRole,CONNECTED,dimension,Phase 12F approved candidate; becomes canonical only in the next implementation phase.
+DimLine,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
+DimMachine,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
+DimPlant,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
+DimProduct,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
+DimShift,CONNECTED,dimension,Phase 12F approved candidate; becomes canonical only in the next implementation phase.
+DimSupplier,CONNECTED,dimension,Only relationships in powerbi_semantic_relationships.csv are permitted.
+DimWarehouse,CONNECTED,dimension,Phase 12F approved candidate; becomes canonical only in the next implementation phase.
+Downtime,CONNECTED,fact,Only relationships in powerbi_semantic_relationships.csv are permitted.
+EmployeeAssignment,CONNECTED,workforce_snapshot_fact,Phase 12F approved candidate; becomes canonical only in the next implementation phase.
+EnterpriseMonthly,CONNECTED,enterprise_mart,Only relationships in powerbi_semantic_relationships.csv are permitted.
+Finance,CONNECTED,fact,Only relationships in powerbi_semantic_relationships.csv are permitted.
+MORI,CONNECTED,risk_mart,Only relationships in powerbi_semantic_relationships.csv are permitted.
+MORIComponentContributions,DISCONNECTED,risk_evidence,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+MORIThresholdSensitivity,DISCONNECTED,risk_evidence,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+MORIWeightSensitivity,DISCONNECTED,risk_evidence,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+Maintenance,CONNECTED,fact,Only relationships in powerbi_semantic_relationships.csv are permitted.
+Orders,CONNECTED,fact,Only relationships in powerbi_semantic_relationships.csv are permitted.
+PredictiveMaintenanceCalibration,DISCONNECTED,model_validation,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+PredictiveMaintenanceFeatureImportance,DISCONNECTED,model_validation,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+PredictiveMaintenanceModelComparison,DISCONNECTED,model_validation,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+PredictiveMaintenanceScores,CONNECTED,model_output,Only relationships in powerbi_semantic_relationships.csv are permitted.
+ProcessCases,DISCONNECTED,case_process_evidence,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+ProcessEventLog,DISCONNECTED,case_process_evidence,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+ProcessTransitions,DISCONNECTED,case_process_evidence,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+ProductionKPI,CONNECTED,fact,Only relationships in powerbi_semantic_relationships.csv are permitted.
+QualityEvents,CONNECTED,fact,Only relationships in powerbi_semantic_relationships.csv are permitted.
+QualityPChart,CONNECTED,statistical_mart,Only relationships in powerbi_semantic_relationships.csv are permitted.
+QualityPareto,DISCONNECTED,presentation_mart,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+Recruitment,CONNECTED,fact,Only relationships in powerbi_semantic_relationships.csv are permitted.
+Reliability,CONNECTED,analytical_mart,Only relationships in powerbi_semantic_relationships.csv are permitted.
+RootCauseAssociations,DISCONNECTED,diagnostic_evidence,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+RootCauseGroupTests,DISCONNECTED,diagnostic_evidence,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+RootCausePriorities,DISCONNECTED,diagnostic_evidence,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+RootCauseRegression,DISCONNECTED,diagnostic_evidence,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+RootCauseSegments,DISCONNECTED,diagnostic_evidence,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+RootCauseTreeImportance,DISCONNECTED,diagnostic_evidence,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+SaaSUsage,CONNECTED,fact,Only relationships in powerbi_semantic_relationships.csv are permitted.
+ScenarioAssumptions,DISCONNECTED,simulated_scenario_evidence,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+ScenarioMonitoringPlan,DISCONNECTED,prospective_monitoring,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+ScenarioOutputs,DISCONNECTED,simulated_scenario,Must not filter operational facts; use only on dedicated evidence/presentation surfaces.
+Shipments,CONNECTED,fact,Only relationships in powerbi_semantic_relationships.csv are permitted.
+SixBigLosses,CONNECTED,analytical_mart,Only relationships in powerbi_semantic_relationships.csv are permitted.
+Supply,CONNECTED,fact,Only relationships in powerbi_semantic_relationships.csv are permitted.
+TechnologyIncidents,CONNECTED,fact,Only relationships in powerbi_semantic_relationships.csv are permitted.
+ValueLeakage,CONNECTED,analytical_mart,Only relationships in powerbi_semantic_relationships.csv are permitted.
+Workforce,CONNECTED,fact,Only relationships in powerbi_semantic_relationships.csv are permitted.

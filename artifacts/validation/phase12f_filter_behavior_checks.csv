@@ -1,0 +1,30 @@
+check,category,passed,status,detail
+baseline_export_contract_preserved_during_phase12f,scope_preservation,True,PASS,Phase 12F validates a proposed target; it does not mutate the current 53-export contract.
+all_relationships_one_to_many,semantic_model,True,PASS,
+all_relationships_single_direction,semantic_model,True,PASS,
+no_fact_to_fact_relationships,semantic_model,True,PASS,
+no_ambiguous_active_filter_paths,filter_behavior,True,PASS,
+no_global_dimregion_relationship,filter_behavior,True,PASS,"Plant, Supplier and Customer geography remain role-specific attributes."
+no_direct_dimline_employeeassignment_relationship,filter_behavior,True,PASS,Nullable line assignment remains informational until a complete workforce-line grain is justified.
+department_filters_assignment_via_jobrole_only,filter_behavior,True,PASS,DimDepartment→DimJobRole→EmployeeAssignment
+one_side_unique_DimPlant_plant_id,key_integrity,True,PASS,
+no_orphans_DimPlant_DimWarehouse,referential_integrity,True,PASS,
+one_side_unique_DimPlant_plant_id,key_integrity,True,PASS,
+no_orphans_DimPlant_EmployeeAssignment,referential_integrity,True,PASS,
+one_side_unique_DimShift_shift_id,key_integrity,True,PASS,
+no_orphans_DimShift_EmployeeAssignment,referential_integrity,True,PASS,
+one_side_unique_DimEmployee_employee_id,key_integrity,True,PASS,
+no_orphans_DimEmployee_EmployeeAssignment,referential_integrity,True,PASS,
+one_side_unique_DimDepartment_department_id,key_integrity,True,PASS,
+no_orphans_DimDepartment_DimJobRole,referential_integrity,True,PASS,
+one_side_unique_DimJobRole_job_role_id,key_integrity,True,PASS,
+no_orphans_DimJobRole_EmployeeAssignment,referential_integrity,True,PASS,
+dimplant_geo_merge_preserves_grain,geospatial,True,PASS,
+dimsupplier_geo_merge_preserves_grain,geospatial,True,PASS,
+dimcustomer_geo_merge_preserves_grain,geospatial,True,PASS,
+plant_filter_employeeassignment,filter_behavior,True,PASS,plant=PL0001;rows=89
+shift_filter_employeeassignment,filter_behavior,True,PASS,shift=S_DAY;rows=87
+employee_filter_one_current_assignment,filter_behavior,True,PASS,employee=EMP0001;rows=1
+department_hierarchy_filter_matches_assignment_reference,filter_behavior,True,PASS,department=DEP01;rows=14
+plant_filter_warehouse_is_nonambiguous,filter_behavior,True,PASS,"warehouses_per_plant={'PL0001': 1, 'PL0002': 1}"
+unready_prototype_facts_not_approved,promotion_gate,True,PASS,Reverse-disaggregated/proxy facts remain outside the approved canonical target.
