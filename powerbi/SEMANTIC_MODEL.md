@@ -2,11 +2,11 @@
 
 ## Enhancement status
 
-This document is the **validated Phase-12 baseline semantic contract**.
+This document is the **validated Phase 12G canonical semantic contract**.
 
-The September 2026 enterprise dataset/twin enhancement introduced candidate inventory, warehouse, material, shift, workforce, geospatial and process-event structures. Phase 12E validated the structural prototype. Phase 12F then reviewed every prototype table and approved a limited promotion plan, but **the approved structures are not yet admitted to this canonical contract**.
+The September 2026 enterprise dataset/twin enhancement introduced candidate inventory, warehouse, material, shift, workforce, geospatial and process-event structures. Phase 12E validated the structural prototype, Phase 12F approved a limited promotion plan, and **Phase 12G now applies that plan to the canonical contract**.
 
-The current 53-export relationships remain authoritative until Phase 12G physically implements the approved structures and this contract is regenerated. Do not manually add Phase 12F proposed relationships to the PBIX before that regeneration.
+The canonical contract now contains **58 exports, 45 active relationships and 2 inactive shipment date roles**. Only the approved role-specific geography/workforce/warehouse structures are admitted; higher-risk prototype facts remain excluded.
 
 The final model uses a **controlled star/snowflake design**. The repository validates the relationship contract before the user builds it in Power BI Desktop.
 
@@ -16,9 +16,9 @@ Machine-readable contract:
 - `artifacts/validation/powerbi_table_roles.csv`
 - `artifacts/validation/powerbi_semantic_audit.json`
 
-## Phase 12F approved target — not canonical yet
+## Phase 12G canonical promotion
 
-Phase 12F contract simulation proposes a post-promotion target of **58 exports, 45 active relationships and 2 inactive relationships** with **0 semantic issues**.
+Phase 12G implements the Phase 12F-approved target: **58 exports, 45 active relationships and 2 inactive relationships** with **0 semantic issues** in repository validation.
 
 Approved geography treatment:
 
@@ -47,7 +47,7 @@ Approved proposed paths:
 
 The proposed model deliberately excludes direct DimLine→EmployeeAssignment and DimDepartment→EmployeeAssignment relationships to preserve a single active filter route. High-risk reverse-disaggregated production, recruitment, supply and inventory prototype facts remain outside the canonical model until direct generation replaces pseudo-detail.
 
-This is a **contract simulation**, not actual PBIX validation.
+This is a **validated repository semantic contract**, but still not actual PBIX validation.
 
 ## Core dimensions
 
@@ -59,7 +59,7 @@ This is a **contract simulation**, not actual PBIX validation.
 - `DimSupplier`
 - `DimCustomer`
 
-`DimEmployee` remains disconnected because the current workforce/recruitment facts are plant-month aggregates rather than employee-grain facts.
+`DimEmployee` is connected only to `EmployeeAssignment`, which is one current synthetic assignment per employee. It does not directly filter plant-month Workforce or Recruitment facts.
 
 ## Cardinality and filtering rules
 
