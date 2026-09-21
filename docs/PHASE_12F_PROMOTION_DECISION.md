@@ -2,7 +2,7 @@
 
 ## Status
 
-**VALIDATED — APPROVED PROMOTION PLAN, NOT YET APPLIED**
+**VALIDATED HISTORICAL GATE — APPROVED PLAN APPLIED BY PHASE 12G**
 
 Phase 12F evaluates every Phase 12E.1 structural prototype against MEDNEXUS business value, grain integrity, semantic-model safety and Power BI filter behavior.
 
@@ -132,9 +132,11 @@ The Phase 12F contract simulation proves:
 
 This is **not** evidence that a PBIX file has been built or inspected.
 
-## Next gate
+## Phase 12G outcome
 
-Phase 12G should physically implement only the approved structures, then:
+Phase 12G subsequently applied only the approved structures. The canonical repository contract is now 58 exports with 45 active and 2 inactive relationships, 0 semantic issues and Data Trust 100/100. The rework-required, deferred and redundant structures listed above remain unpromoted.
+
+The resulting next steps are:
 
 1. regenerate canonical synthetic exports;
 2. expand the table/data dictionary;
