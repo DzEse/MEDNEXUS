@@ -43,12 +43,12 @@ Implemented or substantially implemented today:
 - evidence/confidence/limitations management decision queue;
 - automated data-quality/business checks;
 - reproducibility manifest and cross-process determinism guard;
-- Phase-12 53-file Power BI export contract with ambiguity-safe relationship/table-role audit and headline reconciliation targets;
+- Phase 12G 58-file Power BI export contract with ambiguity-safe relationship/table-role audit and headline reconciliation targets;
 - Power BI semantic-model/DAX/build specifications, preserved Page 1 shell, and flagship Executive Command Center implementation blueprint;
 - CI-compatible automated tests;
 - explicit fictional/synthetic/model-derived/simulated disclosures.
 
-Earlier analytical predecessor work is now substantially implemented or explicitly gated. **Phase 12E.1 provides the validated structural prototype and Phase 12F provides the validated promotion/filter-behavior decision gate.** Phase 12F reviewed all 20 prototype structures, approved 8 for the next canonical implementation, held 8 for direct-generation rework, deferred 3, rejected 1 redundant structure, and passed 29 filter-behavior checks with 0 semantic issues. The canonical 53-file Power BI contract is still unchanged; the approved post-promotion target is 58 exports.
+Earlier analytical predecessor work is now substantially implemented or explicitly gated. **Phase 12E.1 validated the structural prototype, Phase 12F validated the promotion/filter-behavior decision gate, and Phase 12G physically applies only the approved structures.** The canonical Power BI contract is now 58 exports with 45 active and 2 inactive relationships, Data Trust remains 100/100, and the full CI regression passes 120 tests. High-risk reverse-disaggregated prototype facts remain gated and are not exported.
 
 Nothing is silently treated as complete simply because a baseline exists.
 
@@ -126,18 +126,20 @@ Before final PBIX construction, MEDNEXUS now requires:
 2. a small deterministic prototype — **completed**;
 3. key/relationship/event/inventory/calculation validation — **completed in CI (62/62 checks)**;
 4. Phase 12E structural evidence — **completed**;
-5. Phase 12F promotion/filter-behavior contract validation — **completed in CI; local evidence run next**;
-6. physical implementation of only the 8 approved structures — **Phase 12G**;
-7. regeneration of the canonical semantic-model audit and reconciliation targets;
-8. then the actual flagship Executive Command Center and remaining Power BI report build.
+5. Phase 12F promotion/filter-behavior contract validation — **completed locally and in CI**;
+6. physical implementation of only the 8 approved structures — **completed in Phase 12G**;
+7. canonical semantic-model audit and reconciliation-target regeneration — **completed in Phase 12G; local evidence run next**;
+8. then actual Power BI Desktop relationship/measure reconciliation and the flagship Executive Command Center build.
 
 See `docs/ENHANCED_ENTERPRISE_DATA_ARCHITECTURE_BLUEPRINT.md` and `powerbi/EXECUTIVE_COMMAND_CENTER_BLUEPRINT.md`.
 
-The Phase 12E local evidence runner is:
+The active Phase 12G local evidence runner is:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File ".\scripts\phase12e_enhanced_twin_prototype.ps1"
+powershell -ExecutionPolicy Bypass -File ".\scripts\phase12g_canonical_promotion.ps1"
 ```
+
+Phase 12E and Phase 12F evidence remains preserved as historical predecessor evidence.
 
 ## Power BI handoff
 
@@ -149,7 +151,7 @@ The current preparation command is:
 powershell -ExecutionPolicy Bypass -File ".\scripts\phase2_powerbi_prep.ps1"
 ```
 
-The Phase-12 baseline validates the 53-file export/semantic-model contract. The existing Page 1 Enterprise Command Center design is preserved as a report shell. Final PBIX construction is now deliberately gated behind the enhanced enterprise-data prototype so new grains/relationships can be validated before the final model is built.
+Phase 12G validates the canonical 58-file export/semantic-model contract. The existing Page 1 Enterprise Command Center design remains a report shell. The repository still does not claim that a PBIX has been built or reconciled; that requires Power BI Desktop.
 
 ## Repository map
 
